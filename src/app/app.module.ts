@@ -8,6 +8,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/header/header.component';
 import { AlbumThumbComponent } from './components/album-thumb/album-thumb.component';
 import { AlbumsGridComponent } from './components/albums-grid/albums-grid.component';
+import { LoginModalComponent } from './components/auth/login-modal/login-modal.component';
+import { FormsModule } from '@angular/forms';
+import { AuthLinksComponent } from './components/auth/auth-links/auth-links.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { StoreModule } from '@ngrx/store';
+import { RegistrationModalComponent } from './components/auth/registration-modal/registration-modal.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +21,19 @@ import { AlbumsGridComponent } from './components/albums-grid/albums-grid.compon
     HomeComponent,
     HeaderComponent,
     AlbumThumbComponent,
-    AlbumsGridComponent
+    AlbumsGridComponent,
+    LoginModalComponent,
+    AuthLinksComponent,
+    RegistrationModalComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    FormsModule,  
+    ModalModule.forRoot(),
+    StoreModule.forRoot(),    //*  mesto za reducere  */
+
   ],
   providers: [],
   bootstrap: [AppComponent]
