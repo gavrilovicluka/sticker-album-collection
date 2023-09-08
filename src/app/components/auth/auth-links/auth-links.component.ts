@@ -3,8 +3,6 @@ import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { Store, select } from '@ngrx/store';
 import { ModalService } from '../modal.service';
-import { LoginModalComponent } from '../login-modal/login-modal.component';
-import { RegistrationModalComponent } from '../registration-modal/registration-modal.component';
 
 @Component({
   selector: 'app-auth-links',

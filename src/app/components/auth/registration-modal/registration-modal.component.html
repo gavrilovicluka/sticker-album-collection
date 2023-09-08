@@ -3,65 +3,121 @@
 </div>
 
 <div class="modal-body text-center">
-  <div class="row">
-    <div class="login-form mt-4 col-md-8 offset-2">
+  <div class="row justify-content-center">
+    <div class="login-form mt-4 col-md-10">
       <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-        <div class="form-group">
-          <label for="usernamelogin">Korisnicko ime</label>
-          <input
-            type="text"
-            name="username"
-            ngModel
-            #username
-            required
-            id="usernamelogin"
-            class="form-control mt-2 mb-4"
-            placeholder="Unesite korisnicko ime..."
-          />
+        <div class="row justify-content-between">
+          <div class="form-group col-md-6">
+            <label for="forename">Ime</label>
+            <input
+              type="text"
+              name="forename"
+              ngModel
+              #forename
+              required
+              id="forename"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite ime..."
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="surname">Prezime</label>
+            <input
+              type="text"
+              name="surname"
+              ngModel
+              #surname
+              required
+              id="surname"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite prezime..."
+            />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="passwordlogin">Lozinka</label>
-          <input
-            type="password"
-            name="password"
-            ngModel
-            #password
-            required
-            id="passwordlogin"
-            class="form-control mt-2 mb-4"
-            placeholder="Unesite lozinku..."
-            autocomplete
-          />
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="username">Korisnicko ime</label>
+            <input
+              type="text"
+              name="username"
+              ngModel
+              #username
+              required
+              id="username"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite korisnicko ime..."
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              name="email"
+              ngModel
+              #email
+              required
+              id="email"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite e-mail..."
+            />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="address">Adresa</label>
-          <input
-            type="text"
-            name="address"
-            ngModel
-            #address
-            required
-            id="address"
-            class="form-control mt-2 mb-4"
-            placeholder="Unesite adresu..."
-            autocomplete
-          />
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="password">Lozinka</label>
+            <input
+              type="password"
+              name="password"
+              ngModel
+              #password
+              required
+              id="password"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite lozinku..."
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="address">Adresa</label>
+            <input
+              type="text"
+              name="address"
+              ngModel
+              #address
+              required
+              id="address"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite adresu..."
+            />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="phoneNumber">Broj telefona</label>
-          <input
-            type="tel"
-            name="phoneNumber"
-            ngModel
-            #phoneNumber
-            required
-            id="phoneNumber"
-            class="form-control mt-2 mb-4"
-            placeholder="Unesite broj telefona..."
-            autocomplete
-          />
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="phoneNumber">Broj telefona</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              ngModel
+              #phoneNumber
+              required
+              id="phoneNumber"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite broj telefona..."
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <!-- <label for="phoneNumber">Broj telefona</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              ngModel
+              #phoneNumber
+              required
+              id="phoneNumber"
+              class="form-control mt-2 mb-4"
+              placeholder="Unesite broj telefona..."
+            /> -->
+          </div>
         </div>
-
         <button
           type="button"
           class="btn btn-secondary btn-lg mx-2"

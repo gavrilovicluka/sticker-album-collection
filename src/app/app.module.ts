@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -14,6 +13,13 @@ import { AuthLinksComponent } from './components/auth/auth-links/auth-links.comp
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { StoreModule } from '@ngrx/store';
 import { RegistrationModalComponent } from './components/auth/registration-modal/registration-modal.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environments';
+import { EffectsModule } from '@ngrx/effects';
+import { authReducer } from './store/reducers/auth.reducer';
+import { AuthEffect } from './store/effects/auth.effects';
+import { AuthService } from './services/auth/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,10 +38,12 @@ import { RegistrationModalComponent } from './components/auth/registration-modal
     NgbModule,
     FormsModule,  
     ModalModule.forRoot(),
-    StoreModule.forRoot(),    //*  mesto za reducere  */
-
+    StoreModule.forRoot({auth: authReducer}),    //*  mesto za reducere  */
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([AuthEffect]),       // ovde se dodaju efekti
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthService],   // ovde se dodaju servisi
   bootstrap: [AppComponent]
 })
 export class AppModule { }

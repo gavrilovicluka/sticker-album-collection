@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Luka",
+      "surname": "Gavrilovic",
+      "username": "lukagav",
+      "password": "pass",
+      "address": "Niska",
+      "phoneNumber": "0000000"
+    },
+    {
+      "id": 2,
+      "name": "Milan",
+      "surname": "Milanovic",
+      "username": "milan123",
+      "email": "milan123@gmail.com",
+      "password": "mialn123",
+      "address": "Adresa 1",
+      "phoneNumber": "123456",
+      "isAdmin": false
+    },
+    {
+      "id": 3,
+      "name": "Ivan",
+      "surname": "Ivanovic",
+      "username": "ivan123",
+      "email": "ivan123@gmail.com",
+      "password": "ivan123",
+      "address": "Adresa 2",
+      "phoneNumber": "456123",
+      "isAdmin": false
+    },
+    {
+      "id": 5,
+      "name": "Novak",
+      "surname": "Djokovic",
+      "username": "novak123",
+      "email": "novak123@gmail.com",
+      "password": "novak123",
+      "address": "Adresa 3",
+      "phoneNumber": "45612351",
+      "isAdmin": false
+    }
+  ]
+}
