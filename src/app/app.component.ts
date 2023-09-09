@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from './store/app.state';
+import * as publisherActions from 'src/app/store/actions/publisher.actions';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'sticker-album-collection';
+
+  constructor(private store: Store<AppState>) { }
+
+  ngOnInit() {
+  }
 }

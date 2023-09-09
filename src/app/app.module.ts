@@ -20,6 +20,10 @@ import { authReducer } from './store/reducers/auth.reducer';
 import { AuthEffect } from './store/effects/auth.effects';
 import { AuthService } from './services/auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { PublisherListComponent } from './components/publisher/publisher-list/publisher-list/publisher-list.component';
+import { PublisherEffect } from './store/effects/publisher.effects';
+import { publisherReducer } from './store/reducers/publisher.reducer';
+import { PublisherService } from './services/publisher/publisher.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoginModalComponent,
     AuthLinksComponent,
     RegistrationModalComponent,
+    PublisherListComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,12 +43,12 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     FormsModule,  
     ModalModule.forRoot(),
-    StoreModule.forRoot({auth: authReducer}),    //*  mesto za reducere  */
+    StoreModule.forRoot({auth: authReducer, publishers: publisherReducer}),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AuthEffect]),       // ovde se dodaju efekti
+    EffectsModule.forRoot([AuthEffect, PublisherEffect]),       // ovde se dodaju efekti
     HttpClientModule,
   ],
-  providers: [AuthService],   // ovde se dodaju servisi
+  providers: [AuthService, PublisherService],   // ovde se dodaju servisi
   bootstrap: [AppComponent]
 })
 export class AppModule { }
