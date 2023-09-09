@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +24,12 @@ import { PublisherListComponent } from './components/publisher/publisher-list/pu
 import { PublisherEffect } from './store/effects/publisher.effects';
 import { publisherReducer } from './store/reducers/publisher.reducer';
 import { PublisherService } from './services/publisher/publisher.service';
+import { PublisherAddComponent } from './components/publisher/publisher-add/publisher-add/publisher-add.component';
+import { RouteEffects } from './store/effects/route.effects';
+import { ModalEffects } from './store/effects/modal.effects';
+import { RouterModule } from '@angular/router';
+import { routes } from './app-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -36,16 +42,18 @@ import { PublisherService } from './services/publisher/publisher.service';
     AuthLinksComponent,
     RegistrationModalComponent,
     PublisherListComponent,
+    PublisherAddComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    // AppRoutingModule,
+    RouterModule.forRoot(routes),
     NgbModule,
-    FormsModule,  
+    FormsModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({auth: authReducer, publishers: publisherReducer}),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
+    StoreModule.forRoot({ auth: authReducer, publishers: publisherReducer }),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AuthEffect, PublisherEffect]),       // ovde se dodaju efekti
+    EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects]),       // ovde se dodaju efekti
     HttpClientModule,
   ],
   providers: [AuthService, PublisherService],   // ovde se dodaju servisi

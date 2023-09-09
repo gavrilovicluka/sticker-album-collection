@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { Store, select } from '@ngrx/store';
 import { ModalService } from '../modal.service';
+import { AuthLinksViewModal, selectAuthLinksViewModel } from 'src/app/store/selectors/auth.selectors';
+import { logout } from 'src/app/store/actions/auth.actions';
 
 @Component({
   selector: 'app-auth-links',
@@ -11,22 +13,20 @@ import { ModalService } from '../modal.service';
 })
 export class AuthLinksComponent {
 
-  //vm$: Observable<fromAuthSelectors.AuthLinksViewModal>;
+  authViewModel$: Observable<AuthLinksViewModal> = of();
   
   constructor(
-    // public authService: AuthService,
     private modalService: ModalService,
     private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    // this.vm$ = this.store.pipe(
-    //   select(fromAuthSelectors.selectAuthLinksViewModel)
-    // );
+    this.authViewModel$ = this.store.pipe(select(selectAuthLinksViewModel));
   }
 
   logout() {
-    // this.store.dispatch(logout());
+    localStorage.removeItem('user');
+    this.store.dispatch(logout());
   }
 
   openModal() {

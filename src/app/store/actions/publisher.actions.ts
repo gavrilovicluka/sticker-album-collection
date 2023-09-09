@@ -17,4 +17,21 @@ export const loadPublishersFailure = createAction(
 );
 
 
+// Add Publisher Actions
+export const addPublisher = createAction(
+    '[Publisher Add Component] Add Publisher',
+    props<{ publisher: Publisher }>()
+);
+
+export const addPublisherSuccess = createAction(
+    '[Publisher Effect] Add Publisher Success',
+    props<{ publisher: Publisher }>()
+);
+
+export const addPublisherFailure = createAction(
+    '[Publisher Effect] Add Publishers Failure',
+    props<{ error: any }>()
+);
+
+
 // 

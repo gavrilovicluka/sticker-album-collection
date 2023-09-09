@@ -26,7 +26,7 @@ const initialState: AuthState = {
 export const authReducer = createReducer(
     initialState,
 
-    on(AuthActions.loginSuccess, AuthActions.signupSuccess, (state, action) => ({
+    on(AuthActions.loginSuccess, AuthActions.signupSuccess, AuthActions.browserReload, (state, action) => ({
         ...state,
         user: action.user,
         error: null
@@ -46,6 +46,24 @@ export const authReducer = createReducer(
             isAdmin: null
         },
         error: action.error
-    }))
+    })),
+
+    on(AuthActions.logout, (state, action) => {
+        return {
+          ...state,
+          user: {
+            id: -1,
+            name: "",
+            surname: "",
+            username: "",
+            email: "",
+            password: "",
+            address: "",
+            phoneNumber: "",
+            isAdmin: null,
+          },
+          error: null,
+        };
+      })
 )
 

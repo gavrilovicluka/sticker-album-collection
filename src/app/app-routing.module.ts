@@ -2,15 +2,22 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { PublisherListComponent } from './components/publisher/publisher-list/publisher-list/publisher-list.component';
-
-const routes: Routes = [
+import { PublisherAddComponent } from './components/publisher/publisher-add/publisher-add/publisher-add.component';
+import { adminGuard } from './components/auth/admin.guard';
+export const routes: Routes = [
   {
     path: "",
     component: HomeComponent
   },
   {
     path: "admin/publishers",
-    component: PublisherListComponent
+    component: PublisherListComponent,
+    canActivate: [adminGuard()],
+  },
+  {
+    path: "admin/publishers/add",
+    component: PublisherAddComponent,
+    canActivate: [adminGuard()],
   },
   // {
   //   path: "admin/publishers/edit/:id",
@@ -18,8 +25,3 @@ const routes: Routes = [
   // },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

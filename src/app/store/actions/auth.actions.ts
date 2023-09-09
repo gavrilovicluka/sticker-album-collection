@@ -33,3 +33,13 @@ export const signupFailure = createAction(
     '[Auth Effect] Register User Failure',
     props<{ error: any }>()
 );
+
+
+// Logout Actions
+export const logout = createAction('[Auth Links Component] Logout User');
+
+// Browser Reload Actions
+export const browserReload = createAction(
+    '[App Component] Browser Reload',
+    props<{ user: User }>()
+);

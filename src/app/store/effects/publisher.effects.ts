@@ -17,4 +17,13 @@ export class PublisherEffect {
                 catchError((error) => of(PublisherActions.loadPublishersFailure(error)))
             ))
     ))
+
+    addPublisher$ = createEffect(() => this.actions$.pipe(
+        ofType(PublisherActions.addPublisher),
+        mergeMap((action) => 
+            this.publisherService.addPublisher(action.publisher).pipe(
+                map((publisher) => PublisherActions.addPublisherSuccess({publisher})),
+                catchError((error) => of(PublisherActions.addPublisherFailure(error)))
+            ))
+    ))
 }

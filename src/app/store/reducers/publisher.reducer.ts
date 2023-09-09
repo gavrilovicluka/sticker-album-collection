@@ -20,4 +20,6 @@ export const publisherReducer = createReducer(
     initialState,
 
     on(PublisherActions.loadPublishersSuccess, (state, { publishers }) => adapter.setAll(publishers, state)),
+
+    on(PublisherActions.addPublisherSuccess, (state, action) => adapter.addOne(action.publisher, state)),
 )
