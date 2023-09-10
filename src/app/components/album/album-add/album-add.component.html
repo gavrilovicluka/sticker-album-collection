@@ -1,0 +1,68 @@
+<div class="card" *ngIf="showForm">
+<div class="row justify-content-center">
+    <div class="col-8 mt-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="my-0">Dodaj novi album</h1>
+      </div>
+  
+      <form>
+        <div class="form-group mb-3">
+          <label for="name">Naziv albuma</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            [(ngModel)]="album.name"
+            name="name"
+            required
+            placeholder="Unesite naziv albuma..."
+          />
+        </div>
+  
+        <div class="form-group mb-3">
+          <label for="stickersNumber">Broj sličica</label>
+          <input
+            type="number"
+            class="form-control"
+            id="stickersNumber"
+            [(ngModel)]="album.stickersNumber"
+            name="stickersNumber"
+            required
+          />
+        </div>
+        
+        <div class="form-group mb-3">
+          <label for="year">Godina izdavanja</label>
+          <input
+            type="number"
+            class="form-control"
+            id="year"
+            [(ngModel)]="album.year"
+            name="year"
+            required
+          />
+        </div>
+  
+        <div class="form-group mb-3">
+          <label for="image">Slika URL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="image"
+            [(ngModel)]="album.image"
+            name="image"
+            required
+            placeholder="Unesite URL slike..."
+          />
+        </div>
+  
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <button type="submit" class="btn btn-success" (click)="onSubmit()">
+            Dodaj album
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Otkazi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

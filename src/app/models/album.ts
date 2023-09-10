@@ -6,5 +6,6 @@ export interface Album {
     stickersNumber: number,
     year: number,
     image: string,
-    publisher: Publisher
+    publisherId: number
+    //publisher: Publisher
 }

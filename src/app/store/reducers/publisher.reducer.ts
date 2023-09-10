@@ -35,5 +35,13 @@ export const publisherReducer = createReducer(
 
     on(PublisherActions.selectPublisher, (state, { selectedPublisherId }) => {
         return { ...state, selectedPublisherId: selectedPublisherId };
-    })
+    }),
+
+    // on(PublisherActions.addAlbumToPublisher, (state, action) => {
+    //     const update = {
+    //         id: action.publisherId,
+    //         changes: action.album
+    //     }
+    //    return adapter.updateOne(update, state);
+    // })
 )

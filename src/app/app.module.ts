@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/header/header.component';
-import { AlbumThumbComponent } from './components/album-thumb/album-thumb.component';
+import { AlbumThumbComponent2 } from './components/album-thumb/album-thumb.component';
 import { AlbumsGridComponent } from './components/albums-grid/albums-grid.component';
 import { LoginModalComponent } from './components/auth/login-modal/login-modal.component';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +30,13 @@ import { ModalEffects } from './store/effects/modal.effects';
 import { RouterModule } from '@angular/router';
 import { routes } from './app-routing.module';
 import { PublisherEditComponent } from './components/publisher/publisher-edit/publisher-edit.component';
+import { AlbumsListComponent } from './components/album/albums-list/albums-list.component';
+import { AlbumAddComponent } from './components/album/album-add/album-add.component';
+import { PublisherThumbComponent } from './components/publisher/publisher-thumb/publisher-thumb.component';
+import { AlbumService } from './services/album/album.service';
+import { albumReducer } from './store/reducers/album.reducer';
+import { AlbumEffect } from './store/effects/album.effects';
+import { AlbumThumbComponent } from './components/album/album-thumb/album-thumb.component';
 
 
 @NgModule({
@@ -37,7 +44,7 @@ import { PublisherEditComponent } from './components/publisher/publisher-edit/pu
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    AlbumThumbComponent,
+    AlbumThumbComponent2,
     AlbumsGridComponent,
     LoginModalComponent,
     AuthLinksComponent,
@@ -45,6 +52,10 @@ import { PublisherEditComponent } from './components/publisher/publisher-edit/pu
     PublisherListComponent,
     PublisherAddComponent,
     PublisherEditComponent,
+    AlbumsListComponent,
+    AlbumAddComponent,
+    PublisherThumbComponent,
+    AlbumThumbComponent
   ],
   imports: [
     BrowserModule,
@@ -53,12 +64,12 @@ import { PublisherEditComponent } from './components/publisher/publisher-edit/pu
     NgbModule,
     FormsModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({ auth: authReducer, publishers: publisherReducer }),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
+    StoreModule.forRoot({ auth: authReducer, publishers: publisherReducer, albums: albumReducer }),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects]),       // ovde se dodaju efekti
+    EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects, AlbumEffect]),       // ovde se dodaju efekti
     HttpClientModule,
   ],
-  providers: [AuthService, PublisherService],   // ovde se dodaju servisi
+  providers: [AuthService, PublisherService, AlbumService],   // ovde se dodaju servisi
   bootstrap: [AppComponent]
 })
 export class AppModule { }

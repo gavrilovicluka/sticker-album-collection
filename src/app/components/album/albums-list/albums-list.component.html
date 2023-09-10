@@ -1,0 +1,28 @@
+<div class="row justify-content-center" *ngIf="publisher$ | async as publisher">
+  <div class="col-8 mt-4 display-flex justify-content-center">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="my-0">{{ publisher.name }} - albumi</h1>
+      <button
+        type="button"
+        class="btn btn-success"
+        *ngIf="showAddButton"
+        (click)="showAddForm()"
+      >
+        Dodaj novi album <i class="fas fa-plus"></i>
+      </button>
+    </div>
+
+    <app-album-add
+      [showForm]="showForm"
+      (cancelClicked)="cancelForm()"
+    ></app-album-add>
+
+    <div class="row mt-3">
+      <ng-container *ngFor="let album of publisher.albums">
+        <div class="col-6">
+          <app-album-thumb [album]="album"></app-album-thumb>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

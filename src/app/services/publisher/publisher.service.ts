@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap, of, throwError } from 'rxjs';
+import { Album } from 'src/app/models/album';
 import { Publisher } from 'src/app/models/publisher';
 import { environment } from 'src/environments/environments';
 
@@ -27,7 +28,7 @@ export class PublisherService {
         if (publisher) {
           return of(publisher);
         } else {
-          return throwError(() => new Error('Unable to login'));
+          return throwError(() => new Error('Unable to add publisher'));
         }
       })
     )
@@ -35,6 +36,19 @@ export class PublisherService {
 
   editPublisher(publisher: Publisher): Observable<Publisher> {
     return this.httpClient.put<Publisher>(environment.apiUrl + this.path + `/${publisher.id}`, publisher);
+  }
+
+  addAlbumToPublisher(album: Album, publisherId: number): Observable<Publisher> {
+    const albumData = {
+      id: album.id,
+      name: album.name,
+      image: album.image,
+      stickersNumber: album.stickersNumber,
+      year: album.year
+    }
+    return this.httpClient.patch<Publisher>(environment.apiUrl + this.path + `/${publisherId}`, {
+      albums: albumData
+    })
   }
 
 }

@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { Album } from "src/app/models/album";
 import { Publisher } from "src/app/models/publisher";
 
 export const selectPublisher = createAction(
@@ -68,7 +69,24 @@ export const editPublisherSuccess = createAction(
 );
 
 export const editPublisherFailure = createAction(
-    '[Publisher Effect] Edit Publishers Failure',
+    '[Publisher Effect] Edit Publisher Failure',
+    props<{ error: any }>()
+);
+
+
+// Add Album To Publisher
+export const addAlbumToPublisher = createAction(
+    '[Album Add Component] Add Album To Publisher',
+    props<{ publisherId: number, album: Album }>()
+);
+
+export const addAlbumToPublisherSuccess = createAction(
+    '[Publisher Effect] Add Album To Publisher Success',
+    props<{ publisher: Publisher }>()
+);
+
+export const addAlbumToPublisherFailure = createAction(
+    '[Publisher Effect] Add Album To Publisher Failure',
     props<{ error: any }>()
 );
 

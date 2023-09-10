@@ -15,12 +15,12 @@ export class PublisherListComponent {
 
   publishers$: Observable<readonly Publisher[]> = of([]);
 
-  constructor(private store: Store<AppState> /*public router: Router */) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    
+
     this.store.dispatch(publisherActions.loadPublishers());
-    this.publishers$ = this.store.pipe(select(selectAllPublishers));
+    this.publishers$ = this.store.select(selectAllPublishers);
 
   }
 

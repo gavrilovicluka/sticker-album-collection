@@ -50,7 +50,32 @@
       "name": "Panini",
       "description": "Neki opis za panini",
       "image": "https://placehold.co/100",
-      "albums": []
+      "albums": [
+        {
+          "id": 1,
+          "name": "Albmu1",
+          "image": "https://placehold.co/100",
+          "stickersNumber": 10,
+          "year": 2020,
+          "publisherId": 1
+        },
+        {
+          "id": 2,
+          "name": "Album2",
+          "image": "https://placehold.co/100",
+          "stickersNumber": 12,
+          "year": 2021,
+          "publisherId": 1
+        },
+        {
+          "id": 3,
+          "name": "Albmu3",
+          "image": "https://placehold.co/100",
+          "stickersNumber": 14,
+          "year": 2010,
+          "publisherId": 1
+        }
+      ]
     },
     {
       "id": 2,
@@ -86,6 +111,24 @@
       "description": "a3",
       "image": "https://placehold.co/100",
       "albums": []
+    }
+  ],
+  "albums": [
+    {
+      "id": 1,
+      "name": "Albmu1",
+      "image": "https://placehold.co/100",
+      "stickersNumber": 10,
+      "year": 2020,
+      "publisherId": 1
+    },
+    {
+      "id": 2,
+      "name": "Album2",
+      "image": "https://placehold.co/100",
+      "stickersNumber": 12,
+      "year": 2021,
+      "publisherId": 1
     }
   ]
 }

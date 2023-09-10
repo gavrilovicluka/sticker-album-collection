@@ -5,6 +5,7 @@ import { PublisherListComponent } from './components/publisher/publisher-list/pu
 import { PublisherAddComponent } from './components/publisher/publisher-add/publisher-add/publisher-add.component';
 import { adminGuard } from './components/auth/admin.guard';
 import { PublisherEditComponent } from './components/publisher/publisher-edit/publisher-edit.component';
+import { AlbumsListComponent } from './components/album/albums-list/albums-list.component';
 export const routes: Routes = [
   {
     path: "",
@@ -22,7 +23,13 @@ export const routes: Routes = [
   },
   {
     path: "admin/publishers/edit/:id",
-    component: PublisherEditComponent
+    component: PublisherEditComponent,
+    canActivate: [adminGuard()],
+  },
+  {
+    path: "admin/publishers/:id/albums-list",
+    component: AlbumsListComponent,
+    canActivate: [adminGuard()],
   },
 ];
 
