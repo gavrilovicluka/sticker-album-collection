@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { ModalService } from '../modal.service';
 import { AuthLinksViewModal, selectAuthLinksViewModel } from 'src/app/store/selectors/auth.selectors';
 import { logout } from 'src/app/store/actions/auth.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-links',
@@ -17,7 +18,8 @@ export class AuthLinksComponent {
   
   constructor(
     private modalService: ModalService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -25,7 +27,8 @@ export class AuthLinksComponent {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    // this.router.navigate(['/']);
+    // localStorage.removeItem('user');
     this.store.dispatch(logout());
   }
 

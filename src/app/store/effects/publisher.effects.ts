@@ -11,19 +11,38 @@ export class PublisherEffect {
 
     loadPublishers$ = createEffect(() => this.actions$.pipe(
         ofType(PublisherActions.loadPublishers),
-        mergeMap((action) => 
+        mergeMap((action) =>
             this.publisherService.loadPublishers().pipe(
-                map((publishers) => PublisherActions.loadPublishersSuccess({publishers})),            
+                map((publishers) => PublisherActions.loadPublishersSuccess({ publishers })),
                 catchError((error) => of(PublisherActions.loadPublishersFailure(error)))
             ))
     ))
 
     addPublisher$ = createEffect(() => this.actions$.pipe(
         ofType(PublisherActions.addPublisher),
-        mergeMap((action) => 
+        mergeMap((action) =>
             this.publisherService.addPublisher(action.publisher).pipe(
-                map((publisher) => PublisherActions.addPublisherSuccess({publisher})),
+                map((publisher) => PublisherActions.addPublisherSuccess({ publisher })),
                 catchError((error) => of(PublisherActions.addPublisherFailure(error)))
             ))
     ))
+
+    editPublisher$ = createEffect(() => this.actions$.pipe(
+        ofType(PublisherActions.editPublisher),
+        mergeMap((action) =>
+            this.publisherService.editPublisher(action.publisher).pipe(
+                map((publisher) => PublisherActions.editPublisherSuccess({ publisher })),
+                catchError((error) => of(PublisherActions.editPublisherFailure(error)))
+            ))
+    ))
+
+    getPublisher$ = createEffect(() => this.actions$.pipe(
+        ofType(PublisherActions.getPublisher),
+        mergeMap((action) =>
+            this.publisherService.getPublisher(action.selectedPublisherId).pipe(
+                map((publisher) => PublisherActions.getPublisherSuccess({ publisher })),
+                catchError((error) => of(PublisherActions.getPublisherFailure(error)))
+            ))
+    ))
+
 }

@@ -29,6 +29,7 @@ import { RouteEffects } from './store/effects/route.effects';
 import { ModalEffects } from './store/effects/modal.effects';
 import { RouterModule } from '@angular/router';
 import { routes } from './app-routing.module';
+import { PublisherEditComponent } from './components/publisher/publisher-edit/publisher-edit.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { routes } from './app-routing.module';
     RegistrationModalComponent,
     PublisherListComponent,
     PublisherAddComponent,
+    PublisherEditComponent,
   ],
   imports: [
     BrowserModule,

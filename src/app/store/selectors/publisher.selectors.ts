@@ -20,3 +20,8 @@ export const selectAllPublishersAsDict = createSelector(
     selectPublishersFeature,
     (state: PublisherState) => state.entities
 );
+
+export const selectCurrentPublisher = createSelector(
+    selectPublishersFeature,
+    (state: PublisherState) => state.entities[state.selectedPublisherId] ?? null
+)

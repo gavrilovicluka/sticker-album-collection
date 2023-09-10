@@ -8,36 +8,43 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class RouteEffects {
 
-    constructor(private actions$: Actions, private route: Router) {}
+  constructor(private actions$: Actions, private route: Router) { }
 
-//   goShopping$ = createEffect(
-//     () =>
-//       this.actions$.pipe(
-//         ofType(fromAuthActions.loginSuccess),
-//         tap(() => this.route.navigate(['/shopping/products']))
-//       ),
-//     { dispatch: false }
-//   );
+  //   goShopping$ = createEffect(
+  //     () =>
+  //       this.actions$.pipe(
+  //         ofType(fromAuthActions.loginSuccess),
+  //         tap(() => this.route.navigate(['/shopping/products']))
+  //       ),
+  //     { dispatch: false }
+  //   );
 
-//   goHome$ = createEffect(
-//     () =>
-//       this.actions$.pipe(
-//         //ofType(fromAuthActions.logout),
-//         tap(() => this.route.navigate(['/home']))
-//       ),
-//     { dispatch: false }
-//   );
+  goHome$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromAuthActions.logout),
+        tap(() => this.route.navigate(['/']))
+      ),
+    { dispatch: false }
+  );
 
   goPublishersList$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(
-          fromPublisherActions.addPublisherSuccess
-        ),
+        ofType(fromPublisherActions.addPublisherSuccess, fromPublisherActions.editPublisherSuccess),
         tap(() => this.route.navigate(['admin/publishers']))
       ),
     { dispatch: false }
   );
 
-  
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromAuthActions.logout),
+        tap(() => localStorage.removeItem('user'))
+      ),
+    { dispatch: false }
+  );
+
+
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mergeMap, of, throwError } from 'rxjs';
+import { Observable, mergeMap, of, throwError } from 'rxjs';
 import { Publisher } from 'src/app/models/publisher';
 import { environment } from 'src/environments/environments';
 
@@ -13,20 +13,28 @@ export class PublisherService {
 
   constructor(private httpClient: HttpClient) { }
 
-  loadPublishers() {
+  loadPublishers(): Observable<Publisher[]> {
     return this.httpClient.get<Publisher[]>(environment.apiUrl + this.path)
   }
 
-  addPublisher(publisher: Publisher) {
+  getPublisher(publisherId: number): Observable<Publisher> {
+    return this.httpClient.get<Publisher>(environment.apiUrl + this.path + `/${publisherId}`);
+  }
+
+  addPublisher(publisher: Publisher): Observable<Publisher> {
     return this.httpClient.post<Publisher>(environment.apiUrl + this.path, publisher).pipe(
       mergeMap((publisher) => {
-        if(publisher) {
+        if (publisher) {
           return of(publisher);
         } else {
           return throwError(() => new Error('Unable to login'));
         }
       })
     )
+  }
+
+  editPublisher(publisher: Publisher): Observable<Publisher> {
+    return this.httpClient.put<Publisher>(environment.apiUrl + this.path + `/${publisher.id}`, publisher);
   }
 
 }

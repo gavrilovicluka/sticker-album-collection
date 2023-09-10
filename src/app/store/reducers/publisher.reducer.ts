@@ -22,4 +22,18 @@ export const publisherReducer = createReducer(
     on(PublisherActions.loadPublishersSuccess, (state, { publishers }) => adapter.setAll(publishers, state)),
 
     on(PublisherActions.addPublisherSuccess, (state, action) => adapter.addOne(action.publisher, state)),
+
+    on(PublisherActions.getPublisherSuccess, (state, action) => adapter.addOne(action.publisher, state)),
+
+    on(PublisherActions.editPublisherSuccess, (state, action) => {
+        const update = {
+            id: action.publisher.id,
+            changes: action.publisher
+        }
+        return adapter.updateOne(update, state);
+    }),
+
+    on(PublisherActions.selectPublisher, (state, { selectedPublisherId }) => {
+        return { ...state, selectedPublisherId: selectedPublisherId };
+    })
 )
