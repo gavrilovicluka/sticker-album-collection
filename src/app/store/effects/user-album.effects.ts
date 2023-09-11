@@ -18,4 +18,13 @@ export class UserAlbumEffect {
             ))
     ))
 
+    getUserAlbums$ = createEffect(() => this.actions$.pipe(
+        ofType(UserAlbumActions.getUserAlbums),
+        mergeMap((action) =>
+            this.userAlbumService.getUserAlbums(action.userId).pipe(
+                map((albums) => UserAlbumActions.getUserAlbumsSuccess({ albums })),
+                catchError((error) => of(UserAlbumActions.getUserAlbumsFailure(error)))
+            ))
+    ))
+
 }

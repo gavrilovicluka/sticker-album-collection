@@ -7,6 +7,8 @@ import { adminGuard } from './components/auth/admin.guard';
 import { PublisherEditComponent } from './components/publisher/publisher-edit/publisher-edit.component';
 import { AlbumsListComponent } from './components/album/albums-list/albums-list.component';
 import { AlbumListHomeComponent } from './components/album/album-list-home/album-list-home.component';
+import { UserAlbumsComponent } from './components/user/user-albums/user-albums.component';
+import { authGuard } from './components/auth/auth.guard';
 export const routes: Routes = [
   {
     path: "",
@@ -15,6 +17,11 @@ export const routes: Routes = [
   {
     path: ":id/albums-list",
     component: AlbumListHomeComponent
+  },
+  {
+    path: ":id/my-albums",
+    component: UserAlbumsComponent,
+    canActivate: [authGuard()]
   },
   {
     path: "admin/publishers",

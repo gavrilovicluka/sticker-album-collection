@@ -1,17 +1,21 @@
 import { createReducer, on } from "@ngrx/store";
-import * as UserAlbumActions from "../actions/album.actions";
+import * as UserAlbumActions from "../actions/user-album.actions";
 import { UserAlbum } from "src/app/models/user-album";
+import { User } from "src/app/models/user";
+import { Album } from "src/app/models/album";
 
 export interface UserAlbumState {
-    userId: number,
-    albumId: number,
+    // user: User | null;
+    // albums: Album[] | null,
+    albums: Album[],
     missingStickers: number,
     error: any
 }
 
 const initialState: UserAlbumState = {
-    userId: -1,
-    albumId: -1,
+    // user: null,
+    albums: [],
+
     missingStickers: -1,
     error: null
 };
@@ -20,6 +24,14 @@ const initialState: UserAlbumState = {
 export const userAlbumReducer = createReducer(
     initialState,
 
-   
+    on(UserAlbumActions.getUserAlbumsSuccess, (state, action) => ({
+        ...state,
+        albums: action.albums,
+        error: null
+    }))
+    
+    
+
+
 
 )

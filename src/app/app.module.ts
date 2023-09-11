@@ -44,6 +44,9 @@ import { AlbumInfoComponent } from './components/album/album-info/album-info.com
 import { UserAlbumService } from './services/user-album/user-album.service';
 import { UserAlbumEffect } from './store/effects/user-album.effects';
 import { userAlbumReducer } from './store/reducers/user-album.reducer';
+import { UserAlbumsComponent } from './components/user/user-albums/user-albums.component';
+import { userReducer } from './store/reducers/user.reducer';
+import { UserAlbumInfoComponent } from './components/user/user-album-info/user-album-info.component';
 
 
 @NgModule({
@@ -66,7 +69,9 @@ import { userAlbumReducer } from './store/reducers/user-album.reducer';
     PublisherListHomeComponent,
     PublisherThumbHomeComponent,
     AlbumListHomeComponent,
-    AlbumInfoComponent
+    AlbumInfoComponent,
+    UserAlbumsComponent,
+    UserAlbumInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +80,13 @@ import { userAlbumReducer } from './store/reducers/user-album.reducer';
     NgbModule,
     FormsModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({ auth: authReducer, publishers: publisherReducer, albums: albumReducer, userAlbums: userAlbumReducer }),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
+    StoreModule.forRoot({           //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
+      auth: authReducer, 
+      publishers: publisherReducer, 
+      albums: albumReducer, 
+      userAlbums: userAlbumReducer, 
+      user: userReducer
+    }),    
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects, AlbumEffect, UserAlbumEffect]),       // ovde se dodaju efekti
     HttpClientModule,
