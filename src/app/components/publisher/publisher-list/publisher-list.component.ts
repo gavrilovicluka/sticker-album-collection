@@ -14,7 +14,7 @@ import { selectAllPublishers, selectAllPublishersAsDict } from 'src/app/store/se
 export class PublisherListComponent {
 
   publishers$: Observable<readonly Publisher[]> = of([]);
-
+ 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {

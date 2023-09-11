@@ -10,7 +10,10 @@
         class="img-fluid"
       />
     </div>
-    <div class="text-right d-flex flex-column align-items-end justify-content-end">
+
+    <div
+      class="text-right d-flex flex-column align-items-end justify-content-end"
+    >
       <div class="mb-1 w-100">
         <button
           type="button"
@@ -24,15 +27,15 @@
         </button>
       </div>
       <div class="w-100">
-          <button
-            type="button"
-            class="btn btn-warning w-100"
-            [routerLink]="['edit', publisher.id]"
-            data-toggle="tooltip"
-            title="Izmeni"
-          >
-            <i class="fas fa-edit"></i> Izmeni </button
+        <button
+          type="button"
+          class="btn btn-warning w-100"
+          [routerLink]="['edit', publisher.id]"
+          data-toggle="tooltip"
+          title="Izmeni"
         >
+          <i class="fas fa-edit"></i> Izmeni
+        </button>
       </div>
     </div>
   </div>

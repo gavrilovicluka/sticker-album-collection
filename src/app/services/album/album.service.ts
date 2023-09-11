@@ -36,4 +36,6 @@ export class AlbumService {
   editAlbum(album: Album): Observable<Album> {
     return this.httpClient.put<Album>(environment.apiUrl + this.path + `/${album.id}`, album);
   }
+
+  
 }

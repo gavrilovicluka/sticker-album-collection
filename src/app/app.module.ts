@@ -20,7 +20,7 @@ import { authReducer } from './store/reducers/auth.reducer';
 import { AuthEffect } from './store/effects/auth.effects';
 import { AuthService } from './services/auth/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { PublisherListComponent } from './components/publisher/publisher-list/publisher-list/publisher-list.component';
+import { PublisherListComponent } from './components/publisher/publisher-list/publisher-list.component';
 import { PublisherEffect } from './store/effects/publisher.effects';
 import { publisherReducer } from './store/reducers/publisher.reducer';
 import { PublisherService } from './services/publisher/publisher.service';
@@ -37,6 +37,13 @@ import { AlbumService } from './services/album/album.service';
 import { albumReducer } from './store/reducers/album.reducer';
 import { AlbumEffect } from './store/effects/album.effects';
 import { AlbumThumbComponent } from './components/album/album-thumb/album-thumb.component';
+import { PublisherListHomeComponent } from './components/publisher/publisher-list-home/publisher-list-home.component';
+import { PublisherThumbHomeComponent } from './components/publisher/publisher-thumb-home/publisher-thumb-home.component';
+import { AlbumListHomeComponent } from './components/album/album-list-home/album-list-home.component';
+import { AlbumInfoComponent } from './components/album/album-info/album-info.component';
+import { UserAlbumService } from './services/user-album/user-album.service';
+import { UserAlbumEffect } from './store/effects/user-album.effects';
+import { userAlbumReducer } from './store/reducers/user-album.reducer';
 
 
 @NgModule({
@@ -55,7 +62,11 @@ import { AlbumThumbComponent } from './components/album/album-thumb/album-thumb.
     AlbumsListComponent,
     AlbumAddComponent,
     PublisherThumbComponent,
-    AlbumThumbComponent
+    AlbumThumbComponent,
+    PublisherListHomeComponent,
+    PublisherThumbHomeComponent,
+    AlbumListHomeComponent,
+    AlbumInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -64,12 +75,12 @@ import { AlbumThumbComponent } from './components/album/album-thumb/album-thumb.
     NgbModule,
     FormsModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({ auth: authReducer, publishers: publisherReducer, albums: albumReducer }),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
+    StoreModule.forRoot({ auth: authReducer, publishers: publisherReducer, albums: albumReducer, userAlbums: userAlbumReducer }),    //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects, AlbumEffect]),       // ovde se dodaju efekti
+    EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects, AlbumEffect, UserAlbumEffect]),       // ovde se dodaju efekti
     HttpClientModule,
   ],
-  providers: [AuthService, PublisherService, AlbumService],   // ovde se dodaju servisi
+  providers: [AuthService, PublisherService, AlbumService, UserAlbumService],   // ovde se dodaju servisi
   bootstrap: [AppComponent]
 })
 export class AppModule { }

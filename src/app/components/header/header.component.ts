@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
@@ -13,11 +14,18 @@ export class HeaderComponent implements OnInit {
 
   headerViewModel$: Observable<HeaderViewModel> = of();
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private router: Router) { }
 
   ngOnInit(): void {
     this.headerViewModel$ = this.store.pipe(select(selectHeaderViewModel));
   }
 
+  onMyAlbumsClick(isLoggedIn: boolean) {
+    if(!isLoggedIn) {
+      alert("Morate se prijaviti da biste videli albume.");
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
 
 }

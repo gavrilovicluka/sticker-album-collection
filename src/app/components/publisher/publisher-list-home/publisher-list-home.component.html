@@ -1,0 +1,15 @@
+<div
+  class="row justify-content-center bg-light"
+  *ngIf="publishers$ | async as publishers"
+>
+  <div class="col-8 mt-4 display-flex justify-content-center">
+
+    <div class="row mt-3">
+      <ng-container *ngFor="let publisher of publishers">
+        <div class="col-3">
+          <app-publisher-thumb-home [publisher]="publisher"></app-publisher-thumb-home>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

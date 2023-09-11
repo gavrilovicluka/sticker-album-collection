@@ -1,0 +1,25 @@
+<div class="card mb-3" *ngIf="album">
+  <div class="d-flex justify-content-around align-items-center">
+    <!-- <div class="d-flex justify-content-evenly" style="width: 400px"> -->
+    <div>
+      <img src="{{ album.image }}" alt="{{ album.name }}" class="img-fluid" />
+    </div>
+    <div>
+      <h2 class="card-title">
+        <strong> {{ album.name }} </strong>
+      </h2>
+    </div>
+    <!-- </div> -->
+    <div class="text-right">
+      <div class="mx-1 p-4">
+        <p><strong> Godina izdavanja: </strong> {{ album.year }}</p>
+        <p><strong> Broj sličica: </strong> {{ album.stickersNumber }}</p>
+      </div>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-primary" (click)="onAddToCollectionClick()">
+        <i class="fas fa-plus"></i> Dodaj u kolekciju
+      </button>
+    </div>
+  </div>
+</div>
