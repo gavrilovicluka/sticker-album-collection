@@ -130,5 +130,21 @@
       "year": 2021,
       "publisherId": 1
     }
+  ],
+  "stickersLists": [
+    {
+      "missingStickers": [
+        5,
+        7,
+        9,
+        23,
+        8,
+        10,
+        11,
+        2,
+        1
+      ],
+      "id": 1
+    }
   ]
 }

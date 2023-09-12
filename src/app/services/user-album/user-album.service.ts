@@ -23,6 +23,6 @@ export class UserAlbumService {
   }
 
   getUserAlbums(userId: number): Observable<Album[]> {
-    return this.httpClient.get<Album[]>(environment.apiUrl + this.path + `${userId}`);
+    return this.httpClient.get<Album[]>(environment.apiUrl + this.path + `/${userId}`);
   }
 }

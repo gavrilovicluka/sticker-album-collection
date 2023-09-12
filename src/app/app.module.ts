@@ -47,6 +47,10 @@ import { userAlbumReducer } from './store/reducers/user-album.reducer';
 import { UserAlbumsComponent } from './components/user/user-albums/user-albums.component';
 import { userReducer } from './store/reducers/user.reducer';
 import { UserAlbumInfoComponent } from './components/user/user-album-info/user-album-info.component';
+import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
+import { stickerReducer } from './store/reducers/sticker.reducer';
+import { StickerService } from './services/sticker/sticker.service';
+import { StickerEffect } from './store/effects/sticker.effects';
 
 
 @NgModule({
@@ -71,7 +75,8 @@ import { UserAlbumInfoComponent } from './components/user/user-album-info/user-a
     AlbumListHomeComponent,
     AlbumInfoComponent,
     UserAlbumsComponent,
-    UserAlbumInfoComponent
+    UserAlbumInfoComponent,
+    UserStickersComponent
   ],
   imports: [
     BrowserModule,
@@ -81,17 +86,33 @@ import { UserAlbumInfoComponent } from './components/user/user-album-info/user-a
     FormsModule,
     ModalModule.forRoot(),
     StoreModule.forRoot({           //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
-      auth: authReducer, 
-      publishers: publisherReducer, 
-      albums: albumReducer, 
-      userAlbums: userAlbumReducer, 
-      user: userReducer
-    }),    
+      auth: authReducer,
+      publishers: publisherReducer,
+      albums: albumReducer,
+      userAlbums: userAlbumReducer,
+      user: userReducer,
+      stickers: stickerReducer,
+    }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([AuthEffect, PublisherEffect, RouteEffects, ModalEffects, AlbumEffect, UserAlbumEffect]),       // ovde se dodaju efekti
+    EffectsModule.forRoot([
+      AuthEffect,
+      PublisherEffect,
+      RouteEffects,                      // ovde se dodaju efekti
+      ModalEffects,
+      AlbumEffect,
+      UserAlbumEffect,
+      StickerEffect,
+
+    ]),
     HttpClientModule,
   ],
-  providers: [AuthService, PublisherService, AlbumService, UserAlbumService],   // ovde se dodaju servisi
+  providers: [              // ovde se dodaju servisi
+    AuthService,
+    PublisherService,
+    AlbumService,
+    UserAlbumService,
+    StickerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

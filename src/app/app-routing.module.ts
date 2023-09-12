@@ -9,18 +9,24 @@ import { AlbumsListComponent } from './components/album/albums-list/albums-list.
 import { AlbumListHomeComponent } from './components/album/album-list-home/album-list-home.component';
 import { UserAlbumsComponent } from './components/user/user-albums/user-albums.component';
 import { authGuard } from './components/auth/auth.guard';
+import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
 export const routes: Routes = [
   {
     path: "",
     component: HomeComponent
   },
   {
-    path: ":id/albums-list",
+    path: ":publisherId/albums-list",
     component: AlbumListHomeComponent
   },
   {
-    path: ":id/my-albums",
+    path: ":userId/my-albums",
     component: UserAlbumsComponent,
+    canActivate: [authGuard()]
+  },
+  {
+    path: ":userId/my-albums/:albumId",
+    component: UserStickersComponent,
     canActivate: [authGuard()]
   },
   {
