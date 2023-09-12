@@ -32,5 +32,11 @@ export class UserAlbumsComponent implements OnInit {
     this.router.navigate([`${this.userId}/my-albums/${albumId}`]);
   }
 
+  onPossibleSwapsClick(albumId: number) {
+    this.router.navigate([`${this.userId}/my-albums/${albumId}/swapping`]);
+  }
+
+
+
 
 }

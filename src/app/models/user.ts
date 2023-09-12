@@ -20,3 +20,10 @@ export interface UserRegistration {
     phoneNumber: string,
     isAdmin: boolean
 }
+
+export interface UserEdit {
+    username: string,
+    email: string,
+    address: string,
+    phoneNumber: string
+}

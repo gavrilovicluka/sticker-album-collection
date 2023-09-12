@@ -1,9 +1,6 @@
 <div class="auth-links d-flex" *ngIf="authViewModel$ | async as vm">
 	<a *ngIf="vm.isAdmin" class="nav-link" [ngStyle]="{'pointer-events': 'none'}"><i class="fas fa-user-shield"></i> Admin</a>
-	<a *ngIf="!vm.isAdmin && vm.isLoggedin" class="nav-link"><i class="fas fa-user"></i> Profil </a>
+	<a *ngIf="!vm.isAdmin && vm.isLoggedin" class="nav-link" (click)="openUserProfile(vm.userId)"><i class="fas fa-user"></i> Profil </a>
 	<a *ngIf="!vm.isLoggedin" class="nav-link" (click)="openModal()"><i class="fas fa-sign-in-alt"></i> Prijavi se </a>
 	<a *ngIf="vm.isLoggedin" class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Odjavi se</a>  
 </div>
-
-    
-<!-- <a class="nav-link" (click)="openModal()"><i class="fas fa-sign-in-alt"></i> Prijavi se</a> -->

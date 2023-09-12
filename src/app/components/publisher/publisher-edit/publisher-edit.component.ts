@@ -26,7 +26,7 @@ export class PublisherEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let publisherId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
 
     if (publisherId) {
       //this.store.dispatch(PublisherActions.getPublisher({ selectedPublisherId: publisherId }));

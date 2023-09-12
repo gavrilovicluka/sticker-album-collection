@@ -9,20 +9,6 @@ export class AuthEffect {
 
     constructor(private authService: AuthService, private actions$: Actions) { }
 
-
-
-    // login$ = createEffect(() =>
-    //     this.actions$.pipe(
-    //         ofType(login),
-    //         concatMap((action) =>
-    //             this.authService.login(action.username, action.password).pipe(
-    //                 map((user) => loginSuccess({ user: user })),
-    //                 catchError((error) => of(loginFailure({ error })))
-    //             )
-    //         )
-    //     )
-    // );
-
     loginUser$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.login),
         mergeMap((action) => 

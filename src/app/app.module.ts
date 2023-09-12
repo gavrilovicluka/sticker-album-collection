@@ -51,6 +51,11 @@ import { UserStickersComponent } from './components/user/user-stickers/user-stic
 import { stickerReducer } from './store/reducers/sticker.reducer';
 import { StickerService } from './services/sticker/sticker.service';
 import { StickerEffect } from './store/effects/sticker.effects';
+import { UserSwappingListComponent } from './components/user/user-swapping-list/user-swapping-list.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { SwapContactComponent } from './components/user/swap-contact/swap-contact.component';
+import { UserEffect } from './store/effects/user.effects';
+import { UserService } from './services/user/user.service';
 
 
 @NgModule({
@@ -76,7 +81,10 @@ import { StickerEffect } from './store/effects/sticker.effects';
     AlbumInfoComponent,
     UserAlbumsComponent,
     UserAlbumInfoComponent,
-    UserStickersComponent
+    UserStickersComponent,
+    UserSwappingListComponent,
+    UserProfileComponent,
+    SwapContactComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +110,7 @@ import { StickerEffect } from './store/effects/sticker.effects';
       AlbumEffect,
       UserAlbumEffect,
       StickerEffect,
-
+      UserEffect,
     ]),
     HttpClientModule,
   ],
@@ -111,7 +119,8 @@ import { StickerEffect } from './store/effects/sticker.effects';
     PublisherService,
     AlbumService,
     UserAlbumService,
-    StickerService
+    StickerService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

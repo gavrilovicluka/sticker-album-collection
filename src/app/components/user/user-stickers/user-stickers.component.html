@@ -1,74 +1,138 @@
-<div
-  class="d-flex justify-content-center"
-  *ngIf="missingStickers$ | async as missingStickers"
->
-  <div class="row mt-3 col-6">
-    <div class="card mb-3 p-3">
-      <div>
-        <h2 class="card-title">
-          <strong> Tražim: </strong>
-        </h2>
-      </div>
-      <div class="">
-        <div class="d-flex">
-          <div class="m-2" *ngFor="let stickerNumber of missingStickers">
-            <input
-              type="checkbox"
-              [(ngModel)]="selectedStickersToRemove[stickerNumber]"
-              [ngModelOptions]="{ standalone: true }"
-              value="{{ stickerNumber }}"
-            />
-            {{ stickerNumber }}
+<div class="container col-6 mt-3">
+  <div class="justify-content-center">
+    <!-- Trazene slicice -->
+    <!-- <div class=""> -->
+    <div
+      class="d-flex justify-content-center"
+      *ngIf="missingStickers$ | async as missingStickers"
+    >
+      <!-- <div class="row mt-3"> -->
+      <div class="card mb-3 p-3" style="width: 80%">
+        <div>
+          <h2 class="card-title">
+            <strong> Tražim: </strong>
+          </h2>
+        </div>
+        <div class="">
+          <div class="d-flex flex-wrap">
+            <div class="m-2" *ngFor="let stickerNumber of missingStickers">
+              <input
+                type="checkbox"
+                [(ngModel)]="selectedStickersToRemove[stickerNumber]"
+                [ngModelOptions]="{ standalone: true }"
+                value="{{ stickerNumber }}"
+              />
+              {{ stickerNumber }}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-primary" (click)="removeSelectedStickers()">
-          Obriši označene sličice
-        </button>
-        <button class="btn btn-success" (click)="addNewStickersToList()">
-          Dodaj sličice
-        </button>
-        <!-- <button class="btn btn-secondary" (click)="cancelRemovingFromList()">
+        <div class="d-flex justify-content-between mt-3">
+          <button class="btn btn-primary" (click)="removeSelectedStickers()">
+            Obriši označene sličice sa liste
+          </button>
+          <button
+            class="btn btn-success"
+            (click)="addNewStickersToList()"
+            *ngIf="!isAddNewStickersSelected"
+          >
+            Dodaj sličice
+          </button>
+          <!-- <button class="btn btn-secondary" (click)="cancelRemovingFromList()">
           Odustani
         </button> -->
+        </div>
       </div>
     </div>
-  </div>
-</div>
+    <!-- </div> -->
+    <!-- </div> -->
 
-<div class="d-flex justify-content-center" *ngIf="isAddNewStickersSelected">
-  <div class="row mt-3 col-6">
-    <div class="card mb-3 p-3">
-      <div>
-        <h2 class="card-title">
-          <strong> Sve sličice: </strong>
-        </h2>
-      </div>
-      <div class="">
-        <div
-          class="d-flex"
-          *ngIf="allAlbumStickers$ | async as allAlbumStickers"
-        >
-          <div class="m-2" *ngFor="let stickerNumber of allAlbumStickers">
-            <input
-              type="checkbox"
-              [(ngModel)]="selectedStickersToAddToList[stickerNumber]"
-              [ngModelOptions]="{ standalone: true }"
-              value="{{ stickerNumber }}"
-            />
-            {{ stickerNumber }}
+    <!-- Duplikati -->
+    <div class="">
+      <div
+        class="d-flex justify-content-center"
+        *ngIf="duplicatesStickers$ | async as duplicatesStickers"
+      >
+        <!-- <div class="row mt-3"> -->
+        <div class="card mb-3 p-3" style="width: 80%">
+          <div>
+            <h2 class="card-title">
+              <strong> Nudim: </strong>
+            </h2>
+          </div>
+          <div class="">
+            <div class="d-flex flex-wrap">
+              <div class="m-2" *ngFor="let stickerNumber of duplicatesStickers">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="selectedStickersToRemove[stickerNumber]"
+                  [ngModelOptions]="{ standalone: true }"
+                  value="{{ stickerNumber }}"
+                />
+                {{ stickerNumber }}
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-primary" (click)="removeSelectedStickers()">
+              Obriši označene sličice sa liste
+            </button>
+            <button
+              class="btn btn-success"
+              (click)="addNewStickersToList()"
+              *ngIf="!isAddNewStickersSelected"
+            >
+              Dodaj sličice
+            </button>
+            <!-- <button class="btn btn-secondary" (click)="cancelRemovingFromList()">
+          Odustani
+        </button> -->
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-primary" (click)="confirmAdding()">
-          Dodaj sličice u listu traženih
-        </button>
-        <button class="btn btn-secondary" (click)="cancelAddingToList()">
-          Odustani
-        </button>
+      <!-- </div> -->
+    </div>
+
+    <!-- Sve slicice -->
+    <div class="">
+      <div
+        class="d-flex justify-content-center"
+        *ngIf="isAddNewStickersSelected"
+      >
+        <!-- <div class="row mt-3"> -->
+          <div class="card mb-3 p-3" style="width: 80%">
+            <div>
+              <h2 class="card-title">
+                <strong> Sve sličice: </strong>
+              </h2>
+            </div>
+            <div class="">
+              <div
+                class="d-flex flex-wrap"
+                *ngIf="allAlbumStickers$ | async as allAlbumStickers"
+              >
+                <div class="m-2" *ngFor="let stickerNumber of allAlbumStickers">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="selectedStickersToAddToList[stickerNumber]"
+                    [ngModelOptions]="{ standalone: true }"
+                    value="{{ stickerNumber }}"
+                  />
+                  {{ stickerNumber }}
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+              <button class="btn btn-primary" (click)="confirmAdding()">
+                Dodaj sličice u listu traženih
+              </button>
+              <button class="btn btn-secondary" (click)="cancelAddingToList()">
+                Odustani
+              </button>
+            </div>
+          </div>
+        <!-- </div> -->
       </div>
+      <!-- </div> -->
     </div>
   </div>
 </div>

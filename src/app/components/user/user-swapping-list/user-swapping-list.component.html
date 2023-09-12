@@ -1,0 +1,49 @@
+<div
+  class="row justify-content-center"
+  *ngIf="otherUsers$ | async as otherUsers"
+>
+  <div class="col-8 mt-4 display-flex justify-content-center">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="my-0">Moguće razmene - <strong> IME ALBUMA </strong></h1>
+    </div>
+
+    <!-- DEO KOJI JE ZA PROBU -->
+    <div class="row mt-3">
+      <div class="card mb-3">
+        <div class="d-flex justify-content-around align-items-center">
+          <!-- <div class="d-flex justify-content-evenly" style="width: 400px"> -->
+
+          <div>
+            <h2 class="card-title m-0">
+              <strong> IME KORISNIKA </strong>
+            </h2>
+          </div>
+          <!-- </div> -->
+          <div class="text-right">
+            <div class="mx-1 p-2">
+              <p><strong> Imam da ponudim: </strong> 9</p>
+              <p><strong> Ima za mene: </strong> 20</p>
+              <p><strong> Moguca razmena: </strong> 9</p>
+            </div>
+          </div>
+          <div class="text-right d-flex flex-column">
+            <div class="">
+              <button class="btn btn-primary flex-fill w-100" (click)="openModal()">
+                <i class="fa-solid fa-image-portrait"></i> Kontakt
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- KRAJ DELA ZA BRISANJE -->
+
+    <div class="row mt-3">
+      <!-- <ng-container *ngFor="let user of otherUsers">
+          <div class="">
+            <app-user-album-info [album]="album"></app-user-album-info>
+          </div>
+        </ng-container> -->
+    </div>
+  </div>
+</div>

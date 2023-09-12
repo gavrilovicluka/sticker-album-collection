@@ -20,8 +20,8 @@ export class AlbumListHomeComponent {
 
   ngOnInit() {
 
-    let publisherId = parseInt(this.route.snapshot.paramMap.get('id')!);
-
+    let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
+    
     if (publisherId) {
       // this.store.dispatch(albumActions.loadAlbums({ publisherId: publisherId }));
       this.store.dispatch(PublisherActions.selectPublisher({ selectedPublisherId: publisherId }));

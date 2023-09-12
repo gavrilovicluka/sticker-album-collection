@@ -24,7 +24,7 @@ export class AlbumsListComponent {
 
   ngOnInit() {
 
-    let publisherId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
 
     if (publisherId) {
       // this.store.dispatch(albumActions.loadAlbums({ publisherId: publisherId }));

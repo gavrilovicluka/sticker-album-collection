@@ -10,6 +10,8 @@ import { AlbumListHomeComponent } from './components/album/album-list-home/album
 import { UserAlbumsComponent } from './components/user/user-albums/user-albums.component';
 import { authGuard } from './components/auth/auth.guard';
 import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
+import { UserSwappingListComponent } from './components/user/user-swapping-list/user-swapping-list.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 export const routes: Routes = [
   {
     path: "",
@@ -30,6 +32,16 @@ export const routes: Routes = [
     canActivate: [authGuard()]
   },
   {
+    path: ":userId/my-albums/:albumId/swapping",
+    component: UserSwappingListComponent,
+    canActivate: [authGuard()]
+  },
+  {
+    path: ":userId/my-profile",
+    component: UserProfileComponent,
+    canActivate: [authGuard()]
+  },
+  {
     path: "admin/publishers",
     component: PublisherListComponent,
     canActivate: [adminGuard()],
@@ -40,12 +52,12 @@ export const routes: Routes = [
     canActivate: [adminGuard()],
   },
   {
-    path: "admin/publishers/edit/:id",
+    path: "admin/publishers/edit/:publisherId",
     component: PublisherEditComponent,
     canActivate: [adminGuard()],
   },
   {
-    path: "admin/publishers/:id/albums-list",
+    path: "admin/publishers/:publisherId/albums-list",
     component: AlbumsListComponent,
     canActivate: [adminGuard()],
   },

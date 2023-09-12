@@ -36,5 +36,9 @@ export class AuthLinksComponent {
     this.modalService.openModalLogin();
   }
 
+  openUserProfile(userId: number) {
+    this.router.navigate([`${userId}/my-profile`]);
+  }
+
   
 }

@@ -1,5 +1,6 @@
-import { createReducer } from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import { User } from "src/app/models/user";
+import * as UserActions from "../actions/user.actions";
 
 export interface UserState {
     user: User | null;
@@ -14,6 +15,10 @@ const initialState: UserState = {
 export const userReducer = createReducer(
     initialState,
 
-   
+    on(UserActions.editUserSuccess, (state, action) => ({
+        ...state,
+        user: action.user,
+        error: null
+    }))
 
 )
