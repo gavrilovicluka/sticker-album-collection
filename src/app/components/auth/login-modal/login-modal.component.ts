@@ -7,6 +7,7 @@ import { RegistrationModalComponent } from '../registration-modal/registration-m
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { User } from 'src/app/models/user';
 import { login } from 'src/app/store/actions/auth.actions';
+import { UserLoginDto } from 'src/app/models/user-login.dto';
 
 @Component({
   selector: 'app-login-modal',
@@ -29,10 +30,11 @@ export class LoginModalComponent {
 
 
   onSubmit(f: NgForm) {
-    this.store.dispatch(login({
+    const loginDto: UserLoginDto = {
       username: f.value.username,
-      password: f.value.password,
-    })
+      password: f.value.password
+    }
+    this.store.dispatch(login({ userLoginDto: loginDto })
     );
   }
 

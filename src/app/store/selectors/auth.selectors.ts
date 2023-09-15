@@ -2,6 +2,9 @@ import { createSelector } from "@ngrx/store";
 import { AppState } from "../app.state";
 import { AuthState } from "../reducers/auth.reducer";
 import { User } from "src/app/models/user";
+import { DecodedToken } from "src/app/models/decoded-token";
+import jwt_decode from 'jwt-decode';
+import { UserRoles } from "src/app/models/user-roles.enum";
 
 export const selectAuthFeature = createSelector(
     (state: AppState) => state.auth,
@@ -14,19 +17,47 @@ export interface AuthLinksViewModal {
     isLoggedin: boolean;
 }
 
-export const selectUserId = createSelector(
+export const selectUserToken = createSelector(
     selectAuthFeature,
-    (state: AuthState): number => state.user ? state.user.id : -1         // potrebno da se promeni
+    (state: AuthState): string => state.token
 );
 
 export const selectIsLoggedIn = createSelector(
     selectAuthFeature,
-    (state: AuthState): boolean => state.user?.id !== -1 ? true : false         // potrebno da se promeni
+    (state: AuthState): boolean => state.token ? true : false
 );
 
-export const selectIsAdmin = createSelector(
+// export const selectUserData = createSelector(
+//     selectAuthFeature,
+//     (state) => state.user
+// )
+
+export const selectUserRole = createSelector(
     selectAuthFeature,
-    (state: AuthState): boolean => state.user ? state.user.isAdmin! : false
+    (state: AuthState) => {
+        if (state.token) {
+            const decodedToken: DecodedToken = jwt_decode(state.token);
+            return decodedToken.role;
+        }
+        return null;
+    }
+)
+
+export const selectUserId = createSelector(
+    selectAuthFeature,
+    selectUserToken,
+    (state: AuthState) => {
+        if (state.token) {
+            const decodedToken: DecodedToken = jwt_decode(state.token);
+            return decodedToken.sub;
+        }
+        return -1;
+    }
+)
+
+export const selectIsAdmin = createSelector(
+    selectUserRole,
+    (userRole): boolean => userRole === UserRoles.ADMIN
 );
 
 export const selectAuthLinksViewModel = createSelector(
@@ -35,7 +66,7 @@ export const selectAuthLinksViewModel = createSelector(
     selectIsLoggedIn,
     (userId: number, isAdmin: boolean, isLoggedIn: boolean): AuthLinksViewModal => {
         return {
-            userId: userId, 
+            userId: userId,
             isAdmin: isAdmin,
             isLoggedin: isLoggedIn,
         };

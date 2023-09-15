@@ -1,15 +1,16 @@
 import { createAction, props } from "@ngrx/store";
-import { User, UserRegistration } from "src/app/models/user";
+import { User, UserData, UserRegistrationDto } from "src/app/models/user";
+import { UserLoginDto } from "src/app/models/user-login.dto";
 
 // Login User Actions
 export const login = createAction(
     '[Login Modal Component] Login User',
-    props<{ username: string; password: string }>()
+    props<{ userLoginDto: UserLoginDto }>()
 );
 
 export const loginSuccess = createAction(
     '[Auth Effect] Login User Success',
-    props<{ user: User }>()
+    props<{ token: string }>()            //props<({ user: UserData, token: string })>()
 );
 
 export const loginFailure = createAction(
@@ -18,10 +19,32 @@ export const loginFailure = createAction(
 );
 
 
+// Logout Actions
+export const logout = createAction('[Auth Links Component] Logout User');
+
+
+// Set Token
+export const setToken = createAction(
+    '[Auth] Set Token',
+    props<{ token: string }>()
+);
+
+// Remove Token
+export const removeToken = createAction(
+    '[Auth] Remove Token'
+);
+
+// Set User
+export const setUser = createAction(
+    '[Auth] Set User',
+    props<{ user: User }>()
+);
+
+
 // Sign Up User Actions
 export const signup = createAction(
     '[Registration Modal Component] Register User',
-    props<{ user: User }>()                                 // za sad je tip User umesto UserRegistration
+    props<{ user: UserRegistrationDto }>()
 );
 
 export const signupSuccess = createAction(
@@ -35,12 +58,8 @@ export const signupFailure = createAction(
 );
 
 
-// Logout Actions
-export const logout = createAction('[Auth Links Component] Logout User');
-
-
 // Browser Reload Actions
 export const browserReload = createAction(
     '[App Component] Browser Reload',
-    props<{ user: User }>()
+    props<{ token: string }>()
 );

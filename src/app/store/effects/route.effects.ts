@@ -37,14 +37,7 @@ export class RouteEffects {
     { dispatch: false }
   );
 
-  logout$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(fromAuthActions.logout),
-        tap(() => localStorage.removeItem('user'))
-      ),
-    { dispatch: false }
-  );
+  
 
 
 }

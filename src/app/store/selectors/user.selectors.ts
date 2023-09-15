@@ -6,12 +6,12 @@ import { User } from "src/app/models/user";
 
 export const selectUsers = createFeatureSelector<AuthState>('user');
 
-export const selectUserId = createSelector(
-  selectAuthFeature,                                        // !!!! iz auth.selectors
-  (userState: AuthState): number => userState.user ? userState.user.id : -1 
-);
+// export const selectUserId = createSelector(
+//   selectAuthFeature,                                        // !!!! iz auth.selectors
+//   (userState: AuthState): number => userState.user ? userState.user.id : -1 
+// );
 
-export const selectUser = createSelector(
-  selectAuthFeature,
-  (state: AuthState): User | null => state.user 
-);
+// export const selectUser = createSelector(
+//   selectAuthFeature,
+//   (state: AuthState): User | null => state.user 
+// );

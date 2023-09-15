@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { HeaderViewModel, selectHeaderViewModel } from 'src/app/store/selectors/header.selectors';
-import { selectUserId } from 'src/app/store/selectors/user.selectors';
+import { selectUserId } from 'src/app/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-header',

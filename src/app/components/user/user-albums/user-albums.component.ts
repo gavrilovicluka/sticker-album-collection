@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Album } from 'src/app/models/album';
 import * as UserAlbumsAction from 'src/app/store/actions/user-album.actions';
 import { AppState } from 'src/app/store/app.state';
-import { selectUserId } from 'src/app/store/selectors/user.selectors';
+import { selectUserId } from 'src/app/store/selectors/auth.selectors';
 
 
 @Component({

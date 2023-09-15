@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, map, mergeMap, of, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { User, UserRegistration } from 'src/app/models/user';
+import { User, UserData, UserRegistrationDto } from 'src/app/models/user';
+import { UserLoginDto } from 'src/app/models/user-login.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private path: string = '/users';
-  public userCount = 3;    //simulacija apija
+  private path: string = '/auth';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -30,15 +30,16 @@ export class AuthService {
   //   );
   // }
 
-  loginUser(username: string, password: string) {
+  loginUser(userLoginDto: UserLoginDto) {
     return this.httpClient
-      .get<User[]>(environment.apiUrl + this.path + `?username=${username}`)
+      .post<any>(environment.apiUrl + this.path + '/login', userLoginDto )
       .pipe(
-        mergeMap((users) => {
-          let user = users[0];
-          if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            return of(user);
+        mergeMap((response) => {
+          if (response) {
+            // const user : UserData = response.user;
+            const token : string = response.token;
+            // localStorage.setItem('token', JSON.stringify(userToken));
+            return of(token);       // return of({ user, token });
           }
           else {
             return throwError(() => new Error('Unable to login'));
@@ -48,16 +49,15 @@ export class AuthService {
       )
   }
 
-  signupUser(user: User) {      // za sad User sa ID jer ga rucno unosim
-    this.userCount++;
-    return this.httpClient.post<User>(environment.apiUrl + this.path, user).pipe(
+  signupUser(user: UserRegistrationDto) {
+    return this.httpClient.post<User>(environment.apiUrl + '/user/register', user).pipe(
       mergeMap((user) => {
         if (user) {
           //localStorage.setItem('user', JSON.stringify(user));
           return of(user);
         }
         else {
-          return throwError(() => new Error('Unable to login'));
+          return throwError(() => new Error('Unable to signup'));
         }
       }),
       // catchError(errorHandler)

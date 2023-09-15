@@ -16,10 +16,10 @@ export class AppComponent {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    const user: User = JSON.parse(localStorage.getItem('user')!);
+    const token: string | null = localStorage.getItem('token');
 
-    if (user) {
-      this.store.dispatch(browserReload({ user: user }));
+    if (token) {
+      this.store.dispatch(browserReload({ token: token }));
     }
   }
 }

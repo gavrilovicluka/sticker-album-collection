@@ -5,7 +5,7 @@ import { AppState } from 'src/app/store/app.state';
 import { ModalService } from '../modal.service';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { signup } from 'src/app/store/actions/auth.actions';
-import { User } from 'src/app/models/user';
+import { User, UserRegistrationDto } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -28,16 +28,14 @@ export class RegistrationModalComponent {
 
 
   onSubmit(f: NgForm) {
-    let user: User = {
-      id: this.authService.userCount++,
+    let user: UserRegistrationDto = {
       name: f.value.forename!.toString(),
       surname: f.value.surname!.toString(),
       username: f.value.username!.toString(),
       email: f.value.email!.toString(),
       password: f.value.password!.toString(),
       address: f.value.address!.toString(),
-      phoneNumber: f.value.phoneNumber!.toString(),
-      isAdmin: false
+      phoneNumber: f.value.phoneNumber!.toString()
     };
     // user.name = f.value.name!.toString();
     // user.surname = f.value.surname!.toString();

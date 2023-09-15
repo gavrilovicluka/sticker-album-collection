@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { selectIsLoggedIn } from 'src/app/store/selectors/auth.selectors';
-import { selectUserId } from 'src/app/store/selectors/user.selectors';
+import { selectUserId } from 'src/app/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-home',
