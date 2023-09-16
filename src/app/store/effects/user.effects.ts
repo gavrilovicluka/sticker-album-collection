@@ -10,10 +10,19 @@ export class UserEffect {
 
     constructor(private userService: UserService, private actions$: Actions) { }
 
+    getUser$ = createEffect(() => this.actions$.pipe(
+        ofType(UserActions.getUser),
+        mergeMap((action) =>
+            this.userService.getUser(action.userId).pipe(
+                map((user) => UserActions.getUserSuccess({ user })),
+                catchError((error) => of(UserActions.getUserFailure(error)))
+            ))
+    ))
+    
     editUser$ = createEffect(() => this.actions$.pipe(
         ofType(UserActions.editUser),
         mergeMap((action) =>
-            this.userService.editUser(action.user).pipe(
+            this.userService.editUser(action.userId, action.user).pipe(
                 map((user) => UserActions.editUserSuccess({ user })),
                 catchError((error) => of(UserActions.editUserFailure(error)))
             ))
