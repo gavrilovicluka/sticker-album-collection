@@ -10,19 +10,15 @@ import { environment } from 'src/environments/environments';
 })
 export class UserAlbumService {
 
-  path: string = "/user-albums";
+  path: string = "/user-album";
 
   constructor(private httpClient: HttpClient) { }
 
-  addAlbumToUser(albumId: number, userId: number): Observable<UserAlbum> {
-    const data = {
-      albumId,
-      userId
-    }
-    return this.httpClient.post<UserAlbum>(environment.apiUrl, data);
+  addAlbumToUser(userId: number, albumId: number): Observable<UserAlbum> {
+    return this.httpClient.post<UserAlbum>(environment.apiUrl + this.path + `/${userId}/${albumId}`, null);
   }
 
-  getUserAlbums(userId: number): Observable<Album[]> {
-    return this.httpClient.get<Album[]>(environment.apiUrl + this.path + `/${userId}`);
+  getUserAlbums(userId: number): Observable<UserAlbum[]> {
+    return this.httpClient.get<UserAlbum[]>(environment.apiUrl + this.path + `/${userId}`);
   }
 }

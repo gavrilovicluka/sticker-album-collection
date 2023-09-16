@@ -1,52 +1,45 @@
-<div class="row justify-content-center">
-  <div class="col-8 mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="my-0">Dodaj novog izdavača</h1>
-    </div>
-
-    <form>
-      <div class="form-group mb-3">
-        <label for="name">Ime izdavača</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          [(ngModel)]="publisher.name"
-          name="name"
-          required
-        />
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="description">Opis</label>
-        <textarea
-          class="form-control"
-          id="description"
-          [(ngModel)]="publisher.description"
-          name="description"
-          rows="4"
-          required
-        ></textarea>
-      </div>
-
-      <div class="form-group mb-3">
-        <label for="image">Slika URL</label>
-        <input
-          type="text"
-          class="form-control"
-          id="image"
-          [(ngModel)]="publisher.image"
-          name="image"
-          required
-        />
-      </div>
-
+<div class="card" *ngIf="showForm">
+  <div class="row justify-content-center">
+    <div class="col-8 mt-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <button type="submit" class="btn btn-success" (click)="onSubmit()">
-          Dodaj izdavača
-        </button>
-        <button type="button" class="btn btn-secondary" [routerLink]="['..']">Nazad</button>
+        <h1 class="my-0">Dodaj novog izdavača</h1>
       </div>
-    </form>
+
+      <form>
+        <div class="form-group mb-3">
+          <label for="name">Ime izdavača</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            [(ngModel)]="publisher.name"
+            name="name"
+            required
+          />
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="image">Slika URL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="image"
+            [(ngModel)]="publisher.image"
+            name="image"
+            required
+          />
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <button type="submit" class="btn btn-success" (click)="onSubmit()">
+            Dodaj izdavača
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">
+            <!-- [routerLink]="['..']" -->
+            Otkazi
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

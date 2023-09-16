@@ -12,7 +12,7 @@ export class UserAlbumEffect {
     addAlbumToUser$ = createEffect(() => this.actions$.pipe(
         ofType(UserAlbumActions.addAlbumToUser),
         mergeMap((action) =>
-            this.userAlbumService.addAlbumToUser(action.albumId, action.userId).pipe(
+            this.userAlbumService.addAlbumToUser(action.userId, action.albumId).pipe(
                 map((userAlbum) => UserAlbumActions.addAlbumToUserSuccess({ userAlbum })),
                 catchError((error) => of(UserAlbumActions.addAlbumToUserFailure(error)))
             ))
@@ -22,7 +22,7 @@ export class UserAlbumEffect {
         ofType(UserAlbumActions.getUserAlbums),
         mergeMap((action) =>
             this.userAlbumService.getUserAlbums(action.userId).pipe(
-                map((albums) => UserAlbumActions.getUserAlbumsSuccess({ albums })),
+                map((userAlbums) => UserAlbumActions.getUserAlbumsSuccess({ userAlbums })),
                 catchError((error) => of(UserAlbumActions.getUserAlbumsFailure(error)))
             ))
     ))

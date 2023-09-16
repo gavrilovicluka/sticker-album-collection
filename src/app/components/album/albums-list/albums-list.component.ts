@@ -7,6 +7,8 @@ import { Publisher } from 'src/app/models/publisher';
 import { AppState } from 'src/app/store/app.state';
 import { selectCurrentPublisher } from 'src/app/store/selectors/publisher.selectors';
 import * as PublisherActions from 'src/app/store/actions/publisher.actions';
+import * as AlbumActions from 'src/app/store/actions/album.actions';
+import { selectAllAlbums } from 'src/app/store/selectors/album.selectors';
 
 @Component({
   selector: 'app-albums-list',
@@ -15,7 +17,7 @@ import * as PublisherActions from 'src/app/store/actions/publisher.actions';
 })
 export class AlbumsListComponent {
 
-  // albums$: Observable<readonly Album[]> = of([]);
+  albums$: Observable<readonly Album[]> = of([]);
   publisher$: Observable<Publisher | null> = of();
   showForm: boolean = false;
   showAddButton: boolean = true;
@@ -23,18 +25,18 @@ export class AlbumsListComponent {
   constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
+    
     let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
 
     if (publisherId) {
-      // this.store.dispatch(albumActions.loadAlbums({ publisherId: publisherId }));
-      this.store.dispatch(PublisherActions.selectPublisher({ selectedPublisherId: publisherId }));
+      this.store.dispatch(PublisherActions.getPublisherWithAlbums({ publisherId: publisherId }));
+      
+      
     }
     
-    
-    // this.albums$ = this.store.pipe(select(selectAllAlbumsOfPublisher));
+    this.store.dispatch(PublisherActions.selectPublisher({ selectedPublisherId: publisherId }));
     this.publisher$ = this.store.pipe(select(selectCurrentPublisher));
-
+    
   }
 
   showAddForm() {

@@ -1,16 +1,15 @@
 <div class="row justify-content-center" *ngIf="publisher$ | async as publisher">
-    <div class="col-8 mt-4 display-flex justify-content-center">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="my-0">{{ publisher.name }} - albumi</h1>
-      </div>
-  
-      <div class="row mt-3">
-        <ng-container *ngFor="let album of publisher.albums">
-          <div class="">
-            <app-album-info [album]="album"></app-album-info>
-          </div>
-        </ng-container>
-      </div>
+  <div class="col-8 mt-4 display-flex justify-content-center">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="my-0">{{ publisher.name }} - albumi</h1>
+    </div>
+
+    <div class="row mt-3" *ngIf="albums$ | async as albums">
+      <ng-container *ngFor="let album of publisher.albums">
+        <div class="">
+          <app-album-info [album]="album"></app-album-info>
+        </div>
+      </ng-container>
     </div>
   </div>
-  
+</div>

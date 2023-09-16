@@ -1,5 +1,5 @@
 <div class="card mb-3" *ngIf="publisher">
-  <div class="card-body d-flex justify-content-around">
+  <div class="card-body d-flex justify-content-around" style="height: 250px">
     <div class="col-6">
       <h3 class="card-title">
         <strong> {{ publisher.name }} </strong>
@@ -8,6 +8,7 @@
         src="{{ publisher.image }}"
         alt="{{ publisher.name }}"
         class="img-fluid"
+        style="max-width: 100%; max-height: 80%"
       />
     </div>
 
@@ -21,6 +22,7 @@
           [routerLink]="[publisher.id, 'albums-list']"
           data-toggle="tooltip"
           title="Pregled albuma"
+          (click)="clicked($event)"
         >
           <i class="fas fa-images"></i>
           Albumi

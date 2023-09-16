@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Album } from 'src/app/models/album';
+import { Store, select } from '@ngrx/store';
+import { Album, AlbumDto } from 'src/app/models/album';
 import * as AlbumActions from 'src/app/store/actions/album.actions';
 import * as PublisherActions from 'src/app/store/actions/publisher.actions';
 import { AppState } from 'src/app/store/app.state';
+import { selectAllAlbums } from 'src/app/store/selectors/album.selectors';
+import { selectCurrentPublisher } from 'src/app/store/selectors/publisher.selectors';
 
 @Component({
   selector: 'app-album-add',
@@ -15,10 +17,9 @@ export class AlbumAddComponent {
 
   @Input() showForm: boolean = false;
 
-  @Output() cancelClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() closeForm: EventEmitter<boolean> = new EventEmitter<boolean>();
   
-  albumId: number = 2;      // obrisati posle!!!
-  album: Album;
+  album: AlbumDto;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
     this.album = this.makeEmptyAlbum();
@@ -26,33 +27,29 @@ export class AlbumAddComponent {
 
   onSubmit() {
 
-    let publisherId = parseInt(this.route.snapshot.paramMap.get('id')!);
+    let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
 
     if (this.album) {
-      this.album.id = this.albumId;         // za brisanje
-      this.albumId++;                       // za brisanje
-      this.album.publisherId = publisherId;
 
-      this.store.dispatch(AlbumActions.addAlbum({ album: this.album }));
-      this.store.dispatch(PublisherActions.addAlbumToPublisher({ publisherId, album: this.album }));
-
+      this.store.dispatch(AlbumActions.addAlbum({ publisherId: publisherId, album: this.album }));
+      // this.store.select(selectAllAlbums)
+      // this.store.dispatch(PublisherActions.addAlbumToPublisher({ publisherId, album: this.album }));
+      this.store.pipe(select(selectCurrentPublisher));
       this.album = this.makeEmptyAlbum();
-
+      this.closeForm.emit(this.showForm);
     }
   }
 
   cancel() {
-    this.cancelClicked.emit(this.showForm);
+    this.closeForm.emit(this.showForm);
   }
 
-  makeEmptyAlbum(): Album {
+  makeEmptyAlbum(): AlbumDto {
     return {
-      id: this.albumId,
       name: '',
-      image: '',
+      imageUrl: '',
       stickersNumber: 0,
-      year: 0,
-      publisherId: -1
+      year: 0
     }
   }
 }

@@ -1,11 +1,17 @@
 import { createAction, props } from "@ngrx/store";
 import { Album } from "src/app/models/album";
-import { Publisher } from "src/app/models/publisher";
+import { Publisher, PublisherDto } from "src/app/models/publisher";
 
 export const selectPublisher = createAction(
     '[Publisher Edit Component] Select Publisher',
     props<{ selectedPublisherId: number }>()
 )
+
+// Browser Reload Actions
+export const browserReload = createAction(
+    '[Album List Component] Browser Reload',
+    props<{ publisher: Publisher }>()
+);
 
 // Load Publishers Actions
 export const loadPublishers = createAction(
@@ -40,10 +46,27 @@ export const getPublisherFailure = createAction(
 );
 
 
+// Get Publisher With Albums Actions
+export const getPublisherWithAlbums = createAction(
+    '[Albums List Component] Get Publisher With Albums',
+    props<{ publisherId: number }>()
+);
+
+export const getPublisherWithAlbumsSuccess = createAction(
+    '[Publisher Effect] Get Publisher With Albums Success',
+    props<{ publisher: Publisher }>()
+);
+
+export const getPublisherWithAlbumsFailure = createAction(
+    '[Publisher Effect] Get Publisher With Albums Failure',
+    props<{ error: any }>()
+);
+
+
 // Add Publisher Actions
 export const addPublisher = createAction(
     '[Publisher Add Component] Add Publisher',
-    props<{ publisher: Publisher }>()
+    props<{ publisher: PublisherDto }>()
 );
 
 export const addPublisherSuccess = createAction(

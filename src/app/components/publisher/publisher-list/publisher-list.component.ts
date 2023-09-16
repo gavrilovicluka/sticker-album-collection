@@ -14,6 +14,8 @@ import { selectAllPublishers, selectAllPublishersAsDict } from 'src/app/store/se
 export class PublisherListComponent {
 
   publishers$: Observable<readonly Publisher[]> = of([]);
+  showForm: boolean = false;
+  showAddButton: boolean = true;
  
   constructor(private store: Store<AppState>) { }
 
@@ -22,6 +24,22 @@ export class PublisherListComponent {
     this.store.dispatch(publisherActions.loadPublishers());
     this.publishers$ = this.store.select(selectAllPublishers);
 
+  }
+
+  onPublisherSelect(publisherId: number) {
+    console.log('Selektovan je', publisherId);
+    
+    this.store.dispatch(publisherActions.selectPublisher({ selectedPublisherId: publisherId }));
+  }
+
+  showAddForm() {
+    this.showForm = true;
+    this.showAddButton = false;
+  }
+  
+  cancelForm() {
+    this.showForm = false;
+    this.showAddButton = true;
   }
 
 }

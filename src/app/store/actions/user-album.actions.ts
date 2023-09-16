@@ -27,7 +27,7 @@ export const getUserAlbums = createAction(
 
 export const getUserAlbumsSuccess = createAction(
     '[UserAlbum Effect] Get Users Albums Success',
-    props<{ albums: Album[] }>() 
+    props<{ userAlbums: UserAlbum[] }>() 
 );
 
 export const getUserAlbumsFailure = createAction(

@@ -1,4 +1,5 @@
 <div class="auth-links d-flex" *ngIf="authViewModel$ | async as vm">
+	<a *ngIf="vm.isAdmin" class="nav-link" routerLink="/admin/publishers"> Izdavači </a>
 	<a *ngIf="vm.isAdmin" class="nav-link" [ngStyle]="{'pointer-events': 'none'}"><i class="fas fa-user-shield"></i> Admin</a>
 	<a *ngIf="!vm.isAdmin && vm.isLoggedin" class="nav-link" (click)="openUserProfile(vm.userId)"><i class="fas fa-user"></i> Profil </a>
 	<a *ngIf="!vm.isLoggedin" class="nav-link" (click)="openModal()"><i class="fas fa-sign-in-alt"></i> Prijavi se </a>

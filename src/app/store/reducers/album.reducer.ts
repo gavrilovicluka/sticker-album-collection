@@ -19,7 +19,7 @@ const initialState: AlbumState = adapter.getInitialState({
 export const albumReducer = createReducer(
     initialState,
 
-    // on(AlbumActions.loadAlbumsSuccess, (state, { albums }) => adapter.setAll(albums, state)),
+    on(AlbumActions.loadAlbumsSuccess, (state, { albums }) => adapter.setAll(albums, state)),
 
     on(AlbumActions.addAlbumSuccess, (state, action) => adapter.addOne(action.album, state)),
 

@@ -1,10 +1,9 @@
 import { inject } from "@angular/core";
 import { CanActivateFn, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { map } from "rxjs";
-import { User } from "src/app/models/user";
+import { map, mergeMap, withLatestFrom } from "rxjs";
 import { AppState } from "src/app/store/app.state";
-import { selectIsLoggedIn } from "src/app/store/selectors/auth.selectors";
+import { selectIsAdmin, selectIsLoggedIn } from "src/app/store/selectors/auth.selectors";
 
 export const authGuard = (): CanActivateFn => {
 
@@ -22,15 +21,20 @@ export const authGuard = (): CanActivateFn => {
     // return true;
 
     return store.select(selectIsLoggedIn).pipe(
-      map((isLoggedIn: boolean) => {
-        if (isLoggedIn) {
+      withLatestFrom(store.select(selectIsAdmin)),
+      map((([isLoggedIn, isAdmin]) => {
+        if (isLoggedIn && !isAdmin) {
           return true;
+        } else if (isLoggedIn && isAdmin) {
+          router.navigate(['/admin/publishers']);
+          return false;
         } else {
           router.navigate(['/']);
           return false;
         }
-      })
+      }))
     )
+
   };
 
   return guard;

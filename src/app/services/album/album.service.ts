@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap, of, throwError } from 'rxjs';
-import { Album } from 'src/app/models/album';
+import { Album, AlbumDto } from 'src/app/models/album';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -9,20 +9,20 @@ import { environment } from 'src/environments/environments';
 })
 export class AlbumService {
 
-  private path: string = '/albums';
+  private path: string = '/album';
 
   constructor(private httpClient: HttpClient) { }
 
-  loadAlbums(): Observable<Album[]> {
-    return this.httpClient.get<Album[]>(environment.apiUrl + this.path)
+  loadAlbums(publisherId: number): Observable<Album[]> {
+    return this.httpClient.get<Album[]>(environment.apiUrl + this.path + `/publisher/${publisherId}`);
   }
 
   getAlbum(albumId: number): Observable<Album> {
     return this.httpClient.get<Album>(environment.apiUrl + this.path + `/${albumId}`);
   }
 
-  addAlbum(album: Album): Observable<Album> {
-    return this.httpClient.post<Album>(environment.apiUrl + this.path, album).pipe(
+  addAlbum(publisherId: number, album: AlbumDto): Observable<Album> {
+    return this.httpClient.post<Album>(environment.apiUrl + this.path + `/${publisherId}`, album).pipe(
       mergeMap((album) => {
         if (album) {
           return of(album);

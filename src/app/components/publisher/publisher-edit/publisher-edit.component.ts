@@ -29,7 +29,7 @@ export class PublisherEditComponent implements OnInit {
     let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
 
     if (publisherId) {
-      //this.store.dispatch(PublisherActions.getPublisher({ selectedPublisherId: publisherId }));
+      this.store.dispatch(PublisherActions.getPublisher({ selectedPublisherId: publisherId }));
       this.store.dispatch(PublisherActions.selectPublisher({ selectedPublisherId: publisherId }));
 
     }

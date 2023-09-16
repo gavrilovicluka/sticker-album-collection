@@ -1,5 +1,9 @@
+import { Album } from "./album";
+import { User } from "./user";
+
 export interface UserAlbum {
-    userId: number,
-    albumId: number,
-    missingStickers: number
+    user: User,
+    album: Album,
+    missingStickers: number,
+    duplicatesStickers: number
 }

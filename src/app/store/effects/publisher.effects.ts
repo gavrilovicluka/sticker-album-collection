@@ -44,6 +44,15 @@ export class PublisherEffect {
                 catchError((error) => of(PublisherActions.getPublisherFailure(error)))
             ))
     ))
+    
+    getPublisherWithAlbums$ = createEffect(() => this.actions$.pipe(
+        ofType(PublisherActions.getPublisherWithAlbums),
+        mergeMap((action) =>
+            this.publisherService.getPublisherWithAlbums(action.publisherId).pipe(
+                map((publisher) => PublisherActions.getPublisherWithAlbumsSuccess({ publisher })),
+                catchError((error) => of(PublisherActions.getPublisherWithAlbumsFailure(error)))
+            ))
+    ))
 
     addAlbumToPublisher$ = createEffect(() => this.actions$.pipe(
         ofType(PublisherActions.addAlbumToPublisher),

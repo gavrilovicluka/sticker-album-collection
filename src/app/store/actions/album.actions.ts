@@ -1,10 +1,10 @@
 import { createAction, props } from "@ngrx/store";
-import { Album } from "src/app/models/album";
+import { Album, AlbumDto } from "src/app/models/album";
 
 // Add Album Actions
 export const addAlbum = createAction(
     '[Album Add Component] Add Album',
-    props<{ album: Album }>()
+    props<{ publisherId: number, album: AlbumDto }>()
 );
 
 export const addAlbumSuccess = createAction(
@@ -18,4 +18,18 @@ export const addAlbumFailure = createAction(
 );
 
 
-// 
+// Load Albums
+export const loadAlbums = createAction(
+    '[Album List Home Component] Load Albums',
+    props<{ publisherId: number }>()
+);
+
+export const loadAlbumsSuccess = createAction(
+    '[Album Effect] Load Albums Success',
+    props<{ albums: Album[] }>()
+);
+
+export const loadAlbumsFailure = createAction(
+    '[Album Effect] Load Albums Failure',
+    props<{ error: any }>()
+);

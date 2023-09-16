@@ -2,6 +2,7 @@ import { createSelector } from "@ngrx/store";
 import { AppState } from "../app.state";
 import { PublisherState } from "../reducers/publisher.reducer";
 import { Publisher } from "src/app/models/publisher";
+import { selectAllAlbums } from "./album.selectors";
 
 export const selectPublishersFeature = createSelector(
     (state: AppState) => state.publishers,
@@ -13,7 +14,7 @@ export const selectAllPublishers = createSelector(
     (state: PublisherState) => Object
         .values(state.entities)
         .filter(publisher => publisher != null)
-        .map(publisher => <Publisher>publisher)
+        .map(publisher => publisher as Publisher)
 );
 
 export const selectAllPublishersAsDict = createSelector(

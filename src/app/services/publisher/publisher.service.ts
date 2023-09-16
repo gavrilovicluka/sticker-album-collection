@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap, of, throwError } from 'rxjs';
 import { Album } from 'src/app/models/album';
-import { Publisher } from 'src/app/models/publisher';
+import { Publisher, PublisherDto } from 'src/app/models/publisher';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environments';
 })
 export class PublisherService {
 
-  private path: string = '/publishers';
+  private path: string = '/publisher';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,8 +21,12 @@ export class PublisherService {
   getPublisher(publisherId: number): Observable<Publisher> {
     return this.httpClient.get<Publisher>(environment.apiUrl + this.path + `/${publisherId}`);
   }
+  
+  getPublisherWithAlbums(publisherId: number): Observable<Publisher> {
+    return this.httpClient.get<Publisher>(environment.apiUrl + this.path + `/${publisherId}/albums`);
+  }
 
-  addPublisher(publisher: Publisher): Observable<Publisher> {
+  addPublisher(publisher: PublisherDto): Observable<Publisher> {
     return this.httpClient.post<Publisher>(environment.apiUrl + this.path, publisher).pipe(
       mergeMap((publisher) => {
         if (publisher) {
@@ -42,7 +46,7 @@ export class PublisherService {
     const albumData = {
       id: album.id,
       name: album.name,
-      image: album.image,
+      imageUrl: album.imageUrl,
       stickersNumber: album.stickersNumber,
       year: album.year
     }

@@ -8,5 +8,9 @@ import { Album } from 'src/app/models/album';
 })
 export class AlbumThumbComponent {
 
-  @Input() album: Album | null = null;
+  @Input() 
+  public album?: Album;
+
+  ngOnInit() {
+  }
 }

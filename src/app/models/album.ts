@@ -5,7 +5,13 @@ export interface Album {
     name: string,
     stickersNumber: number,
     year: number,
-    image: string,
-    publisherId: number
-    //publisher: Publisher
+    imageUrl: string
+    publisher: Publisher
+}
+
+export interface AlbumDto {
+    name: string,
+    stickersNumber: number,
+    year: number,
+    imageUrl: string
 }

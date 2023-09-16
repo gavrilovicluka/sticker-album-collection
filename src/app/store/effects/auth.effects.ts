@@ -1,23 +1,32 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, concatMap, map, mergeMap, of, switchMap, tap } from "rxjs";
+import { catchError, concatMap, map, mergeMap, of, switchMap, tap, withLatestFrom } from "rxjs";
 import * as AuthActions from "../actions/auth.actions";
 import { AuthService } from "src/app/services/auth/auth.service";
 import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { AppState } from "../app.state";
+import { selectIsAdmin } from "../selectors/auth.selectors";
 
 @Injectable()
 export class AuthEffect {
 
-    constructor(private authService: AuthService, private actions$: Actions, private router: Router) { }
+    constructor(private authService: AuthService, private actions$: Actions, private router: Router, private store: Store<AppState>) { }
 
     loginUser$ = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.login),
-        mergeMap((action) =>
+        withLatestFrom(this.store.select(selectIsAdmin)),
+        mergeMap(([action, isAdmin]) =>
             this.authService.loginUser(action.userLoginDto).pipe(
                 // map((token) => AuthActions.loginSuccess({token})),
                 tap((token) => localStorage.setItem('token', token)),
                 // map((token) => AuthActions.setToken({ token })),
                 map((token) => AuthActions.loginSuccess({ token })),
+                tap((isAdmin) => {
+                    if(isAdmin) {
+                        this.router.navigate(['/admin/publishers']);
+                    }
+                }),
                 catchError((error) => of(AuthActions.loginFailure(error)))
             ))
     ))

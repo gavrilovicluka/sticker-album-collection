@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Publisher } from 'src/app/models/publisher';
+import { Publisher, PublisherDto } from 'src/app/models/publisher';
 import * as PublisherActions from 'src/app/store/actions/publisher.actions';
 import { AppState } from 'src/app/store/app.state';
 
@@ -12,8 +12,9 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class PublisherAddComponent {
 
-  publisherId: number = 17;      // obrisati posle!!!
-  publisher: Publisher;
+  publisher: PublisherDto;
+  @Input() showForm: boolean = false;
+  @Output() closeForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(private store: Store<AppState>) {
     this.publisher = this.makeEmptyPublisher();
@@ -21,24 +22,24 @@ export class PublisherAddComponent {
 
   onSubmit() {
     if (this.publisher) {
-      this.publisher.id = this.publisherId;     // za brisanje
-      this.publisherId++;                       // za brisanje
 
       this.store.dispatch(PublisherActions.addPublisher({ publisher: this.publisher }));
 
-      this.publisher = this.makeEmptyPublisher();
 
+      this.publisher = this.makeEmptyPublisher();
+      this.closeForm.emit(this.showForm);
     }
   }
 
-  makeEmptyPublisher(): Publisher {
+  makeEmptyPublisher(): PublisherDto {
     return {
-      id: this.publisherId,
       name: '',
-      description: '',
       image: '',
-      albums: []
     }
+  }
+
+  cancel() {
+    this.closeForm.emit(this.showForm);
   }
 
 }

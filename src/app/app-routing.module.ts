@@ -46,11 +46,11 @@ export const routes: Routes = [
     component: PublisherListComponent,
     canActivate: [adminGuard()],
   },
-  {
-    path: "admin/publishers/add",
-    component: PublisherAddComponent,
-    canActivate: [adminGuard()],
-  },
+  // {
+  //   path: "admin/publishers/add",
+  //   component: PublisherAddComponent,
+  //   canActivate: [adminGuard()],
+  // },
   {
     path: "admin/publishers/edit/:publisherId",
     component: PublisherEditComponent,
