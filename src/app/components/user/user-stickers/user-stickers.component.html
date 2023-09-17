@@ -1,11 +1,9 @@
-<div class="container col-6 mt-3">
+<div class="container col-6 mt-3" *ngIf="userAlbum$ | async as userAlbum">
   <div class="justify-content-center">
     <!-- Trazene slicice -->
     <!-- <div class=""> -->
-    <div
-      class="d-flex justify-content-center"
-      *ngIf="missingStickers$ | async as missingStickers"
-    >
+    <div class="d-flex justify-content-center" *ngIf="isMissingSelected">
+      <!-- *ngIf="missingStickers$ | async as missingStickers" -->
       <!-- <div class="row mt-3"> -->
       <div class="card mb-3 p-3" style="width: 80%">
         <div>
@@ -15,7 +13,10 @@
         </div>
         <div class="">
           <div class="d-flex flex-wrap">
-            <div class="m-2" *ngFor="let stickerNumber of missingStickers">
+            <div
+              class="m-2"
+              *ngFor="let stickerNumber of userAlbum.missingStickers"
+            >
               <input
                 type="checkbox"
                 [(ngModel)]="selectedStickersToRemove[stickerNumber]"
@@ -27,12 +28,12 @@
           </div>
         </div>
         <div class="d-flex justify-content-between mt-3">
-          <button class="btn btn-primary" (click)="removeSelectedStickers()">
+          <button class="btn btn-primary" (click)="removeSelectedStickers('missing', userAlbum.id, userAlbum.missingStickers)">
             Obriši označene sličice sa liste
           </button>
           <button
             class="btn btn-success"
-            (click)="addNewStickersToList()"
+            (click)="openAddNewStickersToList(userAlbum.album.stickersNumber, 'missing', userAlbum.missingStickers)"
             *ngIf="!isAddNewStickersSelected"
           >
             Dodaj sličice
@@ -47,11 +48,9 @@
     <!-- </div> -->
 
     <!-- Duplikati -->
-    <div class="">
-      <div
-        class="d-flex justify-content-center"
-        *ngIf="duplicatesStickers$ | async as duplicatesStickers"
-      >
+    <div *ngIf="isDuplicatesSelected">
+      <div class="d-flex justify-content-center">
+        <!-- *ngIf="duplicatesStickers$ | async as duplicatesStickers" -->
         <!-- <div class="row mt-3"> -->
         <div class="card mb-3 p-3" style="width: 80%">
           <div>
@@ -61,7 +60,10 @@
           </div>
           <div class="">
             <div class="d-flex flex-wrap">
-              <div class="m-2" *ngFor="let stickerNumber of duplicatesStickers">
+              <div
+                class="m-2"
+                *ngFor="let stickerNumber of userAlbum.duplicatesStickers"
+              >
                 <input
                   type="checkbox"
                   [(ngModel)]="selectedStickersToRemove[stickerNumber]"
@@ -73,12 +75,12 @@
             </div>
           </div>
           <div class="d-flex justify-content-between mt-3">
-            <button class="btn btn-primary" (click)="removeSelectedStickers()">
+            <button class="btn btn-primary" (click)="removeSelectedStickers('duplicates', userAlbum.id, userAlbum.duplicatesStickers)">
               Obriši označene sličice sa liste
             </button>
             <button
               class="btn btn-success"
-              (click)="addNewStickersToList()"
+              (click)="openAddNewStickersToList(userAlbum.album.stickersNumber, 'duplicates', userAlbum.duplicatesStickers)"
               *ngIf="!isAddNewStickersSelected"
             >
               Dodaj sličice
@@ -99,37 +101,37 @@
         *ngIf="isAddNewStickersSelected"
       >
         <!-- <div class="row mt-3"> -->
-          <div class="card mb-3 p-3" style="width: 80%">
-            <div>
-              <h2 class="card-title">
-                <strong> Sve sličice: </strong>
-              </h2>
-            </div>
-            <div class="">
-              <div
-                class="d-flex flex-wrap"
-                *ngIf="allAlbumStickers$ | async as allAlbumStickers"
-              >
-                <div class="m-2" *ngFor="let stickerNumber of allAlbumStickers">
-                  <input
-                    type="checkbox"
-                    [(ngModel)]="selectedStickersToAddToList[stickerNumber]"
-                    [ngModelOptions]="{ standalone: true }"
-                    value="{{ stickerNumber }}"
-                  />
-                  {{ stickerNumber }}
-                </div>
+        <div class="card mb-3 p-3" style="width: 80%">
+          <div>
+            <h2 class="card-title">
+              <strong> Sve sličice: </strong>
+            </h2>
+          </div>
+          <div class="">
+            <div
+              class="d-flex flex-wrap"
+              
+            > <!-- *ngIf="allAlbumStickers$ | async as allAlbumStickers" -->
+              <div class="m-2" *ngFor="let stickerNumber of allAlbumStickers">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="selectedStickersToAddToList[stickerNumber]"
+                  [ngModelOptions]="{ standalone: true }"
+                  value="{{ stickerNumber }}"
+                />
+                {{ stickerNumber }}
               </div>
             </div>
-            <div class="d-flex justify-content-between mt-3">
-              <button class="btn btn-primary" (click)="confirmAdding()">
-                Dodaj sličice u listu traženih
-              </button>
-              <button class="btn btn-secondary" (click)="cancelAddingToList()">
-                Odustani
-              </button>
-            </div>
           </div>
+          <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-primary" (click)="confirmAdding(userAlbum.id)">
+              Dodaj sličice u listu traženih
+            </button>
+            <button class="btn btn-secondary" (click)="cancelAddingToList()">
+              Odustani
+            </button>
+          </div>
+        </div>
         <!-- </div> -->
       </div>
       <!-- </div> -->

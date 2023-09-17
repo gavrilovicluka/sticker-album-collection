@@ -25,3 +25,8 @@ export const selectCurrentAlbum = createSelector(
     selectAlbumsFeature,
     (state: AlbumState) => state.entities[state.selectedAlbumId] ?? null
 )
+
+export const selectAlbumId = createSelector(
+    selectAlbumsFeature,
+    (state: AlbumState) => state.selectedAlbumId
+);

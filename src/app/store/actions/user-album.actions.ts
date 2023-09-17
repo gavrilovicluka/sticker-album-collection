@@ -10,7 +10,7 @@ export const addAlbumToUser = createAction(
 
 export const addAlbumToUserSuccess = createAction(
     '[UserAlbum Effect] Add Album To User Success',
-    props<{ userAlbum: UserAlbum }>() 
+    props<{ userAlbum: UserAlbum }>()
 );
 
 export const addAlbumToUserFailure = createAction(
@@ -27,7 +27,7 @@ export const getUserAlbums = createAction(
 
 export const getUserAlbumsSuccess = createAction(
     '[UserAlbum Effect] Get Users Albums Success',
-    props<{ userAlbums: UserAlbum[] }>() 
+    props<{ userAlbums: UserAlbum[] }>()
 );
 
 export const getUserAlbumsFailure = createAction(
@@ -36,4 +36,35 @@ export const getUserAlbumsFailure = createAction(
 );
 
 
-//
+// Get User Album
+export const getUserAlbum = createAction(
+    '[User Album Component] Get User Album',
+    props<{ userId: number, albumId: number }>()
+);
+
+export const getUserAlbumSuccess = createAction(
+    '[UserAlbum Effect] Get User Album Success',
+    props<{ userAlbum: UserAlbum }>()
+);
+
+export const getUserAlbumFailure = createAction(
+    '[UserAlbum Effect] Get User Album Failure',
+    props<{ error: any }>()
+);
+
+
+// Update Stickers List
+export const updateStickersList = createAction(
+    '[User Stickers Component] Update Stickers List',
+    props<{ fromList: string, stickers: number[], userAlbumId: number }>()
+);
+
+export const updateStickersListSuccess = createAction(
+    '[User Album Effects] Update Stickers List Success',
+    props<{ userAlbum: UserAlbum }>()
+);
+
+export const updateStickersListFailure = createAction(
+    '[User Album Effects] Update Stickers List Failure',
+    props<{ error: any }>()
+);

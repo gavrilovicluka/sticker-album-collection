@@ -30,7 +30,7 @@
         <div class="mb-2">
           <button
             class="btn btn-primary flex-fill w-100"
-            (click)="onMyStickersClick(3)"
+            (click)="onMyStickersClick(album.id)"
           >
             <i class="fa-solid fa-image-portrait"></i> Moje sličice
           </button>
@@ -38,7 +38,7 @@
         <div>
           <button
             class="btn btn-success w-100"
-            (click)="onPossibleSwapsClick(3)"
+            (click)="onPossibleSwapsClick(album.id)"
           >
             <i class="fa-solid fa-right-left"></i> Moguće razmene
           </button>

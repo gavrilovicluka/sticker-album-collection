@@ -40,9 +40,29 @@ export const userAlbumReducer = createReducer(
         // albums: action.albums,
         userAlbums: [],
         error: null
-    }))
+    })),
 
+    on(UserAlbumActions.getUserAlbumSuccess, (state, action) => ({
+        ...state,
+        // albums: action.albums,
+        userAlbums: [action.userAlbum],
+        error: null
+    })),
 
+    on(UserAlbumActions.updateStickersListSuccess, (state, action) => {
+        const updatedUserAlbums = state.userAlbums.map(userAlbum => {
+            if (userAlbum.id === action.userAlbum.id) {
+                return { ...userAlbum, ...action.userAlbum };
+            }
+            return userAlbum;
+        });
+
+        return {
+            ...state,
+            userAlbums: updatedUserAlbums,
+            error: null
+        };
+    }),
 
 
 

@@ -21,4 +21,29 @@ export class UserAlbumService {
   getUserAlbums(userId: number): Observable<UserAlbum[]> {
     return this.httpClient.get<UserAlbum[]>(environment.apiUrl + this.path + `/${userId}`);
   }
+
+  getUserAlbum(userId: number, albumId: number): Observable<UserAlbum> {
+    return this.httpClient.get<UserAlbum>(environment.apiUrl + this.path + `/${userId}/${albumId}`);
+  }
+
+  removeStickersFromList(fromList: string, stickers: number[], userAlbumId: number): Observable<UserAlbum> {
+
+    let data;
+    switch (fromList) {
+      case 'missing':
+        data = {
+          missingStickers: stickers
+        }
+        break;
+      case 'duplicates':
+        data = {
+          duplicatesStickers: stickers
+        }
+        break;
+      default:
+        break;
+    }
+
+    return this.httpClient.put<UserAlbum>(environment.apiUrl + this.path + `/${userAlbumId}`, data);
+  }
 }

@@ -33,7 +33,7 @@ export const albumReducer = createReducer(
     //     return adapter.updateOne(update, state);
     // }),
 
-    // on(AlbumActions.selectAlbum, (state, { selectedAlbumId }) => {
-    //     return { ...state, selectedAlbumId: selectedAlbumId };
-    // })
+    on(AlbumActions.selectAlbum, (state, { albumId }) => {
+        return { ...state, selectedAlbumId: albumId };
+    })
 )

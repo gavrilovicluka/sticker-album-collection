@@ -46,7 +46,7 @@ export const selectUserRole = createSelector(
 export const selectUserId = createSelector(
     selectAuthFeature,
     selectUserToken,
-    (state: AuthState) => {
+    (state: AuthState) => {      
         if (state.token) {
             const decodedToken: DecodedToken = jwt_decode(state.token);
             return decodedToken.sub;

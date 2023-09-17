@@ -1,6 +1,13 @@
 import { createAction, props } from "@ngrx/store";
 import { Album, AlbumDto } from "src/app/models/album";
 
+// Set Album ID
+export const selectAlbum = createAction(
+    'Select Album',
+    props<{ albumId: number }>()
+)
+
+
 // Add Album Actions
 export const addAlbum = createAction(
     '[Album Add Component] Add Album',
