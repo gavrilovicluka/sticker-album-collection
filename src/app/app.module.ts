@@ -48,18 +48,20 @@ import { UserAlbumsComponent } from './components/user/user-albums/user-albums.c
 import { userReducer } from './store/reducers/user.reducer';
 import { UserAlbumInfoComponent } from './components/user/user-album-info/user-album-info.component';
 import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
-import { stickerReducer } from './store/reducers/sticker.reducer';
-import { StickerService } from './services/sticker/sticker.service';
-import { StickerEffect } from './store/effects/sticker.effects';
+// import { stickerReducer } from './store/reducers/sticker.reducer';
+// import { StickerService } from './services/sticker/sticker.service';
+// import { StickerEffect } from './store/effects/sticker.effects';
 import { UserSwappingListComponent } from './components/user/user-swapping-list/user-swapping-list.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { SwapContactComponent } from './components/user/swap-contact/swap-contact.component';
 import { UserEffect } from './store/effects/user.effects';
 import { UserService } from './services/user/user.service';
-import { SwappingInfoEffect } from './store/effects/swapping-info.effects';
-import { swappingInfoReducer } from './store/reducers/swapping-info.reducer';
-import { SwappingService } from './services/swapping/swapping.service';
+// import { SwappingInfoEffect } from './store/effects/swapping-info.effects';
+// import { swappingInfoReducer } from './store/reducers/swapping-info.reducer';
+// import { SwappingService } from './services/swapping/swapping.service';
 import { SwapInfoComponent } from './components/user/swap-info/swap-info.component';
+import { AlertModule } from '@full-fledged/alerts';
+import { AlertEffects } from './store/effects/alert.effects';
 
 
 @NgModule({
@@ -104,8 +106,8 @@ import { SwapInfoComponent } from './components/user/swap-info/swap-info.compone
       albums: albumReducer,
       userAlbums: userAlbumReducer,
       user: userReducer,
-      stickers: stickerReducer,
-      swappingInfos: swappingInfoReducer,
+      // stickers: stickerReducer,
+      // swappingInfos: swappingInfoReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([
@@ -115,20 +117,22 @@ import { SwapInfoComponent } from './components/user/swap-info/swap-info.compone
       ModalEffects,
       AlbumEffect,
       UserAlbumEffect,
-      StickerEffect,
+      // StickerEffect,
       UserEffect,
-      SwappingInfoEffect,
+      // SwappingInfoEffect,
+      AlertEffects
     ]),
     HttpClientModule,
+    AlertModule.forRoot({maxMessages: 5, timeout: 4000, positionX: 'right'}),
   ],
   providers: [              // ovde se dodaju servisi
     AuthService,
     PublisherService,
     AlbumService,
     UserAlbumService,
-    StickerService,
+    // StickerService,
     UserService,
-    SwappingService,
+    // SwappingService,
   ],
   bootstrap: [AppComponent]
 })

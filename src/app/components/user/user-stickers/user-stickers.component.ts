@@ -3,12 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, distinct, filter, map, of } from 'rxjs';
 import { UserAlbum } from 'src/app/models/user-album';
-import * as StickerActions from 'src/app/store/actions/sticker.actions';
 import * as UserAlbumActions from 'src/app/store/actions/user-album.actions';
 import { AppState } from 'src/app/store/app.state';
-import { selectAlbumId } from 'src/app/store/selectors/album.selectors';
-import { selectUserId } from 'src/app/store/selectors/auth.selectors';
-import { selectMissingStickers } from 'src/app/store/selectors/sticker.selectors';
 import { selectUserAlbum, selectUserAlbumByAlbumId, selectUserAlbums } from 'src/app/store/selectors/user-album.selectors';
 
 @Component({

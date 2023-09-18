@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
 import { ModalService } from '../../auth/modal.service';
-import { getSwappingInfo } from 'src/app/store/actions/swapping-info.actions';
 import { ActivatedRoute } from '@angular/router';
-import { selectAlbumId, selectCurrentAlbum } from 'src/app/store/selectors/album.selectors';
 import { SwappingInfo } from 'src/app/models/swapping-info';
-import { selectAllSwappingInfo } from 'src/app/store/selectors/swapping-info.selectors';
 import { getUserAlbumsByAlbumId } from 'src/app/store/actions/user-album.actions';
-import { selectCurrentUserAlbum, selectSwappingInfoWithOffer, selectUserAlbumByAlbumId, selectUserAlbums } from 'src/app/store/selectors/user-album.selectors';
+import { selectCurrentUserAlbum, selectSwappingInfoWithOffer } from 'src/app/store/selectors/user-album.selectors';
 import { selectAlbum } from 'src/app/store/actions/album.actions';
 import { UserAlbum } from 'src/app/models/user-album';
 
