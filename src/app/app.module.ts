@@ -56,6 +56,10 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
 import { SwapContactComponent } from './components/user/swap-contact/swap-contact.component';
 import { UserEffect } from './store/effects/user.effects';
 import { UserService } from './services/user/user.service';
+import { SwappingInfoEffect } from './store/effects/swapping-info.effects';
+import { swappingInfoReducer } from './store/reducers/swapping-info.reducer';
+import { SwappingService } from './services/swapping/swapping.service';
+import { SwapInfoComponent } from './components/user/swap-info/swap-info.component';
 
 
 @NgModule({
@@ -84,7 +88,8 @@ import { UserService } from './services/user/user.service';
     UserStickersComponent,
     UserSwappingListComponent,
     UserProfileComponent,
-    SwapContactComponent
+    SwapContactComponent,
+    SwapInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +105,7 @@ import { UserService } from './services/user/user.service';
       userAlbums: userAlbumReducer,
       user: userReducer,
       stickers: stickerReducer,
+      swappingInfos: swappingInfoReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([
@@ -111,6 +117,7 @@ import { UserService } from './services/user/user.service';
       UserAlbumEffect,
       StickerEffect,
       UserEffect,
+      SwappingInfoEffect,
     ]),
     HttpClientModule,
   ],
@@ -121,6 +128,7 @@ import { UserService } from './services/user/user.service';
     UserAlbumService,
     StickerService,
     UserService,
+    SwappingService,
   ],
   bootstrap: [AppComponent]
 })

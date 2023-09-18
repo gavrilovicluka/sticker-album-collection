@@ -22,7 +22,11 @@
           <p><strong> Broj sličica: </strong> {{ album.stickersNumber }}</p>
           <p>
             <strong> Broj nedostajućih sličica: </strong>
-            {{ album.stickersNumber }}
+            {{ missingStickers }}
+          </p>
+          <p>
+            <strong> Broj duplikata: </strong>
+            {{ duplicatesStickers }}
           </p>
         </div>
       </div>

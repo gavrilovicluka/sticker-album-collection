@@ -53,6 +53,23 @@ export const getUserAlbumFailure = createAction(
 );
 
 
+// Get Swapping Info Actions
+export const getUserAlbumsByAlbumId = createAction(
+    '[User Swapping List Component] Get User Albums By Album ID',
+    props<{ albumId: number }>()
+);
+
+export const getUserAlbumsByAlbumIdSuccess = createAction(
+    '[User Album Effect] Get User Albums By Album ID Success',
+    props<{ userAlbums: UserAlbum[] }>()
+);
+
+export const getUserAlbumsByAlbumIdFailure = createAction(
+    '[User Album Effect] Get User Albums By Album ID Failure',
+    props<{ error: any }>()
+);
+
+
 // Update Stickers List
 export const updateStickersList = createAction(
     '[User Stickers Component] Update Stickers List',

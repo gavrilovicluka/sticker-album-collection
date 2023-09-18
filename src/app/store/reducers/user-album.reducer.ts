@@ -34,6 +34,13 @@ export const userAlbumReducer = createReducer(
         userAlbums: action.userAlbums,
         error: null
     })),
+    
+    on(UserAlbumActions.getUserAlbumsByAlbumIdSuccess, (state, action) => ({
+        ...state,
+        // albums: action.albums,
+        userAlbums: action.userAlbums,
+        error: null
+    })),
 
     on(AuthActions.logout, (state, action) => ({
         ...state,

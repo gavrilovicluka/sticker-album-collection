@@ -10,7 +10,11 @@
     <div class="row mt-3">
       <ng-container *ngFor="let userAlbum of userAlbums">
         <div class="">
-          <app-user-album-info [album]="userAlbum.album"></app-user-album-info>
+          <app-user-album-info
+            [album]="userAlbum.album"
+            [missingStickers]="userAlbum.missingStickers.length"
+            [duplicatesStickers]="userAlbum.duplicatesStickers.length"
+          ></app-user-album-info>
         </div>
       </ng-container>
     </div>

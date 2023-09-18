@@ -26,6 +26,10 @@ export class UserAlbumService {
     return this.httpClient.get<UserAlbum>(environment.apiUrl + this.path + `/${userId}/${albumId}`);
   }
 
+  getUserAlbumsByAlbumId(albumId: number): Observable<UserAlbum[]> {
+    return this.httpClient.get<UserAlbum[]>(environment.apiUrl + this.path + `/album/${albumId}`)
+  }
+
   removeStickersFromList(fromList: string, stickers: number[], userAlbumId: number): Observable<UserAlbum> {
 
     let data;

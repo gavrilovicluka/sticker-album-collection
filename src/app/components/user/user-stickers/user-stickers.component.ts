@@ -21,7 +21,8 @@ export class UserStickersComponent implements OnInit {
   // allAlbumStickers$: Observable<number[]> = of([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
   // missingStickers$: Observable<number[]> = of([]);
   // duplicatesStickers$: Observable<number[]> = of([12, 65, 32, 56, 21, 78, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
-  selectedStickersToRemove: { [stickerNumber: number]: boolean } = {};
+  selectedStickersToRemoveFromMissing: { [stickerNumber: number]: boolean } = {};
+  selectedStickersToRemoveFromDuplicates: { [stickerNumber: number]: boolean } = {};
   selectedStickersToAddToList: { [stickerNumber: number]: boolean } = {};
   currentStickersList: number[] = [];
 
@@ -56,9 +57,20 @@ export class UserStickersComponent implements OnInit {
 
   removeSelectedStickers(fromList: string, userAlbumId: number, currentStickers: number[]) {
 
-    const selectedStickers = Object.keys(this.selectedStickersToRemove)
-      .filter((stickerNumber) => this.selectedStickersToRemove[parseInt(stickerNumber)])
-      .map((stickerNumber) => parseInt(stickerNumber));
+    let selectedStickers: number[] = [];
+
+    switch (fromList) {
+      case 'missing':
+        selectedStickers = this.getStickerNumbers(this.selectedStickersToRemoveFromMissing);
+        this.selectedStickersToRemoveFromMissing = {};
+        break;
+      case 'duplicates':
+        selectedStickers = this.getStickerNumbers(this.selectedStickersToRemoveFromDuplicates);
+        this.selectedStickersToRemoveFromDuplicates = {};
+        break;
+      default:
+        break;
+    }
 
     if (selectedStickers.length <= 0) {
       alert('Niste izabrali nijednu sličicu.');
@@ -72,10 +84,16 @@ export class UserStickersComponent implements OnInit {
         newList.splice(index, 1);
       }
     });
-
+    
     this.store.dispatch(UserAlbumActions.updateStickersList({ fromList, stickers: newList, userAlbumId }));
 
-    this.selectedStickersToRemove = {};
+    
+  }
+
+  getStickerNumbers(selectedStickers: { [stickerNumber: number]: boolean }) {
+    return Object.keys(selectedStickers)
+      .filter((stickerNumber) => selectedStickers[parseInt(stickerNumber)])
+      .map((stickerNumber) => parseInt(stickerNumber));
   }
 
 
@@ -114,7 +132,7 @@ export class UserStickersComponent implements OnInit {
 
     const combinedArray = [...this.currentStickersList, ...selectedStickers];
 
-    const uniqueArray = [...new Set(combinedArray)];
+    const uniqueArray = [...new Set(combinedArray)].sort((a, b) => a - b);
 
     this.store.dispatch(UserAlbumActions.updateStickersList({ fromList, stickers: uniqueArray, userAlbumId }));
 

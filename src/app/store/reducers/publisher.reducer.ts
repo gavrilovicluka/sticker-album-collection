@@ -65,10 +65,8 @@ export const publisherReducer = createReducer(
                 ...publisher,
                 albums: [...publisher.albums, album]
             };
-            console.log(2)
             return adapter.upsertOne(updatedPublisher, state);
         }
-        console.log(1)
         return state;
     }),
 

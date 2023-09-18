@@ -21,12 +21,13 @@ export const selectAllAlbumsAsDict = createSelector(
     (state: AlbumState) => state.entities
 );
 
-export const selectCurrentAlbum = createSelector(
-    selectAlbumsFeature,
-    (state: AlbumState) => state.entities[state.selectedAlbumId] ?? null
-)
-
 export const selectAlbumId = createSelector(
     selectAlbumsFeature,
     (state: AlbumState) => state.selectedAlbumId
 );
+
+export const selectCurrentAlbum = createSelector(
+    selectAlbumsFeature,
+    selectAlbumId,
+    (state: AlbumState, albumId: number) => state.entities[albumId] ?? null
+)

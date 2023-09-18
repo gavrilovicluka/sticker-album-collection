@@ -36,6 +36,15 @@ export class UserAlbumEffect {
             ))
     ))
 
+    getUserAlbumsByAlbumId$ = createEffect(() => this.actions$.pipe(
+        ofType(UserAlbumActions.getUserAlbumsByAlbumId),
+        mergeMap((action) =>
+            this.userAlbumService.getUserAlbumsByAlbumId(action.albumId).pipe(
+                map((userAlbums) => UserAlbumActions.getUserAlbumsByAlbumIdSuccess({ userAlbums })),
+                catchError((error) => of(UserAlbumActions.getUserAlbumsByAlbumIdFailure(error)))
+            ))
+    ))
+
     removeStickersFromList$ = createEffect(() => this.actions$.pipe(
         ofType(UserAlbumActions.updateStickersList),
         mergeMap((action) =>

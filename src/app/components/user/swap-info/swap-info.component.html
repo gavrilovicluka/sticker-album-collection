@@ -1,0 +1,41 @@
+
+  <div class="card mb-3" *ngIf="swappingInfo">
+    <div class="d-flex justify-content-around align-items-center">
+      <!-- <div class="d-flex justify-content-evenly" style="width: 400px"> -->
+
+      <div>
+        <h2 class="card-title m-0">
+          <strong> {{ swappingInfo.username }} </strong>
+        </h2>
+      </div>
+      <!-- </div> -->
+      <div class="text-right d-flex flex-wrap" style="width: 300px">
+        <div class="mx-1 p-2">
+          <p>
+            <strong>
+              Imam da ponudim {{ swappingInfo.stickersToOffer.length }}:
+            </strong>
+            {{ swappingInfo.stickersToOffer }}
+          </p>
+          <p>
+            <strong>
+              Ima za mene {{ swappingInfo.stickersForMe.length }}:
+            </strong>
+            {{ swappingInfo.stickersForMe }}
+          </p>
+          <p>
+            <strong> Moguca razmena: </strong>
+            {{ swappingInfo.possibleSwap }}
+          </p>
+        </div>
+      </div>
+      <div class="text-right d-flex flex-column">
+        <div class="">
+          <button class="btn btn-primary flex-fill w-100" (click)="openModal()">
+            <i class="fa-solid fa-image-portrait"></i> Kontakt
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+

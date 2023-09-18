@@ -29,8 +29,8 @@ export class ModalService {
     this.modalRefRegister = this.modalService.show(RegistrationModalComponent, {id: 2, class: 'modal-lg' });
   }
 
-  openModalSwapContact() {
-    this.modalRefSwapContact = this.modalService.show(SwapContactComponent, {id: 3 });
+  openModalSwapContact(userId: number) {
+    this.modalRefSwapContact = this.modalService.show(SwapContactComponent, { id: 3, initialState: { userId: userId } });
   }
 
   closeModal(modalId?: number){
