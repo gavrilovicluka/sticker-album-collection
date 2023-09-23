@@ -1,8 +1,7 @@
 <div class="row mt-3" *ngIf="album">
   <div class="card mb-3">
     <div class="d-flex justify-content-around align-items-center">
-      <!-- <div class="d-flex justify-content-evenly" style="width: 400px"> -->
-      <div style="width: 180px;">
+      <div style="width: 180px">
         <img
           src="{{ album.imageUrl }}"
           alt="{{ album.name }}"
@@ -15,7 +14,6 @@
           <strong> {{ album.name }} </strong>
         </h2>
       </div>
-      <!-- </div> -->
       <div class="text-right">
         <div class="mx-1 p-4">
           <p><strong> Godina izdavanja: </strong> {{ album.year }}</p>

@@ -20,7 +20,6 @@ const initialState: PublisherState = adapter.getInitialState({
 export const publisherReducer = createReducer(
     initialState,
 
-    // on(PublisherActions.loadPublishersSuccess, (state, { publishers }) => adapter.setAll(publishers, state)),
     on(PublisherActions.loadPublishersSuccess, (state, props) => {
         const { publishers } = props;
         return adapter.setAll(publishers, state)

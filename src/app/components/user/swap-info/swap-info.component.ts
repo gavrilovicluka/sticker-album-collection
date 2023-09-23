@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SwappingInfo } from 'src/app/models/swapping-info';
-import { ModalService } from '../../auth/modal.service';
+import { ModalService } from '../../../services/modal/modal.service';
 
 @Component({
   selector: 'app-swap-info',

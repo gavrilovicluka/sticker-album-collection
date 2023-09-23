@@ -1,20 +1,16 @@
 <div class="card mb-3" *ngIf="publisher">
-  <div class="card text-center"  style="height: 330px">
+  <div class="card text-center" style="height: 330px">
     <img
       class="img-fluid"
       src="{{ publisher.image }}"
       alt="{{ publisher.name }}"
-      style="max-width: 100%; height: 200px; "
+      style="max-width: 100%; height: 200px"
     />
     <a>
-      <div
-        className="mask"
-        style="border: 1px solid rgb(128, 128, 128);"
-      ></div>
+      <div className="mask" style="border: 1px solid rgb(128, 128, 128)"></div>
     </a>
     <div class="card-body">
       <h2 class="card-title">{{ publisher.name }}</h2>
-      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
       <div>
         <a
           class="btn btn-primary pull-right"

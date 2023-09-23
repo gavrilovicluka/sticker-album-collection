@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import * as fromAuthActions from '../actions/auth.actions';
 import { tap } from 'rxjs/operators';
-import { ModalService } from 'src/app/components/auth/modal.service';
+import { ModalService } from 'src/app/services/modal/modal.service';
 
 @Injectable()
 export class ModalEffects {

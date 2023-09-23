@@ -10,15 +10,6 @@ export class RouteEffects {
 
   constructor(private actions$: Actions, private route: Router) { }
 
-  //   goShopping$ = createEffect(
-  //     () =>
-  //       this.actions$.pipe(
-  //         ofType(fromAuthActions.loginSuccess),
-  //         tap(() => this.route.navigate(['/shopping/products']))
-  //       ),
-  //     { dispatch: false }
-  //   );
-
   goHome$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -36,8 +27,5 @@ export class RouteEffects {
       ),
     { dispatch: false }
   );
-
-  
-
 
 }

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/models/user';
 import { AppState } from 'src/app/store/app.state';
-import { ModalService } from '../../auth/modal.service';
+import { ModalService } from '../../../services/modal/modal.service';
 import { ActivatedRoute } from '@angular/router';
 import { SwappingInfo } from 'src/app/models/swapping-info';
 import { getUserAlbumsByAlbumId } from 'src/app/store/actions/user-album.actions';

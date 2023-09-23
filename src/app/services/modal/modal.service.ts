@@ -1,8 +1,8 @@
 import { Injectable, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { LoginModalComponent } from './login-modal/login-modal.component';
-import { RegistrationModalComponent } from './registration-modal/registration-modal.component';
-import { SwapContactComponent } from '../user/swap-contact/swap-contact.component';
+import { LoginModalComponent } from '../../components/auth/login-modal/login-modal.component';
+import { RegistrationModalComponent } from '../../components/auth/registration-modal/registration-modal.component';
+import { SwapContactComponent } from '../../components/user/swap-contact/swap-contact.component';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,6 @@
 import { createSelector } from "@ngrx/store";
 import { AppState } from "../app.state";
 import { AuthState } from "../reducers/auth.reducer";
-import { User } from "src/app/models/user";
 import { DecodedToken } from "src/app/models/decoded-token";
 import jwt_decode from 'jwt-decode';
 import { UserRoles } from "src/app/models/user-roles.enum";
@@ -27,11 +26,6 @@ export const selectIsLoggedIn = createSelector(
     (state: AuthState): boolean => state.token ? true : false
 );
 
-// export const selectUserData = createSelector(
-//     selectAuthFeature,
-//     (state) => state.user
-// )
-
 export const selectUserRole = createSelector(
     selectAuthFeature,
     (state: AuthState) => {
@@ -46,7 +40,7 @@ export const selectUserRole = createSelector(
 export const selectUserId = createSelector(
     selectAuthFeature,
     selectUserToken,
-    (state: AuthState) => {      
+    (state: AuthState) => {
         if (state.token) {
             const decodedToken: DecodedToken = jwt_decode(state.token);
             return decodedToken.sub;

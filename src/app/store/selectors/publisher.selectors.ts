@@ -2,7 +2,6 @@ import { createSelector } from "@ngrx/store";
 import { AppState } from "../app.state";
 import { PublisherState } from "../reducers/publisher.reducer";
 import { Publisher } from "src/app/models/publisher";
-import { selectAllAlbums } from "./album.selectors";
 
 export const selectPublishersFeature = createSelector(
     (state: AppState) => state.publishers,

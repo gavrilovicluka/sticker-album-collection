@@ -44,7 +44,7 @@ export class AlertEffects {
         () =>
             this.actions$.pipe(
                 ofType(AuthActions.loginSuccess),
-                tap(() => this.alertService.success("Uspešno ste se prilavili."))
+                tap(() => this.alertService.success("Uspešno ste se prijavili."))
             ),
         { dispatch: false }
     );

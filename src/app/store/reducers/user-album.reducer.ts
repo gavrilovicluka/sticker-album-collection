@@ -6,20 +6,11 @@ import { Album } from "src/app/models/album";
 import * as AuthActions from "../actions/auth.actions";
 
 export interface UserAlbumState {
-    // user: User | null;
-    // // albums: Album[] | null,
-    // album: Album[],
-    // missingStickers: number,
-    // duplicatesStickers: number,
     userAlbums: UserAlbum[];
     error: any
 }
 
 const initialState: UserAlbumState = {
-    // user: null,
-    // album: [],
-    // missingStickers: -1,
-    // duplicatesStickers: -1,
     userAlbums: [],
     error: null
 };
@@ -30,28 +21,24 @@ export const userAlbumReducer = createReducer(
 
     on(UserAlbumActions.getUserAlbumsSuccess, (state, action) => ({
         ...state,
-        // albums: action.albums,
         userAlbums: action.userAlbums,
         error: null
     })),
-    
+
     on(UserAlbumActions.getUserAlbumsByAlbumIdSuccess, (state, action) => ({
         ...state,
-        // albums: action.albums,
         userAlbums: action.userAlbums,
         error: null
     })),
 
     on(AuthActions.logout, (state, action) => ({
         ...state,
-        // albums: action.albums,
         userAlbums: [],
         error: null
     })),
 
     on(UserAlbumActions.getUserAlbumSuccess, (state, action) => ({
         ...state,
-        // albums: action.albums,
         userAlbums: [action.userAlbum],
         error: null
     })),
@@ -70,7 +57,5 @@ export const userAlbumReducer = createReducer(
             error: null
         };
     }),
-
-
 
 )

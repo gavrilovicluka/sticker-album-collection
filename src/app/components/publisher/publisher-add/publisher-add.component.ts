@@ -39,7 +39,7 @@ export class PublisherAddComponent {
   }
 
   cancel() {
-    this.closeForm.emit(this.showForm);
+    this.closeForm.emit(/*this.showForm*/);
   }
 
 }

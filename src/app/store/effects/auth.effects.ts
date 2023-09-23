@@ -18,9 +18,7 @@ export class AuthEffect {
         withLatestFrom(this.store.select(selectIsAdmin)),
         mergeMap(([action, isAdmin]) =>
             this.authService.loginUser(action.userLoginDto).pipe(
-                // map((token) => AuthActions.loginSuccess({token})),
                 tap((token) => localStorage.setItem('token', token)),
-                // map((token) => AuthActions.setToken({ token })),
                 map((token) => AuthActions.loginSuccess({ token })),
                 tap((isAdmin) => {
                     if(isAdmin) {
@@ -37,7 +35,6 @@ export class AuthEffect {
                 ofType(AuthActions.logout),
                 tap(() => {
                     localStorage.removeItem('token');
-                    // this.router.navigateByUrl("/login");
                 }),
 
             ),

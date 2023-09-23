@@ -1,8 +1,6 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { PublisherListComponent } from './components/publisher/publisher-list/publisher-list.component';
-import { PublisherAddComponent } from './components/publisher/publisher-add/publisher-add/publisher-add.component';
 import { adminGuard } from './components/auth/admin.guard';
 import { PublisherEditComponent } from './components/publisher/publisher-edit/publisher-edit.component';
 import { AlbumsListComponent } from './components/album/albums-list/albums-list.component';
@@ -12,6 +10,7 @@ import { authGuard } from './components/auth/auth.guard';
 import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
 import { UserSwappingListComponent } from './components/user/user-swapping-list/user-swapping-list.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+
 export const routes: Routes = [
   {
     path: "",
@@ -46,11 +45,6 @@ export const routes: Routes = [
     component: PublisherListComponent,
     canActivate: [adminGuard()],
   },
-  // {
-  //   path: "admin/publishers/add",
-  //   component: PublisherAddComponent,
-  //   canActivate: [adminGuard()],
-  // },
   {
     path: "admin/publishers/edit/:publisherId",
     component: PublisherEditComponent,

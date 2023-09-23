@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './components/header/header.component';
-import { AlbumThumbComponent2 } from './components/album-thumb/album-thumb.component';
 import { AlbumsGridComponent } from './components/albums-grid/albums-grid.component';
 import { LoginModalComponent } from './components/auth/login-modal/login-modal.component';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +22,7 @@ import { PublisherListComponent } from './components/publisher/publisher-list/pu
 import { PublisherEffect } from './store/effects/publisher.effects';
 import { publisherReducer } from './store/reducers/publisher.reducer';
 import { PublisherService } from './services/publisher/publisher.service';
-import { PublisherAddComponent } from './components/publisher/publisher-add/publisher-add/publisher-add.component';
+import { PublisherAddComponent } from './components/publisher/publisher-add/publisher-add.component';
 import { RouteEffects } from './store/effects/route.effects';
 import { ModalEffects } from './store/effects/modal.effects';
 import { RouterModule } from '@angular/router';
@@ -48,17 +46,11 @@ import { UserAlbumsComponent } from './components/user/user-albums/user-albums.c
 import { userReducer } from './store/reducers/user.reducer';
 import { UserAlbumInfoComponent } from './components/user/user-album-info/user-album-info.component';
 import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
-// import { stickerReducer } from './store/reducers/sticker.reducer';
-// import { StickerService } from './services/sticker/sticker.service';
-// import { StickerEffect } from './store/effects/sticker.effects';
 import { UserSwappingListComponent } from './components/user/user-swapping-list/user-swapping-list.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { SwapContactComponent } from './components/user/swap-contact/swap-contact.component';
 import { UserEffect } from './store/effects/user.effects';
 import { UserService } from './services/user/user.service';
-// import { SwappingInfoEffect } from './store/effects/swapping-info.effects';
-// import { swappingInfoReducer } from './store/reducers/swapping-info.reducer';
-// import { SwappingService } from './services/swapping/swapping.service';
 import { SwapInfoComponent } from './components/user/swap-info/swap-info.component';
 import { AlertModule } from '@full-fledged/alerts';
 import { AlertEffects } from './store/effects/alert.effects';
@@ -69,7 +61,6 @@ import { AlertEffects } from './store/effects/alert.effects';
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    AlbumThumbComponent2,
     AlbumsGridComponent,
     LoginModalComponent,
     AuthLinksComponent,
@@ -95,19 +86,16 @@ import { AlertEffects } from './store/effects/alert.effects';
   ],
   imports: [
     BrowserModule,
-    // AppRoutingModule,
     RouterModule.forRoot(routes),
     NgbModule,
     FormsModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({           //*  mesto za reducere. PROPERTY MORA DA SE POKLAPA SA IMENOM U REDUCER.TS  */
+    StoreModule.forRoot({           //*  mesto za reducerem, property mora da se poklapa sa imenom u reducer.ts */
       auth: authReducer,
       publishers: publisherReducer,
       albums: albumReducer,
       userAlbums: userAlbumReducer,
       user: userReducer,
-      // stickers: stickerReducer,
-      // swappingInfos: swappingInfoReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([
@@ -117,22 +105,18 @@ import { AlertEffects } from './store/effects/alert.effects';
       ModalEffects,
       AlbumEffect,
       UserAlbumEffect,
-      // StickerEffect,
       UserEffect,
-      // SwappingInfoEffect,
       AlertEffects
     ]),
     HttpClientModule,
-    AlertModule.forRoot({maxMessages: 5, timeout: 4000, positionX: 'right'}),
+    AlertModule.forRoot({ maxMessages: 5, timeout: 4000, positionX: 'right' }),
   ],
   providers: [              // ovde se dodaju servisi
     AuthService,
     PublisherService,
     AlbumService,
     UserAlbumService,
-    // StickerService,
     UserService,
-    // SwappingService,
   ],
   bootstrap: [AppComponent]
 })

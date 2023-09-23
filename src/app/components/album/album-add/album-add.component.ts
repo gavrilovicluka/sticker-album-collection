@@ -3,9 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Album, AlbumDto } from 'src/app/models/album';
 import * as AlbumActions from 'src/app/store/actions/album.actions';
-import * as PublisherActions from 'src/app/store/actions/publisher.actions';
 import { AppState } from 'src/app/store/app.state';
-import { selectAllAlbums } from 'src/app/store/selectors/album.selectors';
 import { selectCurrentPublisher } from 'src/app/store/selectors/publisher.selectors';
 
 @Component({
@@ -17,8 +15,8 @@ export class AlbumAddComponent {
 
   @Input() showForm: boolean = false;
 
-  @Output() closeForm: EventEmitter<boolean> = new EventEmitter<boolean>();
-  
+  @Output() closeForm: EventEmitter<null> = new EventEmitter<null>();
+
   album: AlbumDto;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
@@ -32,16 +30,14 @@ export class AlbumAddComponent {
     if (this.album) {
 
       this.store.dispatch(AlbumActions.addAlbum({ publisherId: publisherId, album: this.album }));
-      // this.store.select(selectAllAlbums)
-      // this.store.dispatch(PublisherActions.addAlbumToPublisher({ publisherId, album: this.album }));
       this.store.pipe(select(selectCurrentPublisher));
       this.album = this.makeEmptyAlbum();
-      this.closeForm.emit(this.showForm);
+      this.closeForm.emit();
     }
   }
 
   cancel() {
-    this.closeForm.emit(this.showForm);
+    this.closeForm.emit();
   }
 
   makeEmptyAlbum(): AlbumDto {

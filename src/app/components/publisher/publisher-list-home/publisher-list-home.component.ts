@@ -15,7 +15,6 @@ import { AuthLinksViewModal, selectAuthLinksViewModel } from 'src/app/store/sele
 export class PublisherListHomeComponent {
 
   publishers$: Observable<readonly Publisher[]> = of([]);
-  authViewModel$: Observable<AuthLinksViewModal> = of();
  
   constructor(private store: Store<AppState>) { }
 
@@ -23,7 +22,6 @@ export class PublisherListHomeComponent {
 
     this.store.dispatch(publisherActions.loadPublishers());
     this.publishers$ = this.store.select(selectAllPublishers);
-    this.authViewModel$ = this.store.select(selectAuthLinksViewModel);
 
   }
 

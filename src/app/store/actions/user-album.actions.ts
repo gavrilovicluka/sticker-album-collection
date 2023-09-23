@@ -1,5 +1,4 @@
 import { createAction, props } from "@ngrx/store";
-import { Album } from "src/app/models/album";
 import { UserAlbum } from "src/app/models/user-album";
 
 // Add Album To User

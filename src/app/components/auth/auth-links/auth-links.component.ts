@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/store/app.state';
 import { Store, select } from '@ngrx/store';
-import { ModalService } from '../modal.service';
+import { ModalService } from '../../../services/modal/modal.service';
 import { AuthLinksViewModal, selectAuthLinksViewModel } from 'src/app/store/selectors/auth.selectors';
 import { logout } from 'src/app/store/actions/auth.actions';
 import { Router } from '@angular/router';
@@ -27,8 +27,6 @@ export class AuthLinksComponent {
   }
 
   logout() {
-    // this.router.navigate(['/']);
-    // localStorage.removeItem('user');
     this.store.dispatch(logout());
   }
 

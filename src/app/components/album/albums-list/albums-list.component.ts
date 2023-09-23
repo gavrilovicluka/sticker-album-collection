@@ -7,8 +7,6 @@ import { Publisher } from 'src/app/models/publisher';
 import { AppState } from 'src/app/store/app.state';
 import { selectCurrentPublisher } from 'src/app/store/selectors/publisher.selectors';
 import * as PublisherActions from 'src/app/store/actions/publisher.actions';
-import * as AlbumActions from 'src/app/store/actions/album.actions';
-import { selectAllAlbums } from 'src/app/store/selectors/album.selectors';
 
 @Component({
   selector: 'app-albums-list',
@@ -29,9 +27,7 @@ export class AlbumsListComponent {
     let publisherId = parseInt(this.route.snapshot.paramMap.get('publisherId')!);
 
     if (publisherId) {
-      this.store.dispatch(PublisherActions.getPublisherWithAlbums({ publisherId: publisherId }));
-      
-      
+      this.store.dispatch(PublisherActions.getPublisherWithAlbums({ publisherId: publisherId }));     
     }
     
     this.store.dispatch(PublisherActions.selectPublisher({ selectedPublisherId: publisherId }));

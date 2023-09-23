@@ -14,9 +14,6 @@ import { selectUserAlbum, selectUserAlbumByAlbumId, selectUserAlbums } from 'src
 })
 export class UserStickersComponent implements OnInit {
 
-  // allAlbumStickers$: Observable<number[]> = of([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
-  // missingStickers$: Observable<number[]> = of([]);
-  // duplicatesStickers$: Observable<number[]> = of([12, 65, 32, 56, 21, 78, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
   selectedStickersToRemoveFromMissing: { [stickerNumber: number]: boolean } = {};
   selectedStickersToRemoveFromDuplicates: { [stickerNumber: number]: boolean } = {};
   selectedStickersToAddToList: { [stickerNumber: number]: boolean } = {};
@@ -32,9 +29,7 @@ export class UserStickersComponent implements OnInit {
   allAlbumStickers: number[] = [];
   stickersNumber: number | null = null;
 
-  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {
-    // this.missingStickers$ = this.store.select(selectMissingStickers);
-    // this.missingStickers$ = this.store.select(selectDuplicatesStickers);
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -44,9 +39,6 @@ export class UserStickersComponent implements OnInit {
     this.store.dispatch(UserAlbumActions.getUserAlbum({ userId: this.userId, albumId: this.albumId }));
 
     this.userAlbum$ = this.store.select(selectUserAlbum);
-
-    // Problem sa reload
-    // this.userAlbum$ = this.store.select(selectUserAlbumByAlbumId)
 
   }
 

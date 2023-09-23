@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalService } from '../modal.service';
+import { ModalService } from '../../../services/modal/modal.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 import { RegistrationModalComponent } from '../registration-modal/registration-modal.component';
@@ -16,12 +16,7 @@ import { UserLoginDto } from 'src/app/models/user-login.dto';
 })
 export class LoginModalComponent {
 
-
-  // user$: Observable<User>;
-
   constructor(
-    // public authService: AuthService,
-    // private cartService: MockApiCartService,
     private modalService: ModalService,
     private store: Store<AppState>
   ) { }
@@ -34,8 +29,8 @@ export class LoginModalComponent {
       username: f.value.username,
       password: f.value.password
     }
-    this.store.dispatch(login({ userLoginDto: loginDto })
-    );
+    
+    this.store.dispatch(login({ userLoginDto: loginDto }));
   }
 
   cancel(): void {

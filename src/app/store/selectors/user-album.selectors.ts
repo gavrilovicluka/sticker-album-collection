@@ -56,7 +56,7 @@ export const selectSwappingInfoWithOffer = createSelector(
         }
 
         return userAlbums
-            .filter(userAlbum => userAlbum && userAlbum.user && userAlbum.user.id !== userId) // selectUserAlbums pri prvom otvaranju komponente User Swapping List vrati i albume koji su bili u state ali ih vise nema 
+            .filter(userAlbum => userAlbum && userAlbum.user && userAlbum.user.id !== userId)
             .map(userAlbum => {
 
                 const stickersForMe = loggedUserAlbum.missingStickers.filter(sticker => {
@@ -72,6 +72,7 @@ export const selectSwappingInfoWithOffer = createSelector(
                     }
                     return userAlbum.missingStickers.includes(sticker);
                 });
+
                 const possibleSwap = Math.min(stickersForMe.length, stickersToOffer.length);
 
                 const swappingInfo: SwappingInfo = {
@@ -82,13 +83,6 @@ export const selectSwappingInfoWithOffer = createSelector(
                     possibleSwap: possibleSwap
                 }
                 return swappingInfo;
-                //  {
-                //     userId: userAlbum.id,
-                //     username: userAlbum.user.username,
-                //     stickersForMe: stickersForMe, //?.length || 0,
-                //     stickerToOffer: stickersToOffer, //?.length || 0
-                //     possibleSwap: possibleSwap
-                // };
 
             });
 

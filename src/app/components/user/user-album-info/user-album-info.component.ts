@@ -1,13 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { State, Store, select } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { Album } from 'src/app/models/album';
-import { UserAlbum } from 'src/app/models/user-album';
 import { selectAlbum } from 'src/app/store/actions/album.actions';
 import { AppState } from 'src/app/store/app.state';
 import { selectUserId } from 'src/app/store/selectors/auth.selectors';
-import { selectUserAlbums } from 'src/app/store/selectors/user-album.selectors';
 
 
 @Component({

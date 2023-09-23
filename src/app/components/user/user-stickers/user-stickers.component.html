@@ -1,10 +1,7 @@
 <div class="container col-6 mt-3" *ngIf="userAlbum$ | async as userAlbum">
   <div class="justify-content-center">
     <!-- Trazene slicice -->
-    <!-- <div class=""> -->
     <div class="d-flex justify-content-center" *ngIf="isMissingSelected">
-      <!-- *ngIf="missingStickers$ | async as missingStickers" -->
-      <!-- <div class="row mt-3"> -->
       <div class="card mb-3 p-3" style="width: 80%">
         <div>
           <h2 class="card-title">
@@ -54,20 +51,13 @@
           >
             Dodaj sličice
           </button>
-          <!-- <button class="btn btn-secondary" (click)="cancelRemovingFromList()">
-          Odustani
-        </button> -->
         </div>
       </div>
     </div>
-    <!-- </div> -->
-    <!-- </div> -->
 
     <!-- Duplikati -->
     <div *ngIf="isDuplicatesSelected">
       <div class="d-flex justify-content-center">
-        <!-- *ngIf="duplicatesStickers$ | async as duplicatesStickers" -->
-        <!-- <div class="row mt-3"> -->
         <div class="card mb-3 p-3" style="width: 80%">
           <div>
             <h2 class="card-title">
@@ -82,7 +72,9 @@
               >
                 <input
                   type="checkbox"
-                  [(ngModel)]="selectedStickersToRemoveFromDuplicates[stickerNumber]"
+                  [(ngModel)]="
+                    selectedStickersToRemoveFromDuplicates[stickerNumber]
+                  "
                   [ngModelOptions]="{ standalone: true }"
                   value="{{ stickerNumber }}"
                 />
@@ -117,13 +109,9 @@
             >
               Dodaj sličice
             </button>
-            <!-- <button class="btn btn-secondary" (click)="cancelRemovingFromList()">
-          Odustani
-        </button> -->
           </div>
         </div>
       </div>
-      <!-- </div> -->
     </div>
 
     <!-- Sve slicice -->
@@ -132,7 +120,6 @@
         class="d-flex justify-content-center"
         *ngIf="isAddNewStickersSelected"
       >
-        <!-- <div class="row mt-3"> -->
         <div class="card mb-3 p-3" style="width: 80%">
           <div>
             <h2 class="card-title">
@@ -141,7 +128,6 @@
           </div>
           <div class="">
             <div class="d-flex flex-wrap">
-              <!-- *ngIf="allAlbumStickers$ | async as allAlbumStickers" -->
               <div class="m-2" *ngFor="let stickerNumber of allAlbumStickers">
                 <input
                   type="checkbox"
@@ -165,9 +151,7 @@
             </button>
           </div>
         </div>
-        <!-- </div> -->
       </div>
-      <!-- </div> -->
     </div>
   </div>
 </div>

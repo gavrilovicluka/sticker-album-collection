@@ -17,17 +17,11 @@ import { selectUserAlbums } from 'src/app/store/selectors/user-album.selectors';
 })
 export class UserAlbumsComponent implements OnInit {
 
-  // albums: Album[] = [];
   userAlbums$: Observable<UserAlbum[]> = of([]);
   userId: number | null = null;
 
-  constructor(private store: Store<AppState>, private router: Router) { 
-    this.userAlbums$ = this.store.select(selectUserAlbums)/*.subscribe((userAlbums: UserAlbum[]) => {
-      userAlbums.forEach((userAlbum: UserAlbum) => {
-        this.albums.push(userAlbum.album);
-      })
-    });*/
-
+  constructor(private store: Store<AppState>) {
+    this.userAlbums$ = this.store.select(selectUserAlbums);
   }
 
   ngOnInit(): void {
@@ -36,9 +30,6 @@ export class UserAlbumsComponent implements OnInit {
     if (this.userId) {
       this.store.dispatch(UserAlbumsAction.getUserAlbums({ userId: this.userId }));
     }
-
-    
-
   }
 
 }

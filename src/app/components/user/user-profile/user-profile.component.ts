@@ -2,14 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
 import { User, UserData, UserEdit } from 'src/app/models/user';
 import * as UserActions from 'src/app/store/actions/user.actions';
 import { AppState } from 'src/app/store/app.state';
-import { userReducer } from 'src/app/store/reducers/user.reducer';
 import { selectUser } from 'src/app/store/selectors/user.selectors';
-// import { selectUserData } from 'src/app/store/selectors/auth.selectors';
-// import { selectUser } from 'src/app/store/selectors/user.selectors';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,7 +14,6 @@ import { selectUser } from 'src/app/store/selectors/user.selectors';
 })
 export class UserProfileComponent implements OnInit {
 
-  // user$: Observable<UserData | null> = of();
   user: UserData = {
     name: '',
     surname: '',
@@ -30,9 +25,7 @@ export class UserProfileComponent implements OnInit {
 
   userId?: number;
 
-  // getUser(userId) -> id se nalazi u tokenu
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {
-    // this.user$ = this.store.select(selectUserData);
   }
 
   ngOnInit(): void {
