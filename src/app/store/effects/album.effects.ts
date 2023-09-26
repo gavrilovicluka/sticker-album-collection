@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap, of } from "rxjs";
 import * as AlbumActions from "../actions/album.actions";
 import { AlbumService } from "src/app/services/album/album.service";
+import * as HttpActions from "../actions/http.actions";
 
 @Injectable()
 export class AlbumEffect {
@@ -23,7 +24,15 @@ export class AlbumEffect {
         mergeMap((action) =>
             this.albumService.addAlbum(action.publisherId, action.album).pipe(
                 map((album) => AlbumActions.addAlbumSuccess({ album })),
-                catchError((error) => of(AlbumActions.addAlbumFailure(error)))
+                catchError((error) => {
+                    if (error.status === 401) {
+                        return of(HttpActions.unauthorizedError(error));
+                    } else if (error.status === 403) {
+                        return of(HttpActions.forbiddenError(error));
+                    } else {
+                        return of(AlbumActions.addAlbumFailure(error))
+                    }
+                })
             ))
     ))
 

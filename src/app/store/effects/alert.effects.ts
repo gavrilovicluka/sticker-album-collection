@@ -7,6 +7,7 @@ import * as UserActions from "../actions/user.actions";
 import * as AlbumActions from "../actions/album.actions";
 import * as PublisherActions from "../actions/publisher.actions";
 import * as UserAlbumActions from "../actions/user-album.actions";
+import * as HttpActions from "../actions/http.actions";
 
 @Injectable()
 export class AlertEffects {
@@ -34,6 +35,8 @@ export class AlertEffects {
                     UserAlbumActions.getUserAlbumFailure,
                     UserAlbumActions.getUserAlbumsByAlbumIdFailure,
                     UserAlbumActions.updateStickersListFailure,
+                    HttpActions.forbiddenError,
+                    HttpActions.unauthorizedError
                 ),
                 tap((error) => this.alertService.danger(error.error.message))
             ),

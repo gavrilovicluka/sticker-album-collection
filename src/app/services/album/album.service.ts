@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap, of, throwError } from 'rxjs';
 import { Album, AlbumDto } from 'src/app/models/album';
@@ -22,7 +22,15 @@ export class AlbumService {
   }
 
   addAlbum(publisherId: number, album: AlbumDto): Observable<Album> {
-    return this.httpClient.post<Album>(environment.apiUrl + this.path + `/${publisherId}`, album).pipe(
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.post<Album>(
+      environment.apiUrl + this.path + `/${publisherId}`,
+      album,
+      { headers: headers }
+    ).pipe(
       mergeMap((album) => {
         if (album) {
           return of(album);
@@ -34,8 +42,16 @@ export class AlbumService {
   }
 
   editAlbum(album: Album): Observable<Album> {
-    return this.httpClient.put<Album>(environment.apiUrl + this.path + `/${album.id}`, album);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.put<Album>(
+      environment.apiUrl + this.path + `/${album.id}`,
+      album,
+      { headers: headers }
+    );
   }
 
-  
+
 }

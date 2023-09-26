@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, mergeMap, of, throwError } from 'rxjs';
 import { Album } from 'src/app/models/album';
@@ -19,15 +19,29 @@ export class PublisherService {
   }
 
   getPublisher(publisherId: number): Observable<Publisher> {
-    return this.httpClient.get<Publisher>(environment.apiUrl + this.path + `/${publisherId}`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<Publisher>(
+      environment.apiUrl + this.path + `/${publisherId}`,
+      { headers: headers }
+    );
   }
-  
+
   getPublisherWithAlbums(publisherId: number): Observable<Publisher> {
     return this.httpClient.get<Publisher>(environment.apiUrl + this.path + `/${publisherId}/albums`);
   }
 
   addPublisher(publisher: PublisherDto): Observable<Publisher> {
-    return this.httpClient.post<Publisher>(environment.apiUrl + this.path, publisher).pipe(
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.post<Publisher>(
+      environment.apiUrl + this.path, publisher,
+      { headers: headers }
+    ).pipe(
       mergeMap((publisher) => {
         if (publisher) {
           return of(publisher);
@@ -39,10 +53,21 @@ export class PublisherService {
   }
 
   editPublisher(publisher: Publisher): Observable<Publisher> {
-    return this.httpClient.put<Publisher>(environment.apiUrl + this.path + `/${publisher.id}`, publisher);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.put<Publisher>(
+      environment.apiUrl + this.path + `/${publisher.id}`, publisher,
+      { headers: headers }
+    );
   }
 
   addAlbumToPublisher(album: Album, publisherId: number): Observable<Publisher> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     const albumData = {
       id: album.id,
       name: album.name,
@@ -50,9 +75,11 @@ export class PublisherService {
       stickersNumber: album.stickersNumber,
       year: album.year
     }
-    return this.httpClient.patch<Publisher>(environment.apiUrl + this.path + `/${publisherId}`, {
-      albums: albumData
-    })
+    return this.httpClient.patch<Publisher>(
+      environment.apiUrl + this.path + `/${publisherId}`,
+      { albums: albumData },
+      { headers: headers }
+    )
   }
 
 }

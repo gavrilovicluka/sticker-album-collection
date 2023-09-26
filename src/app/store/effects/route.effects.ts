@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as fromAuthActions from '../actions/auth.actions';
 import * as fromPublisherActions from '../actions/publisher.actions';
 import { tap } from 'rxjs/operators';
+import * as HttpActions from '../actions/http.actions';
 
 @Injectable()
 export class RouteEffects {
@@ -13,7 +14,7 @@ export class RouteEffects {
   goHome$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(fromAuthActions.logout),
+        ofType(fromAuthActions.logout, HttpActions.forbiddenError, HttpActions.unauthorizedError),
         tap(() => this.route.navigate(['/']))
       ),
     { dispatch: false }

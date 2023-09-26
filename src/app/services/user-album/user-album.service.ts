@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Album } from 'src/app/models/album';
@@ -15,22 +15,56 @@ export class UserAlbumService {
   constructor(private httpClient: HttpClient) { }
 
   addAlbumToUser(userId: number, albumId: number): Observable<UserAlbum> {
-    return this.httpClient.post<UserAlbum>(environment.apiUrl + this.path + `/${userId}/${albumId}`, null);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.httpClient.post<UserAlbum>(
+      environment.apiUrl + this.path + `/${userId}/${albumId}`,
+      null,
+      { headers: headers }
+    );
   }
 
   getUserAlbums(userId: number): Observable<UserAlbum[]> {
-    return this.httpClient.get<UserAlbum[]>(environment.apiUrl + this.path + `/${userId}`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<UserAlbum[]>(
+      environment.apiUrl + this.path + `/${userId}`,
+      { headers: headers }
+    );
   }
 
   getUserAlbum(userId: number, albumId: number): Observable<UserAlbum> {
-    return this.httpClient.get<UserAlbum>(environment.apiUrl + this.path + `/${userId}/${albumId}`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<UserAlbum>(
+      environment.apiUrl + this.path + `/${userId}/${albumId}`,
+      { headers: headers }
+    );
   }
 
   getUserAlbumsByAlbumId(albumId: number): Observable<UserAlbum[]> {
-    return this.httpClient.get<UserAlbum[]>(environment.apiUrl + this.path + `/album/${albumId}`)
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<UserAlbum[]>(
+      environment.apiUrl + this.path + `/album/${albumId}`,
+      { headers: headers }
+    )
   }
 
   removeStickersFromList(fromList: string, stickers: number[], userAlbumId: number): Observable<UserAlbum> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
 
     let data;
     switch (fromList) {
@@ -48,6 +82,10 @@ export class UserAlbumService {
         break;
     }
 
-    return this.httpClient.put<UserAlbum>(environment.apiUrl + this.path + `/${userAlbumId}`, data);
+    return this.httpClient.put<UserAlbum>(
+      environment.apiUrl + this.path + `/${userAlbumId}`,
+      data,
+      { headers: headers }
+    );
   }
 }
