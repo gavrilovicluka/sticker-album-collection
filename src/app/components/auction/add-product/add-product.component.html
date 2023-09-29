@@ -1,0 +1,234 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 offset-sm-3 mt-5" style="padding: 0px">
+      <mat-card class="productAdd-card">
+        <div class="card-basic-content text-center mt-3">
+          <h2 class="font-weight-bold">Dodaj proizvod na aukciju</h2>
+        </div>
+        <mat-card-content>
+          <form class="example-form" [formGroup]="auctionForm" novalidate>
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-10 d-flex justify-content-evenly">
+                <mat-form-field class="example-full-width" style="width: 100%">
+                  <input
+                    matInput
+                    placeholder="Ime proizvoda"
+                    formControlName="ProductName"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['ProductName'].hasError('required')
+                    "
+                    >Morate uneti ime proizvoda.</mat-error
+                  >
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-10">
+                <mat-form-field class="example-full-width" style="width: 100%">
+                  <mat-label>Opis proizvoda</mat-label>
+                  <textarea
+                    matInput
+                    placeholder="Opis proizvoda"
+                    formControlName="ProductDescription"
+                    required
+                    rows="4"
+                  ></textarea>
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['ProductDescription'].hasError(
+                        'required'
+                      )
+                    "
+                    >Morate uneti opis proizvoda.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['ProductDescription'].hasError(
+                        'maxlength'
+                      )
+                    "
+                    >Opis proizvoda moze biti maksimalno 1000
+                    karaktera</mat-error
+                  >
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-10 mb-2">
+                <mat-form-field class="example-full-width" style="width: 100%">
+                  <input
+                    matInput
+                    placeholder="Pocetna cena"
+                    formControlName="BasePrice"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['BasePrice'].hasError('required')
+                    "
+                    >Morate uneti pocetnu cenu.
+                  </mat-error>
+                  <mat-error
+                    *ngIf="auctionForm.controls['BasePrice'].hasError('min')"
+                    >Pocetna cena mora biti minimum 1</mat-error
+                  >
+                  <mat-error
+                    *ngIf="auctionForm.controls['BasePrice'].hasError('max')"
+                    >Pocetna cena moze biti maksimum 10000000</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['BasePrice'].hasError('pattern')
+                    "
+                    >Pocetna cena moze sadrzati samo brojeve</mat-error
+                  >
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-5 d-flex justify-content-center">
+                <mat-form-field>
+                  <mat-label>Pocetak aukcije</mat-label>
+                  <input
+                    matInput
+                    [min]="minDate"
+                    [matDatepicker]="startPicker"
+                    formControlName="StartDateTime"
+                    required
+                  />
+                  <!-- value="{{
+                    this.productForm.controls['StartDateTime'].value
+                  }}" -->
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startPicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #startPicker></mat-datepicker>
+
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['StartDateTime'].hasError(
+                        'required'
+                      ) &&
+                      (auctionForm.controls['StartDateTime'].dirty ||
+                        auctionForm.controls['StartDateTime'].touched)
+                    "
+                    >Izaberite datum</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      (auctionForm.controls['StartDateTime'].dirty ||
+                        auctionForm.controls['StartDateTime'].touched) &&
+                      auctionForm.controls['StartDateTime'].hasError(
+                        'startDateInvalid'
+                      )
+                    "
+                    >Morate uneti datum koji je pre datuma kraja
+                    aukcije</mat-error
+                  >
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-5 d-flex justify-content-center">
+                <mat-form-field>
+                  <mat-label>Kraj aukcije</mat-label>
+                  <input
+                    matInput
+                    [min]="minDate"
+                    [matDatepicker]="endPicker"
+                    formControlName="EndDateTime"
+                    required
+                  />
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endPicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #endPicker></mat-datepicker>
+
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['EndDateTime'].hasError(
+                        'required'
+                      ) &&
+                      (auctionForm.controls['EndDateTime'].dirty ||
+                        auctionForm.controls['EndDateTime'].touched)
+                    "
+                    >Izaberite datum</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['EndDateTime'].hasError(
+                        'endDateInvalid'
+                      )
+                    "
+                    >Morate uneti datum koji je veci od datuma pocetka
+                    aukcije</mat-error
+                  >
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-10 mt-5 d-flex justify-content-center">
+                <mat-form-field style="width: 100%">
+                  <mat-label>Izaberite sliku</mat-label>
+                  <button mat-icon-button matPrefix (click)="f_input.click()">
+                    <i class="fa-solid fa-paperclip"></i>
+                  </button>
+                  <input
+                    type="text"
+                    readonly
+                    matInput
+                    formControlName="Image"
+                  />
+                  <input
+                    type="file"
+                    class="custom-file-input"
+                    id="Image"
+                    (change)="onFileSelected($event)"
+                    hidden
+                    #f_input
+                    required
+                  />
+
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['Image'].hasError('required') &&
+                      (auctionForm.controls['Image'].dirty ||
+                        auctionForm.controls['Image'].touched)
+                    "
+                    >Izaberite sliku</mat-error
+                  >
+                  <mat-error
+                    *ngIf="
+                      auctionForm.controls['Image'].hasError(
+                        'invalidImageExtension'
+                      )
+                    "
+                    >Nevalidna ekstenzija</mat-error
+                  >
+                </mat-form-field>
+              </div>
+
+              <mat-card-footer class="d-flex justify-content-center mt-5">
+                <div class="row">
+                  <div class="">
+                    <button
+                      type="submit"
+                      mat-raised-button
+                      class="form-button"
+                      color="primary"
+                      (click)="onSubmit()"
+                    >
+                      Postavi
+                    </button>
+                  </div>
+                </div>
+              </mat-card-footer>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

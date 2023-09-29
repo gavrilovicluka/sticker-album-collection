@@ -14,8 +14,24 @@ export class RouteEffects {
   goHome$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(fromAuthActions.logout, HttpActions.forbiddenError, HttpActions.unauthorizedError),
+        ofType(fromAuthActions.logout, /*HttpActions.forbiddenError, HttpActions.unauthorizedError*/),
         tap(() => this.route.navigate(['/']))
+      ),
+    { dispatch: false }
+  );
+
+  login$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(fromAuthActions.loginSuccess),
+        tap(() => {
+          const previousUrl = localStorage.getItem('previousUrl');
+          if (previousUrl) {
+            this.route.navigateByUrl(previousUrl);
+          } else {
+            this.route.navigate(['/']);
+          }
+        })
       ),
     { dispatch: false }
   );

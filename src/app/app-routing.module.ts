@@ -10,6 +10,9 @@ import { authGuard } from './components/auth/auth.guard';
 import { UserStickersComponent } from './components/user/user-stickers/user-stickers.component';
 import { UserSwappingListComponent } from './components/user/user-swapping-list/user-swapping-list.component';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { AuctionListComponent } from './components/auction/auction-list/auction-list.component';
+import { ViewProductComponent } from './components/auction/view-product/view-product.component';
+import { AddProductComponent } from './components/auction/add-product/add-product.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +36,20 @@ export const routes: Routes = [
   {
     path: ":userId/my-albums/:albumId/swapping",
     component: UserSwappingListComponent,
+    canActivate: [authGuard()]
+  },
+  {
+    path: "auctions",
+    component: AuctionListComponent,
+    // canActivate: [authGuard()]
+  },
+  {
+    path: "auctions/product/:productId",
+    component: ViewProductComponent,
+  },
+  {
+    path: "auctions/add-product",
+    component: AddProductComponent,
     canActivate: [authGuard()]
   },
   {

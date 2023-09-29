@@ -54,7 +54,22 @@ import { UserService } from './services/user/user.service';
 import { SwapInfoComponent } from './components/user/swap-info/swap-info.component';
 import { AlertModule } from '@full-fledged/alerts';
 import { AlertEffects } from './store/effects/alert.effects';
-
+import { AuctionListComponent } from './components/auction/auction-list/auction-list.component';
+import { AuctionEffects } from './store/effects/auction.effects';
+import { NgxSimpleCountdownModule } from 'ngx-simple-countdown';
+import { ViewProductComponent } from './components/auction/view-product/view-product.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddProductComponent } from './components/auction/add-product/add-product.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { AuctionService } from './services/auction/auction.service';
+import { auctionReducer } from './store/reducers/auction.reducer';
 
 @NgModule({
   declarations: [
@@ -82,7 +97,10 @@ import { AlertEffects } from './store/effects/alert.effects';
     UserSwappingListComponent,
     UserProfileComponent,
     SwapContactComponent,
-    SwapInfoComponent
+    SwapInfoComponent,
+    AuctionListComponent,
+    ViewProductComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
@@ -90,12 +108,13 @@ import { AlertEffects } from './store/effects/alert.effects';
     NgbModule,
     FormsModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({           //*  mesto za reducerem, property mora da se poklapa sa imenom u reducer.ts */
+    StoreModule.forRoot({           //*  mesto za reducere, property mora da se poklapa sa imenom u reducer.ts */
       auth: authReducer,
       publishers: publisherReducer,
       albums: albumReducer,
       userAlbums: userAlbumReducer,
       user: userReducer,
+      auction: auctionReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([
@@ -106,10 +125,23 @@ import { AlertEffects } from './store/effects/alert.effects';
       AlbumEffect,
       UserAlbumEffect,
       UserEffect,
-      AlertEffects
+      AlertEffects,
+      AuctionEffects,
     ]),
     HttpClientModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 4000, positionX: 'right' }),
+    NgxSimpleCountdownModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    
+
   ],
   providers: [              // ovde se dodaju servisi
     AuthService,
@@ -117,6 +149,7 @@ import { AlertEffects } from './store/effects/alert.effects';
     AlbumService,
     UserAlbumService,
     UserService,
+    AuctionService,
   ],
   bootstrap: [AppComponent]
 })

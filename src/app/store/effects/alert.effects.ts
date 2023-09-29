@@ -8,6 +8,7 @@ import * as AlbumActions from "../actions/album.actions";
 import * as PublisherActions from "../actions/publisher.actions";
 import * as UserAlbumActions from "../actions/user-album.actions";
 import * as HttpActions from "../actions/http.actions";
+import * as AuctionActions from "../actions/auction.actions";
 
 @Injectable()
 export class AlertEffects {
@@ -36,7 +37,10 @@ export class AlertEffects {
                     UserAlbumActions.getUserAlbumsByAlbumIdFailure,
                     UserAlbumActions.updateStickersListFailure,
                     HttpActions.forbiddenError,
-                    HttpActions.unauthorizedError
+                    HttpActions.unauthorizedError,
+                    AuctionActions.addAuctionFailure,
+
+
                 ),
                 tap((error) => this.alertService.danger(error.error.message))
             ),
@@ -78,7 +82,7 @@ export class AlertEffects {
             ),
         { dispatch: false }
     );
-    
+
     addAlbum$ = createEffect(
         () =>
             this.actions$.pipe(
@@ -87,7 +91,7 @@ export class AlertEffects {
             ),
         { dispatch: false }
     );
-    
+
     addPublisher$ = createEffect(
         () =>
             this.actions$.pipe(
@@ -96,7 +100,7 @@ export class AlertEffects {
             ),
         { dispatch: false }
     );
-    
+
     addAlbumToCollection$ = createEffect(
         () =>
             this.actions$.pipe(
@@ -105,12 +109,21 @@ export class AlertEffects {
             ),
         { dispatch: false }
     );
-    
+
     updateStickers$ = createEffect(
         () =>
             this.actions$.pipe(
                 ofType(UserAlbumActions.updateStickersListSuccess),
                 tap(() => this.alertService.success("Uspešno ste izmenili listu sličica."))
+            ),
+        { dispatch: false }
+    );
+
+    addAuction$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuctionActions.addAuctionSuccess),
+                tap(() => this.alertService.success("Uspešno ste dodali proizvod."))
             ),
         { dispatch: false }
     );
