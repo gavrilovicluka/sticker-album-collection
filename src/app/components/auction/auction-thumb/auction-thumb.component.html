@@ -31,17 +31,17 @@
         <a>N/A</a>
       </ng-template>
       <p class="clock">
-        <a
+        <label
           *ngIf="IsAuctionEnd(auction.endDate); else startBlock"
           class="alert-warning"
           matTooltip="Auction Ended"
-          >ENDED</a
+          >ZAVRŠENO</label
         >
         <ng-template #startBlock>
-          <a
+          <label
             *ngIf="IsAuctionStart(auction.startDate); else timeBlock"
             class="alert-success"
-            >WAIT..</a
+            >NA ČEKANJU</label
           >
         </ng-template>
         <ng-template #timeBlock>
@@ -56,6 +56,7 @@
                           padding: 10px 4px;
                           '
             "
+            [endMessage]="'Aukcija je gotova'"
           ></div>
         </ng-template>
       </p>

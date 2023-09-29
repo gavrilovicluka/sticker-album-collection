@@ -38,17 +38,23 @@ export class AuctionThumbComponent {
   }
 
   public IsAuctionEnd(end: Date): boolean {
-    let date1 = end;
-    let date2 = new Date();
+    if (typeof end === 'string') {
+      end = new Date(end);
+    }
+    let date1 = end.getTime();
+    let date2 = new Date().getTime();
     if (date1 < date2) return true;
     return false;
   }
 
 
-  public IsAuctionStart(start: Date) {
-    // var date1 = new Date(start);
-    let date1 = start;
-    let date2 = new Date();
+  public IsAuctionStart(start: Date): boolean {
+    if (typeof start === 'string') {
+      start = new Date(start);
+    }
+    
+    let date1 = start.getTime();
+    let date2 = new Date().getTime();
     if (date1 > date2) return true;
     return false;
   }

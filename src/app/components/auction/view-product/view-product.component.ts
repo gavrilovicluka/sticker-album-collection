@@ -116,4 +116,5 @@ export class ViewProductComponent implements OnInit {
     return dateTime.toLocaleDateString('sr-RS', options) + '  ' + dateTime.toLocaleTimeString('sr');
   }
 
+
 }

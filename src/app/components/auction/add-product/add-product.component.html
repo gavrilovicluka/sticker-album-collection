@@ -89,22 +89,39 @@
               <div class="col-md-5 d-flex justify-content-center">
                 <mat-form-field>
                   <mat-label>Pocetak aukcije</mat-label>
-                  <input
+                  <!-- <input
                     matInput
                     [min]="minDate"
                     [matDatepicker]="startPicker"
                     formControlName="StartDateTime"
                     required
                   />
-                  <!-- value="{{
-                    this.productForm.controls['StartDateTime'].value
-                  }}" -->
                   <mat-hint>MM/DD/YYYY</mat-hint>
                   <mat-datepicker-toggle
                     matIconSuffix
                     [for]="startPicker"
                   ></mat-datepicker-toggle>
-                  <mat-datepicker #startPicker></mat-datepicker>
+                  <mat-datepicker #startPicker></mat-datepicker> -->
+
+                  <input
+                    matInput
+                    [ngxMatDatetimePicker]="startPicker"
+                    formControlName="StartDateTime"
+                    [min]="minDate"
+                    required
+                  />
+                  <ngx-mat-datepicker-toggle
+                    matSuffix
+                    [for]="startPicker"
+                  ></ngx-mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #startPicker
+                    [stepHour]="1"
+                    [stepMinute]="1"
+                    [stepSecond]="1"
+                    [touchUi]="false"
+                  >
+                  </ngx-mat-datetime-picker>
 
                   <mat-error
                     *ngIf="
@@ -133,7 +150,7 @@
               <div class="col-md-5 d-flex justify-content-center">
                 <mat-form-field>
                   <mat-label>Kraj aukcije</mat-label>
-                  <input
+                  <!-- <input
                     matInput
                     [min]="minDate"
                     [matDatepicker]="endPicker"
@@ -145,7 +162,26 @@
                     matIconSuffix
                     [for]="endPicker"
                   ></mat-datepicker-toggle>
-                  <mat-datepicker #endPicker></mat-datepicker>
+                  <mat-datepicker #endPicker></mat-datepicker> -->
+
+                  <input
+                    matInput
+                    [ngxMatDatetimePicker]="endPicker"
+                    formControlName="EndDateTime"
+                    [min]="minDate"
+                  />
+                  <ngx-mat-datepicker-toggle
+                    matSuffix
+                    [for]="endPicker"
+                  ></ngx-mat-datepicker-toggle>
+                  <ngx-mat-datetime-picker
+                    #endPicker
+                    [stepHour]="1"
+                    [stepMinute]="1"
+                    [stepSecond]="1"
+                    [touchUi]="false"
+                  >
+                  </ngx-mat-datetime-picker>
 
                   <mat-error
                     *ngIf="

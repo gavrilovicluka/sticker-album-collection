@@ -71,6 +71,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuctionService } from './services/auction/auction.service';
 import { auctionReducer } from './store/reducers/auction.reducer';
 import { AuctionThumbComponent } from './components/auction/auction-thumb/auction-thumb.component';
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [
@@ -129,6 +130,7 @@ import { AuctionThumbComponent } from './components/auction/auction-thumb/auctio
       UserEffect,
       AlertEffects,
       AuctionEffects,
+      
     ]),
     HttpClientModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 4000, positionX: 'right' }),
@@ -142,7 +144,9 @@ import { AuctionThumbComponent } from './components/auction/auction-thumb/auctio
     MatInputModule,
     MatNativeDateModule,
     MatButtonModule,
-    
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
 
   ],
   providers: [              // ovde se dodaju servisi
