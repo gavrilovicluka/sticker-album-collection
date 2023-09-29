@@ -13,7 +13,16 @@ export const selectAllAuctions = createSelector(
     (state: AuctionState) => Object
         .values(state.entities)
         .filter(auction => auction != null)
-        .map(auction => auction as Auction)
+        // .map(auction => auction as Auction)
+        .map(auction => {
+            if (typeof auction!.endDate === 'string') {
+              return {
+                ...auction,
+                endDate: new Date(auction!.endDate),
+              };
+            }
+            return auction;
+          }) as Auction[] 
 );
 
 export const selectAllAuctionsAsDict = createSelector(

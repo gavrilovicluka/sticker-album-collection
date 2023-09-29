@@ -1,106 +1,105 @@
-<!-- <div class="col-8 mt-4 display-flex justify-content-center">
+<!-- <div class="col-8 mt-4 display-flex justify-content-center" *ngIf="auctions$ | async as auctions">
   <div class="row mt-3">
-    <div *ngIf="PageProducts; else noContent" class="row">
-      <div class="card mb-3">
-        <div class="col-md-3 col-6" *ngFor="let product of PageProducts">
-          <div class="basic-product-container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="hide-name">{{ product.productName }}</div>
-              </div>
+    <ng-container *ngFor="let auction of auctions">
+      <div class="col-3">
+        <div class="basic-product-container">
+          <div class="row">
+            <div class="col-md-12 mt-2">
+              <div class="hide-name">{{ auction.productName }}</div>
             </div>
-            <div class="row">
-              <div class="gallery-wrap col-md-12">
-                <div class="img-small-wrap">
-                  <div class="item-gallery">
-                    <img src="{{ product.image }}" />
-                  </div>
+          </div>
+          <div class="row">
+            <div class="gallery-wrap col-md-12">
+              <div class="img-small-wrap">
+                <div class="item-gallery">
+                  <img src="{{ baseUrl + auction.productImage }}" />
                 </div>
               </div>
             </div>
-            <div class="product-info-container">
-              <p *ngIf="product.bidderName; else elseBlock" class="price">
-                ${{ product.bidPrice }}
-              </p>
-              <ng-template #elseBlock>
-                <p class="price">${{ product.basePrice }}</p>
-              </ng-template>
+          </div>
+          <div class="product-info-container">
+            <p *ngIf="auction.bidderName; else elseBlock" class="price">
+              ${{ auction.bidPrice }}
+            </p>
+            <ng-template #elseBlock>
+              <p class="price">{{ auction.basePrice }} din</p>
+            </ng-template>
+            <a *ngIf="auction.bidderName; else thenBlock" class="leader">{{
+              auction.bidderName
+            }}</a>
+            <ng-template #thenBlock>
+              <a>N/A</a>
+            </ng-template>
+            <p class="clock">
               <a
-                *ngIf="product.bidderName; else thenBlock"
-                class="leader"
-                routerLink="profile/{{ product.bidderId }}"
-                >{{ product.bidderName }}</a
+                *ngIf="IsAuctionEnd(auction.endDate); else startBlock"
+                class="alert-warning"
+                matTooltip="Auction Ended"
+                >ENDED</a
               >
-              <ng-template #thenBlock>
-                <a>N/A</a>
-              </ng-template>
-              <p class="clock">
+              <ng-template #startBlock>
                 <a
-                  *ngIf="IsAuctionEnd(product.endDate); else startBlock"
-                  class="alert-warning"
-                  matTooltip="Auction Ended"
+                  *ngIf="IsAuctionStart(auction.startDate); else timeBlock"
+                  class="alert-success"
+                  >WAIT..</a
                 >
-                  ENDED</a
-                >
-                <ng-template #startBlock>
+              </ng-template>
+              <ng-template #timeBlock>
+                <p class="mt-2 mb-0">Preostalo vreme:</p>
+                <div
+                  class="countdown d-flex justify-content-center"
+                  simpleCountdown
+                  [dateTo]="auction.endDate.getTime() / 1000"
+                  [styles]="
+                    '
+                              background-color: #dfdfdf;
+                              padding: 10px 4px;
+                              '
+                  "
+                ></div>
+              </ng-template>
+            </p>
+            <div class="row">
+              <div class="col-6">
+                <p class="btn-control">
                   <a
-                    *ngIf="IsAuctionStart(product.startDate); else timeBlock"
-                    class="alert-success"
-                  >
-                    WAIT..</a
-                  >
-                </ng-template>
-
-                <ng-template #timeBlock>
-                  <p>Preostalo vreme:</p>
-
-                  <div
-                    class="countdown"
-                    simpleCountdown
-                    [dateTo]="product.endDate.getTime() / 1000"
-                  ></div>
-                </ng-template>
-              </p>
-              <div class="row">
-                <div class="col-6">
-                  <p class="btn-control">
-                    <a
-                      color="primary"
-                      mat-button
-                      matTooltip="View This Product"
-                      routerLink="product/{{ product.productId }}"
-                    >
-                      <i class="material-icons"> visibility </i>
-                    </a>
-                  </p>
-                </div>
-                <div class="col-6">
-                  <button
-                    color="accent"
+                    color="primary"
                     mat-button
-                    (click)="
-                      openDialog(
-                        product.productId,
-                        product.bidPrice == 0
-                          ? product.basePrice
-                          : product.bidPrice
-                      )
-                    "
-                    matTooltip="Bid This Product"
-                    [disabled]="
-                      IsAuctionEnd(product.endDate) ||
-                      IsAuctionStart(product.startDate)
-                    "
+                    matTooltip="View This Product"
+                    [routerLink]="['product', auction.id]"
                   >
-                    <i class="material-icons"> gavel </i>
-                  </button>
-                </div>
+                    <i class="material-icons"> visibility </i>
+                  </a>
+                </p>
+              </div>
+              <div class="col-6">
+                <button
+                  color="accent"
+                  mat-button
+                  (click)="
+                    openDialog(
+                      auction.id,
+                      auction.bidPrice == 0
+                        ? auction.basePrice
+                        : auction.bidPrice
+                    )
+                  "
+                  matTooltip="Bid This Product"
+                  [disabled]="
+                    IsAuctionEnd(auction.endDate) ||
+                    IsAuctionStart(auction.startDate)
+                  "
+                >
+                  <i class="material-icons" style="color: rgb(174, 33, 33)">
+                    gavel
+                  </i>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>
 
@@ -110,71 +109,27 @@
   </div>
 </ng-template> -->
 
-<div class="col-8 mt-4">
-  <div class="row mt-3">
-    <div *ngIf="PageProducts; else noContent" class="row">
-      <ng-container *ngFor="let product of PageProducts">
-        <div class="col-md-3 col-6">
-          <div class="basic-product-container">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="hide-name">{{ product.productName }}</div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="gallery-wrap col-md-12">
-                <div class="img-small-wrap">
-                  <div class="item-gallery">
-                    <img [src]="product.image" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="product-info-container">
-              <p *ngIf="product.bidderName; else elseBlock" class="price">
-                ${{ product.bidPrice }}
-              </p>
-              <ng-template #elseBlock>
-                <p class="price">${{ product.basePrice }}</p>
-              </ng-template>
-              <a *ngIf="product.bidderName; else thenBlock" class="leader">{{ product.bidderName }}</a>
-              <ng-template #thenBlock>
-                <a>N/A</a>
-              </ng-template>
-              <p class="clock">
-                <a *ngIf="IsAuctionEnd(product.endDate); else startBlock" class="alert-warning" matTooltip="Auction Ended">ENDED</a>
-                <ng-template #startBlock>
-                  <a *ngIf="IsAuctionStart(product.startDate); else timeBlock" class="alert-success">WAIT..</a>
-                </ng-template>
-                <ng-template #timeBlock>
-                  <p>Preostalo vreme:</p>
-                  <div class="countdown" simpleCountdown [dateTo]="product.endDate.getTime() / 1000"></div>
-                </ng-template>
-              </p>
-              <div class="row">
-                <div class="col-6">
-                  <p class="btn-control">
-                    <a color="primary" mat-button matTooltip="View This Product" [routerLink]="['product', product.productId]">
-                      <i class="material-icons"> visibility </i>
-                    </a>
-                  </p>
-                </div>
-                <div class="col-6">
-                  <button color="accent" mat-button (click)="openDialog(product.productId, product.bidPrice == 0 ? product.basePrice : product.bidPrice)" matTooltip="Bid This Product" [disabled]="IsAuctionEnd(product.endDate) || IsAuctionStart(product.startDate)">
-                    <i class="material-icons"> gavel </i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+
+
+
+
+
+
+
+
+
+<div
+  class="row justify-content-center bg-light"
+  *ngIf="auctions$ | async as auctions"
+>
+  <div class="col-10 mt-4 display-flex justify-content-center">
+
+    <div class="row mt-3">
+      <ng-container *ngFor="let auction of auctions">
+        <div class="col-3">
+          <app-auction-thumb [auction]="auction"></app-auction-thumb>
         </div>
       </ng-container>
     </div>
   </div>
 </div>
-
-<ng-template #noContent>
-  <div class="no-content text-center">
-    <h1 class="alert alert-info">No Product Available</h1>
-  </div>
-</ng-template>

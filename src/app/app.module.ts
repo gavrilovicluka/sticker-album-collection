@@ -70,6 +70,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { AuctionService } from './services/auction/auction.service';
 import { auctionReducer } from './store/reducers/auction.reducer';
+import { AuctionThumbComponent } from './components/auction/auction-thumb/auction-thumb.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { auctionReducer } from './store/reducers/auction.reducer';
     SwapInfoComponent,
     AuctionListComponent,
     ViewProductComponent,
-    AddProductComponent
+    AddProductComponent,
+    AuctionThumbComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,7 @@ import { auctionReducer } from './store/reducers/auction.reducer';
       albums: albumReducer,
       userAlbums: userAlbumReducer,
       user: userReducer,
-      auction: auctionReducer,
+      auctions: auctionReducer,
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([

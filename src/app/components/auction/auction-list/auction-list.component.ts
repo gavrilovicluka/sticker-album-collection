@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
+import { Auction } from 'src/app/models/auction';
+import * as AuctionActions from 'src/app/store/actions/auction.actions';
 import { AppState } from 'src/app/store/app.state';
+import { selectAllAuctions } from 'src/app/store/selectors/auction.selector';
 
 interface ProductHome {
   productId: string;
@@ -20,8 +23,10 @@ interface ProductHome {
   templateUrl: './auction-list.component.html',
   styleUrls: ['./auction-list.component.scss']
 })
-export class AuctionListComponent {
+export class AuctionListComponent implements OnInit {
 
+  baseUrl: string = 'http://localhost:3000';
+  auctions$: Observable<Auction[]> = of([]);
 
   public PageProducts: ProductHome[] = [
     {
@@ -40,8 +45,14 @@ export class AuctionListComponent {
   constructor(private store: Store<AppState>) {
   }
 
+  ngOnInit(): void {
 
-  openDialog(id: string, min_price: number): void {
+    this.store.dispatch(AuctionActions.getAuctions());
+    this.auctions$ = this.store.select(selectAllAuctions) //.subscribe(x => console.log(typeof x[0].endDate));
+  }
+
+
+  openDialog(id: number, min_price: number): void {
     // this.selectedId = id;
     // this.currentPrice = min_price;
     // let dialogRef = this.dialog.open(BidDialogComponent, {
@@ -68,16 +79,17 @@ export class AuctionListComponent {
   }
 
   public IsAuctionEnd(end: Date): boolean {
-    var date1 = end;
-    var date2 = new Date();
+    let date1 = end;
+    let date2 = new Date();
     if (date1 < date2) return true;
     return false;
   }
 
 
-  public IsAuctionStart(start: string) {
-    var date1 = new Date(start);
-    var date2 = new Date();
+  public IsAuctionStart(start: Date) {
+    // var date1 = new Date(start);
+    let date1 = start;
+    let date2 = new Date();
     if (date1 > date2) return true;
     return false;
   }

@@ -20,6 +20,11 @@ export const auctionReducer = createReducer(
 
     on(AuctionActions.addAuctionSuccess, (state, action) => adapter.addOne(action.auction, state)),
 
+    on(AuctionActions.getAuctionsSuccess, (state, props) => {
+        const { auctions } = props;
+        return adapter.setAll(auctions, state)
+    }),
+
 )
 
 

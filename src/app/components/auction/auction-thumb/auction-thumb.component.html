@@ -1,0 +1,98 @@
+<div class=""  *ngIf="auction">
+    <div class="basic-product-container">
+      <div class="row">
+        <div class="col-md-12 mt-2">
+          <div class="hide-name">{{ auction.productName }}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="gallery-wrap col-md-12">
+          <div class="img-small-wrap d-flex align-items-center justify-content-center p-1" style="height: 200px">
+            <!-- <div class="item-gallery"> -->
+              <img src="{{ baseUrl + auction.productImage }}" />
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="product-info-container">
+        <p *ngIf="auction.bidderName; else elseBlock" class="price">
+          ${{ auction.bidPrice }}
+        </p>
+        <ng-template #elseBlock>
+          <p class="price">{{ auction.basePrice }} din</p>
+        </ng-template>
+        <a *ngIf="auction.bidderName; else thenBlock" class="leader">{{
+          auction.bidderName
+        }}</a>
+        <ng-template #thenBlock>
+          <a>N/A</a>
+        </ng-template>
+        <p class="clock">
+          <a
+            *ngIf="IsAuctionEnd(auction.endDate); else startBlock"
+            class="alert-warning"
+            matTooltip="Auction Ended"
+            >ENDED</a
+          >
+          <ng-template #startBlock>
+            <a
+              *ngIf="IsAuctionStart(auction.startDate); else timeBlock"
+              class="alert-success"
+              >WAIT..</a
+            >
+          </ng-template>
+          <ng-template #timeBlock>
+            <p class="mt-2 mb-0">Preostalo vreme:</p>
+            <div
+              class="countdown d-flex justify-content-center"
+              simpleCountdown
+              [dateTo]="auction.endDate.getTime() / 1000"
+              [styles]="
+                '
+                          background-color: #dfdfdf;
+                          padding: 10px 4px;
+                          '
+              "
+            ></div>
+          </ng-template>
+        </p>
+        <div class="row">
+          <div class="col-6">
+            <p class="btn-control">
+              <a
+                color="primary"
+                mat-button
+                matTooltip="View This Product"
+                [routerLink]="['product', auction.id]"
+              >
+                <i class="material-icons"> visibility </i>
+              </a>
+            </p>
+          </div>
+          <div class="col-6">
+            <button
+              color="accent"
+              mat-button
+              (click)="
+                openDialog(
+                  auction.id,
+                  auction.bidPrice == 0
+                    ? auction.basePrice
+                    : auction.bidPrice
+                )
+              "
+              matTooltip="Bid This Product"
+              [disabled]="
+                IsAuctionEnd(auction.endDate) ||
+                IsAuctionStart(auction.startDate)
+              "
+            >
+              <i class="material-icons" style="color: rgb(174, 33, 33)">
+                gavel
+              </i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

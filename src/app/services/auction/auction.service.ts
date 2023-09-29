@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, mergeMap, of, throwError } from 'rxjs';
+import { Observable, map, mergeMap, of, throwError } from 'rxjs';
 import { Auction, AuctionDto } from 'src/app/models/auction';
 import { environment } from 'src/environments/environments';
 
@@ -31,5 +31,9 @@ export class AuctionService {
         }
       })
     )
+  }
+
+  getAuctions(): Observable<Auction[]> {
+    return this.httpClient.get<Auction[]>(environment.apiUrl + this.path)
   }
 }

@@ -8,8 +8,11 @@ export interface Auction {
     endDate: Date;
     basePrice: number;
     productDescription: string;
+    productImage: string;
     user: User;
     bids: Bid[];
+    bidderName: string;
+    bidPrice: number;
 }
 
 export interface AuctionDto {
