@@ -36,4 +36,8 @@ export class AuctionService {
   getAuctions(): Observable<Auction[]> {
     return this.httpClient.get<Auction[]>(environment.apiUrl + this.path)
   }
+  
+  getAuctionById(auctionId: number): Observable<Auction> {
+    return this.httpClient.get<Auction>(environment.apiUrl + this.path + `/${auctionId}`);
+  }
 }

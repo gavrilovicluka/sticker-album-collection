@@ -44,7 +44,7 @@ export const routes: Routes = [
     // canActivate: [authGuard()]
   },
   {
-    path: "auctions/product/:productId",
+    path: "auctions/product/:auctionId",
     component: ViewProductComponent,
   },
   {

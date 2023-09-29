@@ -25,6 +25,12 @@ export const auctionReducer = createReducer(
         return adapter.setAll(auctions, state)
     }),
 
+    on(AuctionActions.getAuctionByIdSuccess, (state, action) => adapter.addOne(action.auction, state)),
+
+    on(AuctionActions.selectAuction, (state, { selectedAuctionId }) => {
+        return { ...state, selectedAuctionId: selectedAuctionId };
+    })
+
 )
 
 

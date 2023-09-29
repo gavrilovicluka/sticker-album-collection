@@ -32,5 +32,15 @@ export const selectAllAuctionsAsDict = createSelector(
 
 export const selectCurrentAuction = createSelector(
     selectAuctionsFeature,
-    (state: AuctionState) => state.entities[state.selectedAuctionId] ?? null
+    (state: AuctionState) => {
+      // state.entities[state.selectedAuctionId] ?? null
+      const auction = state.entities[state.selectedAuctionId];
+      if(!auction) return null;
+      
+      return {
+        ...auction,
+        endDate: new Date(auction.endDate),
+        startDate: new Date(auction.startDate),
+      }
+    }
 )

@@ -35,5 +35,14 @@ export class AuctionEffects {
         catchError((error) => of(AuctionActions.getAuctionsFailure(error)))
       ))
   ))
+  
+  getAuctionById$ = createEffect(() => this.actions$.pipe(
+    ofType(AuctionActions.getAuctionById),
+    mergeMap((action) =>
+      this.auctionService.getAuctionById(action.aucionId).pipe(
+        map((auction) => AuctionActions.getAuctionByIdSuccess({ auction })),
+        catchError((error) => of(AuctionActions.getAuctionByIdFailure(error)))
+      ))
+  ))
 
 }

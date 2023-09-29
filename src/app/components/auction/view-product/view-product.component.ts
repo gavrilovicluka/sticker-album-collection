@@ -1,4 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.state';
+import * as AuctionActions from 'src/app/store/actions/auction.actions';
+import { selectCurrentAuction } from 'src/app/store/selectors/auction.selector';
+import { Auction } from 'src/app/models/auction';
+import { Observable, of } from 'rxjs';
 
 
 interface Product {
@@ -30,7 +37,7 @@ interface Bid {
   templateUrl: './view-product.component.html',
   styleUrls: ['./view-product.component.scss']
 })
-export class ViewProductComponent {
+export class ViewProductComponent implements OnInit {
 
   product: Product = {
     userName: 'username1',
@@ -49,6 +56,26 @@ export class ViewProductComponent {
 
   currentTopBid?: Bid;
   top10Bids?: Bid[];
+
+  auction$: Observable<Auction | null> = of();
+  baseUrl: string = 'http://localhost:3000';
+
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<AppState>
+  ) { }
+
+  ngOnInit(): void {
+    let auctionId = parseInt(this.route.snapshot.paramMap.get('auctionId')!);
+
+    if (auctionId) {
+      this.store.dispatch(AuctionActions.selectAuction({ selectedAuctionId: auctionId }));
+      this.store.dispatch(AuctionActions.getAuctionById({ aucionId: auctionId }));
+
+      this.auction$ = this.store.select(selectCurrentAuction) //.subscribe(x => console.log(x));
+    }
+
+  }
 
 
   openDialog(min_price: number): void {
@@ -85,6 +112,7 @@ export class ViewProductComponent {
       month: "short",
       day: "numeric",
     };
+
     return dateTime.toLocaleDateString('sr-RS', options) + '  ' + dateTime.toLocaleTimeString('sr');
   }
 
