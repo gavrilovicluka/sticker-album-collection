@@ -24,11 +24,19 @@ export class HeaderComponent implements OnInit {
   }
 
   onMyAlbumsClick(isLoggedIn: boolean) {
-    if(!isLoggedIn) {
+    if (!isLoggedIn) {
       alert("Morate biti prijavljeni da biste videli albume.");
     } else {
       this.router.navigate([`${this.userId}/my-albums`]);
     }
+  }
+
+  goToMyAuctions() {
+
+  }
+
+  goToMyBids() {
+
   }
 
 }

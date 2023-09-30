@@ -25,13 +25,13 @@
         <aside class="col-lg-7">
           <article class="card-body p-4">
             <h3 class="title mb-3">
-              <strong> Naziv proizvoda: </strong> {{ auction.productName }}
+              <strong> Naziv: </strong> {{ auction.productName }}
             </h3>
 
             <p class="price-detail-wrap">
-              <span class="price h3 text-warning">
+              <span class="price h3 text-info">
                 <span class="currency"
-                  >Početna cena: {{ auction.basePrice }}</span
+                  >Početna cena: {{ auction.basePrice }} din</span
                 >
               </span>
             </p>
@@ -57,27 +57,67 @@
       <div class="card current-top-bidder">
         <div class="card-body">
           <div class="row">
-            <p class="card-title col-8">Trenutna najveća ponuda:</p>
-            <p class="card-title col-4">
-              <strong>{{ currentTopBid?.bidPrice }}</strong>
-            </p>
+            <div class="row">
+              <p class="card-title col-8 m-0">Trenutna najveća ponuda:</p>
+              <p class="card-title col-4 m-0 d-flex">
+                <strong>{{
+                  auction.bids && auction.bids.length > 0 ? auction.bids[0].bidPrice + " din": "Nema ponuda"
+                }}</strong>
+              </p>
+            </div>
             <div class="col-12"><hr /></div>
             <div class="col-6">
-              <div class="gallery-wrap">
-                <div class="img-small-wrap">
-                  <p class="card-text">Najveća ponuda:</p>
-                </div>
+              <div class="img-small-wrap">
+                <p class="card-text">Najveća ponuda:</p>
               </div>
+              <p class="card-text">Vreme ponude:</p>
             </div>
             <div class="col-6">
               <p class="card-text highest-bidder-name">
-                {{ currentTopBid?.userName }}
+                {{ auction.bids && auction.bids.length > 0 ? auction.bids[0].bidUsername : "Nema ponuda" }}
               </p>
-              <p class="card-text">Vreme ponude:</p>
-              <p class="card-text">{{ currentTopBid?.bidTime }}</p>
+              <!-- <p class="card-text">Vreme ponude:</p> -->
+              <p class="card-text">
+                {{
+                  auction.bids && auction.bids.length > 0
+                    ? convertToViewAbleDate(auction.bids[0].bidTime)
+                    : "Nema ponuda"
+                }}
+              </p>
             </div>
             <div class="col-12 clock d-flex justify-content-center my-3">
-              <div
+              <p class="clock text-center">
+                <label
+                  *ngIf="IsAuctionEnd(auction.endDate); else startBlock"
+                  class="alert-warning"
+                  matTooltip="Auction Ended"
+                  >Aukcija je gotova</label
+                >
+                <ng-template #startBlock>
+                  <label
+                    *ngIf="IsAuctionStart(auction.startDate); else timeBlock"
+                    class="alert-success"
+                    >Aukcija nije pocela</label
+                  >
+                </ng-template>
+                <ng-template #timeBlock>
+                  <p class="mt-2 mb-0"> <strong>Preostalo vreme:</strong></p>
+                  <div
+                    class="countdown d-flex justify-content-center"
+                    simpleCountdown
+                    [dateTo]="auction.endDate.getTime() / 1000"
+                    [styles]="
+                      '
+                                  background-color: #dfdfdf;
+                                  padding: 10px 4px;
+                                  font-size: 20px;
+                                  '
+                    "
+                    [endMessage]="'Aukcija je gotova'"
+                  ></div>
+                </ng-template>
+              </p>
+              <!-- <div
                 class="countdown"
                 simpleCountdown
                 [dateTo]="auction.endDate.getTime() / 1000"
@@ -89,7 +129,7 @@
                           '
                 "
                 [endMessage]="'Aukcija je gotova'"
-              ></div>
+              ></div> -->
             </div>
             <div class="col-3"></div>
             <div class="col-6 text-center">
@@ -99,8 +139,8 @@
                 mat-raised-button
                 (click)="
                   openDialog(
-                    currentTopBid != null
-                      ? currentTopBid.bidPrice
+                    auction.bids && auction.bids.length > 0
+                      ? auction.bids[0].bidPrice
                       : auction.basePrice
                   )
                 "
@@ -119,7 +159,7 @@
     <div class="col-lg-7">
       <div class="card-basic-content">
         <mat-tab-group>
-          <mat-tab label="Informacije o proizvodu">
+          <mat-tab label="Informacije o aukciji">
             <table class="table table-hover">
               <tbody>
                 <tr>
@@ -136,7 +176,7 @@
           </mat-tab>
 
           <mat-tab label="Informacije o korisniku">
-            <table class="table table-hover">
+            <table class="table table-hover" *ngIf="auction.user">
               <tbody>
                 <tr>
                   <td><strong>Username</strong></td>
@@ -168,10 +208,10 @@
         <div class="card-body">
           <h5 class="card-title">Top 5 najvećih ponuda</h5>
           <div class="bidders">
-            <div *ngFor="let bid of top10Bids" class="row">
-              <p class="card-text col-3">{{ bid?.bidPrice }}</p>
-              <p class="card-text col-4">{{ bid?.userName }}</p>
-              <p class="card-text col-5">{{ bid?.bidTime }}</p>
+            <div *ngFor="let bid of auction.bids" class="row my-2 d-flex align-items-end">
+              <p class="card-text col-3">{{ bid?.bidPrice }} din</p>
+              <p class="card-text col-4">{{ bid?.bidUsername }}</p>
+              <p class="card-text col-5">{{ convertToViewAbleDate(bid.bidTime) }}</p>
             </div>
           </div>
         </div>

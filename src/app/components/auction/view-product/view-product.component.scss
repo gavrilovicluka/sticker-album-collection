@@ -50,9 +50,9 @@
 .top-ten-bidder .card-text {
   text-align: center;
   font-weight: bold;
-  font-size: 10px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  // font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+  //   "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 .current-top-bidder {
   max-height: 400px;
@@ -60,23 +60,28 @@
   border-radius: 10px;
   background: lightgray;
   box-shadow: 5px 5px 5px darkgray;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  // font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+  //   "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   min-width: 350px;
 }
+
 .current-top-bidder .card-title {
   text-align: center;
   padding: 10px;
   border-radius: 20px;
+  font-size: 15px;
 }
+
 .current-top-bidder .card-text {
   margin: 0px;
   padding: 0px;
-  font-size: 12px;
+  font-size: 15px;
 }
+
 .current-top-bidder .highest-bidder-name {
   font-weight: bold;
 }
+
 hr {
   color: darkgreen;
 }

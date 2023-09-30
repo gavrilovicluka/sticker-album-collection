@@ -24,12 +24,31 @@
             Moji albumi
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            role="button"
+            aria-expanded="false"
+            >Aukcije</a
+          >
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/auctions']" [queryParams]="{ type: 'active' }">Aktivne</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/auctions']" [queryParams]="{ type: 'ended' }">Završene</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/auctions']" [queryParams]="{ type: 'waiting' }">Na čekanju</a></li>
+            <div *ngIf="hvm.isLoggedin">
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" (click)="goToMyAuctions()">Moje aukcije</a></li>
+              <li><a class="dropdown-item" (click)="goToMyBids()">Moje ponude</a></li>
+            </div>
+          </ul>
+        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/about">O nama</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact">Kontakt</a>
-        </li>
+        </li> -->
       </div>
       <li class="nav-item">
         <app-auth-links></app-auth-links>

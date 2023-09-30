@@ -18,15 +18,15 @@
       </div>
     </div>
     <div class="product-info-container">
-      <p *ngIf="auction.bidderName; else elseBlock" class="price">
-        ${{ auction.bidPrice }}
+      <p *ngIf="auction.topBid; else elseBlock" class="price mb-1">
+        {{ auction.topBid.bidPrice }} din
       </p>
       <ng-template #elseBlock>
-        <p class="price">{{ auction.basePrice }} din</p>
+        <p class="price mb-2">{{ auction.basePrice }} din</p>
       </ng-template>
-      <a *ngIf="auction.bidderName; else thenBlock" class="leader">{{
-        auction.bidderName
-      }}</a>
+      <a *ngIf="auction.topBid; else thenBlock" class="leader">
+        {{ auction.topBid.bidUsername }}</a
+      >
       <ng-template #thenBlock>
         <a>N/A</a>
       </ng-template>
@@ -80,7 +80,7 @@
             (click)="
               openDialog(
                 auction.id,
-                auction.bidPrice === 0 ? auction.basePrice : auction.bidPrice
+                auction.topBid ? auction.topBid.bidPrice : auction.basePrice
               )
             "
             matTooltip="Bid This Product"

@@ -11,8 +11,7 @@ export interface Auction {
     productImage: string;
     user: User;
     bids: Bid[];
-    bidderName: string;
-    bidPrice: number;
+    topBid: Bid;
 }
 
 export interface AuctionDto {

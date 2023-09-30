@@ -10,6 +10,13 @@ export const selectAuction = createAction(
 )
 
 
+// Browser Reload Actions
+export const browserReload = createAction(
+    '[Auction View Component] Browser Reload',
+    props<{ auction: Auction }>()
+);
+
+
 // Add Auction Actions
 export const addAuction = createAction(
     '[Auction Add Component] Add Auction',
@@ -29,7 +36,8 @@ export const addAuctionFailure = createAction(
 
 // Get Auctions Actions
 export const getAuctions = createAction(
-    '[Auction List Component] Get Auctions'
+    '[Auction List Component] Get Auctions',
+    props<{ auctionType: string }>()
 );
 
 export const getAuctionsSuccess = createAction(

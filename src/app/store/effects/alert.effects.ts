@@ -39,7 +39,8 @@ export class AlertEffects {
                     HttpActions.forbiddenError,
                     HttpActions.unauthorizedError,
                     AuctionActions.addAuctionFailure,
-
+                    AuctionActions.makeBidFailure,
+                    AuctionActions.getAuctionsFailure,
 
                 ),
                 tap((error) => this.alertService.danger(error.error.message))
@@ -124,6 +125,15 @@ export class AlertEffects {
             this.actions$.pipe(
                 ofType(AuctionActions.addAuctionSuccess),
                 tap(() => this.alertService.success("Uspešno ste dodali proizvod."))
+            ),
+        { dispatch: false }
+    );
+
+    makeBid$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(AuctionActions.makeBidSuccess),
+                tap(() => this.alertService.success("Uspešno ste postavili ponudu."))
             ),
         { dispatch: false }
     );

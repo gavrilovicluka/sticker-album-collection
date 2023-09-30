@@ -29,7 +29,28 @@ export const auctionReducer = createReducer(
 
     on(AuctionActions.selectAuction, (state, { selectedAuctionId }) => {
         return { ...state, selectedAuctionId: selectedAuctionId };
-    })
+    }),
+
+    on(AuctionActions.getAuctionByIdSuccess, (state, { auction }) => {
+
+        const auction1 = state.entities[auction.id];
+
+        if (auction1) {
+            const updatedAuction: Auction = {
+                ...auction1,
+                bids: [...auction.bids],
+                user: auction.user
+            };
+            return adapter.upsertOne(updatedAuction, state);
+        }
+        return state;
+    }),
+
+    on(AuctionActions.browserReload, (state, action) => ({
+        ...state,
+        entities: { [action.auction.id]: action.auction },
+        error: null
+    })),
 
 )
 

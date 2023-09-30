@@ -36,7 +36,6 @@ export const selectCurrentAuction = createSelector(
       // state.entities[state.selectedAuctionId] ?? null
       const auction = state.entities[state.selectedAuctionId];
       if(!auction) return null;
-      
       return {
         ...auction,
         endDate: new Date(auction.endDate),

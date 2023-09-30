@@ -1,5 +1,12 @@
 import { User } from "./user";
 
 export interface Bid {
-    bidder: User;
+    id: number,
+    bidPrice: number,
+    bidTime: Date
+    bidUserId: number,
+    bidUsername: string,
+    bidUserAddress: string,
+    bidUserPhoneNumber: string,
+    bidUserEmail: string
 }

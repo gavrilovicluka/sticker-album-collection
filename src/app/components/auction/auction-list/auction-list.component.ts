@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { Auction } from 'src/app/models/auction';
@@ -42,13 +43,18 @@ export class AuctionListComponent implements OnInit {
     }
   ];
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
 
-    this.store.dispatch(AuctionActions.getAuctions());
-    this.auctions$ = this.store.select(selectAllAuctions);
+    this.route.queryParams.subscribe(params => {
+      const type = params['type'];
+
+      this.store.dispatch(AuctionActions.getAuctions({ auctionType: type }));
+
+    });
+    this.auctions$ = this.store.select(selectAllAuctions) //.subscribe(x => console.log(x));
   }
 
 }

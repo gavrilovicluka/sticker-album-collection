@@ -20,21 +20,20 @@ export class AuctionThumbComponent {
   isLoggedIn?: boolean;
   selectedId?: number;
 
-  constructor(public dialog: MatDialog, private store: Store<AppState>) {
+  constructor(private dialog: MatDialog, private store: Store<AppState>) {
     this.store.select(selectIsLoggedIn).subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
   }
 
   openDialog(id: number, minPrice: number): void {
 
     this.selectedId = id;
-    console.log(this.selectedId);
 
     if (!this.isLoggedIn) {
-      alert("Morate biti prijavljeni da biste postavili ponudu.");
+      // alert("Morate biti prijavljeni da biste postavili ponudu.");
+      this.store.dispatch(AuctionActions.makeBidFailure({ error: new Error("Morate biti prijavljeni da biste postavili ponudu") }))
       return;
     }
 
-    minPrice = 200; // ****************************
     this.currentPrice = minPrice;
 
     let dialogRef = this.dialog.open(BidDialogComponent, {
@@ -47,7 +46,8 @@ export class AuctionThumbComponent {
       if (result && this.currentPrice && this.selectedId && result > this.currentPrice) {
         this.store.dispatch(AuctionActions.makeBid({ bidPrice: result, auctionId: this.selectedId }));
       } else if (result) {
-        alert('Vaša ponuda mora biti veća od trenutne ponude.');
+        // alert('Vaša ponuda mora biti veća od trenutne ponude.');
+        this.store.dispatch(AuctionActions.makeBidFailure({ error: new Error("Vaša ponuda mora biti veća od trenutne ponude") }))
       }
     });
   }

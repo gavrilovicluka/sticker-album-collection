@@ -6,6 +6,9 @@ import * as AuctionActions from 'src/app/store/actions/auction.actions';
 import { selectCurrentAuction } from 'src/app/store/selectors/auction.selector';
 import { Auction } from 'src/app/models/auction';
 import { Observable, of } from 'rxjs';
+import { selectIsLoggedIn } from 'src/app/store/selectors/auth.selectors';
+import { MatDialog } from '@angular/material/dialog';
+import { BidDialogComponent } from '../bid-dialog/bid-dialog.component';
 
 
 interface Product {
@@ -58,45 +61,56 @@ export class ViewProductComponent implements OnInit {
   top10Bids?: Bid[];
 
   auction$: Observable<Auction | null> = of();
+  auctionId?: number;
   baseUrl: string = 'http://localhost:3000';
+  currentPrice?: number;
+  isLoggedIn?: boolean;
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    let auctionId = parseInt(this.route.snapshot.paramMap.get('auctionId')!);
+    this.auctionId = parseInt(this.route.snapshot.paramMap.get('auctionId')!);
 
-    if (auctionId) {
-      this.store.dispatch(AuctionActions.selectAuction({ selectedAuctionId: auctionId }));
-      this.store.dispatch(AuctionActions.getAuctionById({ aucionId: auctionId }));
+    if (this.auctionId) {
+      this.store.dispatch(AuctionActions.selectAuction({ selectedAuctionId: this.auctionId }));
+      this.store.dispatch(AuctionActions.getAuctionById({ aucionId: this.auctionId }));
 
       this.auction$ = this.store.select(selectCurrentAuction) //.subscribe(x => console.log(x));
     }
 
+    this.store.select(selectIsLoggedIn).subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+
   }
 
 
-  openDialog(min_price: number): void {
-    // this.currentPrice = min_price;
-    // let dialogRef = this.dialog.open(BidDialogComponent, {
-    //   width: '250px',
-    //   data: { price: min_price }
-    // });
+  openDialog(minPrice: number): void {
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result > this.currentPrice) {
-    //     if (this._commonService.isAuthenticated()) {
-    //       //console.log(this._commonService.getUserId());
-    //       this.TryBid(result, this.productId, this._commonService.getUserId());
-    //     } else {
-    //       this.router.navigate(['/signin']);
-    //     }
-    //   } else if (result) {
-    //     this.toastr.warning('Your bid must be grater than current bid.');
-    //   }
-    // });
+    if (!this.isLoggedIn) {
+      // alert("Morate biti prijavljeni da biste postavili ponudu.");
+      this.store.dispatch(AuctionActions.makeBidFailure({ error: new Error("Morate biti prijavljeni da biste postavili ponudu") }))
+      return;
+    }
+
+    this.currentPrice = minPrice;
+
+    let dialogRef = this.dialog.open(BidDialogComponent, {
+      width: '250px',
+      data: { price: minPrice }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result && this.currentPrice && this.auctionId && result > this.currentPrice) {
+        this.store.dispatch(AuctionActions.makeBid({ bidPrice: result, auctionId: this.auctionId }));
+      } else if (result) {
+        // alert('Vaša ponuda mora biti veća od trenutne ponude.');
+        this.store.dispatch(AuctionActions.makeBidFailure({ error: new Error("Vaša ponuda mora biti veća od trenutne ponude") }))
+      }
+    });
   }
 
   isAuctionLive(start: Date, end: Date): boolean {
@@ -105,7 +119,8 @@ export class ViewProductComponent implements OnInit {
     return false;
   }
 
-  convertToViewAbleDate(dateTime: Date) {
+  convertToViewAbleDate(date: Date | string) {
+    const dateTime = new Date(date);
     const options: Intl.DateTimeFormatOptions = {
       weekday: "short",
       year: "numeric",
@@ -114,6 +129,28 @@ export class ViewProductComponent implements OnInit {
     };
 
     return dateTime.toLocaleDateString('sr-RS', options) + '  ' + dateTime.toLocaleTimeString('sr');
+  }
+
+  public IsAuctionEnd(end: Date): boolean {
+    if (typeof end === 'string') {
+      end = new Date(end);
+    }
+    let date1 = end.getTime();
+    let date2 = new Date().getTime();
+    if (date1 < date2) return true;
+    return false;
+  }
+
+
+  public IsAuctionStart(start: Date): boolean {
+    if (typeof start === 'string') {
+      start = new Date(start);
+    }
+
+    let date1 = start.getTime();
+    let date2 = new Date().getTime();
+    if (date1 > date2) return true;
+    return false;
   }
 
 
