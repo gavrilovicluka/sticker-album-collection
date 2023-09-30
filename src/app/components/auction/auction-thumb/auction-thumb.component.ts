@@ -1,5 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { BidDialogComponent } from 'src/app/components/auction/bid-dialog/bid-dialog.component';
 import { Auction } from 'src/app/models/auction';
+import * as AuctionActions from 'src/app/store/actions/auction.actions';
+import { AppState } from 'src/app/store/app.state';
+import { selectIsLoggedIn } from 'src/app/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-auction-thumb',
@@ -10,31 +16,40 @@ export class AuctionThumbComponent {
 
   @Input() auction: Auction | null = null;
   baseUrl: string = 'http://localhost:3000';
+  currentPrice?: number;
+  isLoggedIn?: boolean;
+  selectedId?: number;
 
-  openDialog(id: number, min_price: number): void {
-    // this.selectedId = id;
-    // this.currentPrice = min_price;
-    // let dialogRef = this.dialog.open(BidDialogComponent, {
-    //   width: '250px',
-    //   data: { price: min_price }
-    // });
+  constructor(public dialog: MatDialog, private store: Store<AppState>) {
+    this.store.select(selectIsLoggedIn).subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+  }
 
-    // dialogRef.afterClosed().subscribe(result => {
+  openDialog(id: number, minPrice: number): void {
 
-    //   if (result && result > this.currentPrice) {
-    //     this.IsRequesting = true;
-    //     if (this._commonService.isAuthenticated()) {
-    //       console.log(this._commonService.getUserId());
-    //       this.TryBid(result, this.selectedId, this._commonService.getUserId());
-    //       this.IsRequesting = false;
-    //     } else {
-    //       this.IsRequesting = false;
-    //       this.router.navigate(['/signin']);
-    //     }
-    //   }else if(result){
-    //     this.toastr.warning('Your bid must be grater than current bid.');
-    //   }
-    // });
+    this.selectedId = id;
+    console.log(this.selectedId);
+
+    if (!this.isLoggedIn) {
+      alert("Morate biti prijavljeni da biste postavili ponudu.");
+      return;
+    }
+
+    minPrice = 200; // ****************************
+    this.currentPrice = minPrice;
+
+    let dialogRef = this.dialog.open(BidDialogComponent, {
+      width: '250px',
+      data: { price: minPrice }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result && this.currentPrice && this.selectedId && result > this.currentPrice) {
+        this.store.dispatch(AuctionActions.makeBid({ bidPrice: result, auctionId: this.selectedId }));
+      } else if (result) {
+        alert('Vaša ponuda mora biti veća od trenutne ponude.');
+      }
+    });
   }
 
   public IsAuctionEnd(end: Date): boolean {
@@ -52,7 +67,7 @@ export class AuctionThumbComponent {
     if (typeof start === 'string') {
       start = new Date(start);
     }
-    
+
     let date1 = start.getTime();
     let date2 = new Date().getTime();
     if (date1 > date2) return true;

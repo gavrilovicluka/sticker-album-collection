@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, mergeMap, of, throwError } from 'rxjs';
 import { Auction, AuctionDto } from 'src/app/models/auction';
+import { Bid } from 'src/app/models/bid';
 import { environment } from 'src/environments/environments';
 
 @Injectable({
@@ -19,15 +20,15 @@ export class AuctionService {
       'Authorization': `Bearer ${token}`
     });
     return this.httpClient.post<Auction>(
-      environment.apiUrl + this.path + '/create', 
+      environment.apiUrl + this.path + '/create',
       fd,
       { headers: headers }
     ).pipe(
-      mergeMap((publisher) => {
-        if (publisher) {
-          return of(publisher);
+      mergeMap((auction) => {
+        if (auction) {
+          return of(auction);
         } else {
-          return throwError(() => new Error('Unable to add publisher'));
+          return throwError(() => new Error('Unable to add auction'));
         }
       })
     )
@@ -36,8 +37,28 @@ export class AuctionService {
   getAuctions(): Observable<Auction[]> {
     return this.httpClient.get<Auction[]>(environment.apiUrl + this.path)
   }
-  
+
   getAuctionById(auctionId: number): Observable<Auction> {
     return this.httpClient.get<Auction>(environment.apiUrl + this.path + `/${auctionId}`);
+  }
+
+  makeBid(bidPrice: number, auctionId: number): Observable<Bid> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.post<Bid>(
+      `${environment.apiUrl}/bid/create/${auctionId}/${bidPrice}`,
+      null,
+      { headers: headers }
+    ).pipe(
+      mergeMap((bid) => {
+        if (bid) {
+          return of(bid);
+        } else {
+          return throwError(() => new Error('Unable to add bid'));
+        }
+      })
+    )
   }
 }

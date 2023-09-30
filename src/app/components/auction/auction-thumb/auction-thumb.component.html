@@ -1,4 +1,4 @@
-<div class="" *ngIf="auction">
+<div class="my-3" *ngIf="auction">
   <div class="basic-product-container">
     <div class="row">
       <div class="col-md-12 mt-2">
@@ -80,7 +80,7 @@
             (click)="
               openDialog(
                 auction.id,
-                auction.bidPrice == 0 ? auction.basePrice : auction.bidPrice
+                auction.bidPrice === 0 ? auction.basePrice : auction.bidPrice
               )
             "
             matTooltip="Bid This Product"

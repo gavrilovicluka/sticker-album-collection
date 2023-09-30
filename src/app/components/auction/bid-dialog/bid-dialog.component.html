@@ -1,0 +1,28 @@
+<h3 mat-dialog-title><strong>Unesite ponudu</strong></h3>
+<div mat-dialog-content>
+  <p>
+    <strong>Minimalna ponuda: </strong>
+    <span style="color: red"> {{ givenValue }}+</span>
+  </p>
+  <mat-form-field>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="data.price"
+      min="{{ givenValue }}"
+    />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-center">
+  <button
+    color="primary"
+    mat-raised-button
+    (click)="onNoClick()"
+    cdkFocusInitial
+  >
+    Odustani
+  </button>
+  <button color="warn" mat-raised-button [mat-dialog-close]="data.price">
+    Potvrdi
+  </button>
+</div>

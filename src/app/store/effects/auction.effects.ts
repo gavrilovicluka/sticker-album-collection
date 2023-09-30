@@ -35,13 +35,30 @@ export class AuctionEffects {
         catchError((error) => of(AuctionActions.getAuctionsFailure(error)))
       ))
   ))
-  
+
   getAuctionById$ = createEffect(() => this.actions$.pipe(
     ofType(AuctionActions.getAuctionById),
     mergeMap((action) =>
       this.auctionService.getAuctionById(action.aucionId).pipe(
         map((auction) => AuctionActions.getAuctionByIdSuccess({ auction })),
         catchError((error) => of(AuctionActions.getAuctionByIdFailure(error)))
+      ))
+  ))
+
+  makeBid$ = createEffect(() => this.actions$.pipe(
+    ofType(AuctionActions.makeBid),
+    mergeMap((action) =>
+      this.auctionService.makeBid(action.bidPrice, action.auctionId).pipe(
+        map((bid) => AuctionActions.makeBidSuccess({ bid })),
+        catchError((error) => {
+          if (error.status === 401) {
+            return of(HttpActions.unauthorizedError(error));
+          } else if (error.status === 403) {
+            return of(HttpActions.forbiddenError(error));
+          } else {
+            return of(AuctionActions.makeBidFailure(error))
+          }
+        })
       ))
   ))
 

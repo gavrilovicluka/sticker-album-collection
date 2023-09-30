@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Auction, AuctionDto } from 'src/app/models/auction';
+import { Bid } from 'src/app/models/bid';
 
 
 // Select Auction
@@ -24,6 +25,7 @@ export const addAuctionFailure = createAction(
     '[Auction Effect] Add Auctions Failure',
     props<{ error: any }>()
 );
+
 
 // Get Auctions Actions
 export const getAuctions = createAction(
@@ -54,5 +56,22 @@ export const getAuctionByIdSuccess = createAction(
 
 export const getAuctionByIdFailure = createAction(
     '[Auction Effect] Get Auction By ID Failure',
+    props<{ error: any }>()
+);
+
+
+// Make New Bid Actions
+export const makeBid = createAction(
+    '[Auction List Component] Make Bid',
+    props<{ bidPrice: number, auctionId: number }>()
+);
+
+export const makeBidSuccess = createAction(
+    '[Auction Effect] Make Bid Success',
+    props<{ bid: Bid }>()
+);
+
+export const makeBidFailure = createAction(
+    '[Auction Effect] Make Bid Failure',
     props<{ error: any }>()
 );

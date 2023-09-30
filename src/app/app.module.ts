@@ -72,6 +72,8 @@ import { AuctionService } from './services/auction/auction.service';
 import { auctionReducer } from './store/reducers/auction.reducer';
 import { AuctionThumbComponent } from './components/auction/auction-thumb/auction-thumb.component';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { BidDialogComponent } from './components/auction/bid-dialog/bid-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,8 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     AuctionListComponent,
     ViewProductComponent,
     AddProductComponent,
-    AuctionThumbComponent
+    AuctionThumbComponent,
+    BidDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +133,7 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
       UserEffect,
       AlertEffects,
       AuctionEffects,
-      
+
     ]),
     HttpClientModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 4000, positionX: 'right' }),
@@ -147,6 +150,7 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    MatDialogModule,
 
   ],
   providers: [              // ovde se dodaju servisi
