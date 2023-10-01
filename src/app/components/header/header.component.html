@@ -38,8 +38,8 @@
             <li><a class="dropdown-item" [routerLink]="['/auctions']" [queryParams]="{ type: 'waiting' }">Na čekanju</a></li>
             <div *ngIf="hvm.isLoggedin">
               <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" (click)="goToMyAuctions()">Moje aukcije</a></li>
-              <li><a class="dropdown-item" (click)="goToMyBids()">Moje ponude</a></li>
+              <li><a class="dropdown-item" [routerLink]="[userId, 'my-auctions']">Moje aukcije</a></li>
+              <li><a class="dropdown-item" [routerLink]="[userId, 'my-bids']">Moje ponude</a></li>
             </div>
           </ul>
         </li>

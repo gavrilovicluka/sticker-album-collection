@@ -25,6 +25,16 @@ export const selectAllAuctions = createSelector(
           }) as Auction[] 
 );
 
+export const selectSoldAuctions = createSelector(
+  selectAllAuctions,
+  (auctions) => {
+    const currentDate = new Date();
+    return auctions.filter(auction => {
+      return new Date(auction.endDate) < currentDate && auction.numberOfBids > 0;
+    });
+  }
+);
+
 export const selectAllAuctionsAsDict = createSelector(
     selectAuctionsFeature,
     (state: AuctionState) => state.entities

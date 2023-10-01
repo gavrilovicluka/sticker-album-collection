@@ -62,4 +62,23 @@ export class AuctionEffects {
       ))
   ))
 
+  filterData$ = createEffect(() => this.actions$.pipe(
+    ofType(AuctionActions.getAuctionsWithFilter),
+    mergeMap((action) =>
+      this.auctionService.getAuctionsWithFilter(action.auctionType, action.startDate, action.endDate).pipe(
+        map((auctions) => AuctionActions.getAuctionsWithFilterSuccess({ auctions })),
+        catchError((error) => {
+          if (error.status === 401) {
+            return of(HttpActions.unauthorizedError(error));
+          } else if (error.status === 403) {
+            return of(HttpActions.forbiddenError(error));
+          } else {
+            return of(AuctionActions.getAuctionsWithFilterFailure(error))
+          }
+        })
+      ))
+  ))
+
+
+
 }

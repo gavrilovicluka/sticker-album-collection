@@ -62,4 +62,26 @@ export class AuctionService {
       })
     )
   }
+
+  getAuctionsWithFilter(auctionType: string, startDate: string, endDate: string): Observable<Auction[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.httpClient
+      .get<Auction[]>(`${environment.apiUrl}${this.path}/userAuctions?type=${auctionType}&startDate=${startDate}&endDate=${endDate}`,
+      {
+        headers: headers
+      })
+      .pipe(
+        mergeMap((auctions) => {
+          if (auctions) {
+            return of(auctions);
+          } else {
+            return throwError(() => new Error('Unable to get auctions'));
+          }
+        })
+      )
+  }
 }

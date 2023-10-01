@@ -13,6 +13,7 @@ import { UserProfileComponent } from './components/user/user-profile/user-profil
 import { AuctionListComponent } from './components/auction/auction-list/auction-list.component';
 import { ViewProductComponent } from './components/auction/view-product/view-product.component';
 import { AddProductComponent } from './components/auction/add-product/add-product.component';
+import { UserAuctionsComponent } from './components/auction/user-auctions/user-auctions.component';
 
 export const routes: Routes = [
   {
@@ -40,8 +41,7 @@ export const routes: Routes = [
   },
   {
     path: "auctions",
-    component: AuctionListComponent,
-    // canActivate: [authGuard()]
+    component: AuctionListComponent
   },
   {
     path: "auctions/product/:auctionId",
@@ -50,6 +50,11 @@ export const routes: Routes = [
   {
     path: "auctions/add-product",
     component: AddProductComponent,
+    canActivate: [authGuard()]
+  },
+  {
+    path: ":userId/my-auctions",
+    component: UserAuctionsComponent,
     canActivate: [authGuard()]
   },
   {

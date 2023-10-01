@@ -66,7 +66,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { AuctionService } from './services/auction/auction.service';
 import { auctionReducer } from './store/reducers/auction.reducer';
@@ -74,6 +74,9 @@ import { AuctionThumbComponent } from './components/auction/auction-thumb/auctio
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { BidDialogComponent } from './components/auction/bid-dialog/bid-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UserAuctionsComponent } from './components/auction/user-auctions/user-auctions.component';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -106,7 +109,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ViewProductComponent,
     AddProductComponent,
     AuctionThumbComponent,
-    BidDialogComponent
+    BidDialogComponent,
+    UserAuctionsComponent
   ],
   imports: [
     BrowserModule,
@@ -151,7 +155,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     MatDialogModule,
-
+    MatListModule,
+    MatChipsModule,
+    
+    
   ],
   providers: [              // ovde se dodaju servisi
     AuthService,
@@ -160,6 +167,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     UserAlbumService,
     UserService,
     AuctionService,
+    { provide: MAT_DATE_LOCALE, useValue: 'sr-RS' }
   ],
   bootstrap: [AppComponent]
 })

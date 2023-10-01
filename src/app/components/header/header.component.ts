@@ -31,12 +31,4 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  goToMyAuctions() {
-
-  }
-
-  goToMyBids() {
-
-  }
-
 }

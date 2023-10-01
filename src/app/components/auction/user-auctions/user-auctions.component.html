@@ -1,0 +1,237 @@
+<div class="row">
+  <div class="col-10 offset-sm-1">
+    <mat-card-content>
+      <!-- <form class="example-form" [formGroup]="auctionForm" novalidate> -->
+      <div class="row d-flex align-items-baseline my-4">
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label>Datum od</mat-label>
+            <input
+              matInput
+              [matDatepicker]="startPicker"
+              [(ngModel)]="startDate"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="startPicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label>Datum do</mat-label>
+            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="endPicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-md-3">
+          <div class="">
+            <button
+              type="submit"
+              mat-raised-button
+              class="form-button"
+              color="primary"
+              (click)="filterData()"
+            >
+              Pretrazi
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- </form> -->
+    </mat-card-content>
+
+    <h1>
+      <span *ngIf="selectedTabIndex === 0"
+        >Sve aukcije koje se zavrsavaju u izabranom periodu:</span
+      >
+      <span *ngIf="selectedTabIndex === 1"
+        >Sve prodate aukcije u izabranom periodu:</span
+      >
+    </h1>
+
+    <div class="card-basic-content my-4">
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+        <mat-tab label="Postavljene aukcije">
+          <mat-list *ngIf="userAuctions$ | async as userAuctions">
+            <mat-list-item *ngFor="let userAuction of userAuctions">
+              <div class="d-flex align-items-center">
+                <h3 mat-line style="font-weight: bolder" class="col-3">
+                  {{ userAuction.productName }}
+                </h3>
+                <p mat-line class="col-3">
+                  {{ userAuction.startDate | date }} <strong> To </strong
+                  >{{ userAuction.endDate | date }}
+                </p>
+                <p class="clock col-3 text-center">
+                  <label
+                    *ngIf="IsAuctionEnd(userAuction.endDate); else startBlock"
+                    class="alert-warning"
+                    matTooltip="Auction Ended"
+                    >ZAVRŠENO</label
+                  >
+                  <ng-template #startBlock>
+                    <label
+                      *ngIf="
+                        IsAuctionStart(userAuction.startDate);
+                        else timeBlock
+                      "
+                      class="alert-success"
+                      >NA ČEKANJU</label
+                    >
+                  </ng-template>
+                  <ng-template #timeBlock>
+                    <div
+                      class="countdown d-flex justify-content-center"
+                      simpleCountdown
+                      [dateTo]="userAuction.endDate.getTime() / 1000"
+                      [styles]="
+                        '
+                                    background-color: white;
+                                    padding: 10px 4px;
+                                    '
+                      "
+                      [endMessage]="'Aukcija je gotova'"
+                    ></div>
+                  </ng-template>
+                </p>
+                <mat-chip color="primary" selected="true">
+                  <strong style="font-weight: bolder">{{
+                    userAuction?.bids?.length || "0"
+                  }}</strong>
+                  Ponuda</mat-chip
+                >
+                <p class="text-center btn-control col-3">
+                  <a
+                    color="primary"
+                    mat-button
+                    matTooltip="View This Product"
+                    [routerLink]="[
+                      '../../',
+                      'auctions',
+                      'product',
+                      userAuction.id
+                    ]"
+                  >
+                    <i class="material-icons"> visibility </i>
+                  </a>
+                </p>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+
+        <mat-tab label="Prodate aukcije">
+          <mat-list *ngIf="soldAuctions$ | async as soldAuctions">
+            <mat-list-item *ngFor="let soldAuction of soldAuctions">
+              <div class="d-flex align-items-center">
+                <h3 mat-line style="font-weight: bolder" class="col-3">
+                  {{ soldAuction.productName }}
+                </h3>
+                <p mat-line class="col-3">
+                  {{ soldAuction.startDate | date }} <strong> To </strong
+                  >{{ soldAuction.endDate | date }}
+                </p>
+                <p class="clock col-3 text-center">
+                  <label
+                    *ngIf="IsAuctionEnd(soldAuction.endDate); else startBlock"
+                    class="alert-warning"
+                    matTooltip="Auction Ended"
+                    >ZAVRŠENO</label
+                  >
+                  <ng-template #startBlock>
+                    <label
+                      *ngIf="
+                        IsAuctionStart(soldAuction.startDate);
+                        else timeBlock
+                      "
+                      class="alert-success"
+                      >NA ČEKANJU</label
+                    >
+                  </ng-template>
+                  <ng-template #timeBlock>
+                    <p class="mt-2 mb-0">Preostalo vreme:</p>
+                    <div
+                      class="countdown d-flex justify-content-center"
+                      simpleCountdown
+                      [dateTo]="soldAuction.endDate.getTime() / 1000"
+                      [styles]="
+                        '
+                                  background-color: #dfdfdf;
+                                  padding: 10px 4px;
+                                  '
+                      "
+                      [endMessage]="'Aukcija je gotova'"
+                    ></div>
+                  </ng-template>
+                </p>
+                <mat-chip color="primary" selected="true">
+                  <strong style="font-weight: bolder">{{
+                    soldAuction?.bids?.length || "0"
+                  }}</strong>
+                  Ponuda</mat-chip
+                >
+                <p class="text-center btn-control col-3">
+                  <a
+                    color="primary"
+                    mat-button
+                    matTooltip="View This Product"
+                    [routerLink]="[
+                      '../../',
+                      'auctions',
+                      'product',
+                      soldAuction.id
+                    ]"
+                  >
+                    <i class="material-icons"> visibility </i>
+                  </a>
+                </p>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+
+        <!-- <mat-tab label="Bids">
+        <mat-list *ngIf="Bids">
+          <mat-list-item *ngFor="let bid of Bids">
+            <h3 mat-line style="font-weight: bolder">{{bid.productName}}</h3>
+            <p mat-line>
+              <strong>Amount:</strong>{{bid.bidPrice}}
+              <strong>Auction End At</strong> {{bid.bidEndTime | date}} </p>
+            <a [routerLink]="['../../','product',bid.productId]">
+              <mat-icon color="primary" mat-list-icon>visibility</mat-icon>
+            </a>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab> -->
+
+        <!-- <mat-tab label="Wins">
+        <mat-list *ngIf="won">
+          <mat-list-item *ngFor="let win of won">
+            <h3 mat-line style="font-weight: bolder">{{win.productName}}</h3>
+            <p mat-line> <strong>Amount:</strong>{{win.soldPrice}} <strong>Description</strong>{{win.productDescription}}</p>
+            <p>
+              <strong>Time</strong> {{win.dateTime | date}} </p>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab> -->
+
+        <!-- <mat-tab label="Sold History">
+        <mat-list *ngIf="sold">
+          <mat-list-item *ngFor="let sale of sold">
+            <h3 mat-line style="font-weight: bolder">{{sale.productName}}</h3>
+            <p mat-line> <strong>Amount:</strong>{{sale.soldPrice}} <strong>Description</strong>{{sale.productDescription}}</p>
+            <p>
+              <strong>Time</strong> {{sale.dateTime | date}} </p>
+          </mat-list-item>
+        </mat-list>
+      </mat-tab> -->
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@ export interface Auction {
     user: User;
     bids: Bid[];
     topBid: Bid;
+    numberOfBids: number;
 }
 
 export interface AuctionDto {

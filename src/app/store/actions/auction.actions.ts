@@ -83,3 +83,21 @@ export const makeBidFailure = createAction(
     '[Auction Effect] Make Bid Failure',
     props<{ error: any }>()
 );
+
+
+// Filter Data
+export const getAuctionsWithFilter = createAction(
+    '[User Auctions Component] Get Auctions With Filter',
+    props<{ auctionType: string, startDate: string, endDate: string }>()
+);
+
+export const getAuctionsWithFilterSuccess = createAction(
+    '[Auction Effect] Get Auctions With Filter Success',
+    props<{ auctions: Auction[] }>()
+);
+
+export const getAuctionsWithFilterFailure = createAction(
+    '[Auction Effect] Get Auctions With Filter Failure',
+    props<{ error: any }>()
+);
+
