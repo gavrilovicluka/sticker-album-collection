@@ -1,0 +1,161 @@
+<div class="row">
+  <div class="col-10 offset-sm-1">
+    <mat-card-content>
+      <form class="example-form" [formGroup]="filterForm" novalidate>
+        <div class="row d-flex align-items-baseline my-4">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Datum od</mat-label>
+              <input
+                matInput
+                [matDatepicker]="startPicker"
+                formControlName="StartDateTime"
+                [(ngModel)]="startDate"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="startPicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  (filterForm.controls['StartDateTime'].dirty ||
+                    filterForm.controls['StartDateTime'].touched) &&
+                  filterForm.controls['StartDateTime'].hasError(
+                    'startDateInvalid'
+                  )
+                "
+                >"Datum od" mora biti manji od "Datum do"
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Datum do</mat-label>
+              <input
+                matInput
+                [matDatepicker]="endPicker"
+                formControlName="EndDateTime"
+                [(ngModel)]="endDate"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="endPicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  filterForm.controls['EndDateTime'].hasError('endDateInvalid')
+                "
+                >"Datum do" mora biti veci od "Datum od"</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <div class="">
+              <button
+                type="submit"
+                mat-raised-button
+                class="form-button"
+                color="primary"
+                (click)="filterData()"
+              >
+                Pretraži
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <h1>
+      <span *ngIf="selectedTabIndex === 0"
+        >Sve ponude u izabranom periodu:</span
+      >
+      <span *ngIf="selectedTabIndex === 1"
+        >Sve pobeđene aukcije u izabranom periodu:</span
+      >
+    </h1>
+
+    <div class="card-basic-content my-4">
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+        <mat-tab label="Moje ponude">
+          <mat-list *ngIf="userBids$ | async as userBids">
+            <mat-list-item *ngFor="let bid of userBids">
+              <div class="d-flex align-items-center">
+                <h3 mat-line class="col-2" style="font-weight: bolder">
+                  {{ bid.productName }}
+                </h3>
+                <p mat-line class="col-2">
+                  <strong>Iznos:</strong>
+                  <span class="text-danger"> {{ bid.bidPrice }} </span>
+                </p>
+                <p mat-line class="col-3">
+                  <strong>Vreme ponude:</strong>
+                  {{ bid.bidTime | date : "dd.MM.yyyy HH:mm" }}
+                </p>
+                <p mat-line class="col-3">
+                  <strong>Kraj aukcije:</strong>
+                  {{ bid.endDate | date : "dd.MM.yyyy HH:mm" }}
+                </p>
+                <p class="text-center btn-control col-2">
+                  <a
+                    color="primary"
+                    mat-button
+                    matTooltip="View This Product"
+                    [routerLink]="[
+                      '../../',
+                      'auctions',
+                      'product',
+                      bid.auctionId
+                    ]"
+                  >
+                    <i class="material-icons"> visibility </i>
+                  </a>
+                </p>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+
+        <mat-tab label="Pobede">
+          <mat-list *ngIf="wonBids$ | async as wonBids">
+            <mat-list-item *ngFor="let bid of wonBids" class="my-3">
+              <div class="d-flex align-items-center">
+                <h3 mat-line class="col-2 m-0" style="font-weight: bolder">
+                  {{ bid.productName }}
+                </h3>
+                <p mat-line class="col-2 m-0">
+                  <strong>Iznos:</strong>
+                  <span class="text-danger"> {{ bid.bidPrice }} </span>
+                </p>
+                <p mat-line class="col-4 d-flex flex-wrap m-0">
+                  <strong>Opis:</strong> {{ bid.productDescription }}
+                </p>
+                <p mat-line class="col-2 d-flex flex-wrap m-0">
+                  <strong>Vreme ponude:</strong>
+                  {{ bid.bidTime | date : "dd.MM.yyyy HH:mm" }}
+                </p>
+                <p class="text-center btn-control col-2 m-0">
+                  <a
+                    color="primary"
+                    mat-button
+                    matTooltip="View This Product"
+                    [routerLink]="[
+                      '../../',
+                      'auctions',
+                      'product',
+                      bid.auctionId
+                    ]"
+                  >
+                    <i class="material-icons"> visibility </i>
+                  </a>
+                </p>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

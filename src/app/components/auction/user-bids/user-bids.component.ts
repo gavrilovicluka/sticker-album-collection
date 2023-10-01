@@ -2,25 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { Auction } from 'src/app/models/auction';
+import { Bid } from 'src/app/models/bid';
 import { EndDateValidator } from 'src/app/shared/validators/EndDateValidator';
 import { StartDateValidator } from 'src/app/shared/validators/StartDateValidator';
-import { getAuctionsWithFilter } from 'src/app/store/actions/auction.actions';
+import * as BidActions from 'src/app/store/actions/bid.actions';
 import { AppState } from 'src/app/store/app.state';
-import { selectAllAuctions, selectSoldAuctions } from 'src/app/store/selectors/auction.selector';
+import { selectUserBids, selectWonBids } from 'src/app/store/selectors/bid.selector';
 
 @Component({
-  selector: 'app-user-auctions',
-  templateUrl: './user-auctions.component.html',
-  styleUrls: ['./user-auctions.component.scss']
+  selector: 'app-user-bids',
+  templateUrl: './user-bids.component.html',
+  styleUrls: ['./user-bids.component.scss']
 })
-export class UserAuctionsComponent implements OnInit {
+export class UserBidsComponent implements OnInit {
 
   selectedTabIndex: number = 0;
   startDate: Date;
   endDate: Date;
-  userAuctions$: Observable<Auction[]> = of([]);
-  soldAuctions$: Observable<Auction[]> = of([]);
+  userBids$: Observable<Bid[]> = of([]);
+  wonBids$: Observable<Bid[]> = of([]);
 
   filterForm: FormGroup = this.fb.group({
     StartDateTime: ['', [Validators.required, StartDateValidator('EndDateTime')]],
@@ -38,14 +38,15 @@ export class UserAuctionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(getAuctionsWithFilter({
+    this.store.dispatch(BidActions.getUserBids({
       startDate: this.startDate.toISOString(),
       endDate: this.endDate.toISOString()
-    }))
+    }));
 
-    this.userAuctions$ = this.store.select(selectAllAuctions) //.subscribe(x => console.log(x))
-    this.soldAuctions$ = this.store.select(selectSoldAuctions)  //.subscribe(x => console.log(x))
+    this.userBids$ = this.store.select(selectUserBids)  //.subscribe(x => console.log(x))
+    this.wonBids$ = this.store.select(selectWonBids)  //.subscribe(x => console.log(x))
   }
+
 
   filterData() {
     if (this.filterForm.invalid) {
@@ -55,32 +56,11 @@ export class UserAuctionsComponent implements OnInit {
     const startDate = this.filterForm.controls['StartDateTime'].value.toISOString();
     const endDate = this.filterForm.controls['EndDateTime'].value.toISOString();
 
-    this.store.dispatch(getAuctionsWithFilter({
+    this.store.dispatch(BidActions.getUserBids({
       startDate: startDate,
       endDate: endDate
     }))
   }
 
-  public IsAuctionEnd(end: Date): boolean {
-    if (typeof end === 'string') {
-      end = new Date(end);
-    }
-    let date1 = end.getTime();
-    let date2 = new Date().getTime();
-    if (date1 < date2) return true;
-    return false;
-  }
-
-
-  public IsAuctionStart(start: Date): boolean {
-    if (typeof start === 'string') {
-      start = new Date(start);
-    }
-
-    let date1 = start.getTime();
-    let date2 = new Date().getTime();
-    if (date1 > date2) return true;
-    return false;
-  }
 
 }

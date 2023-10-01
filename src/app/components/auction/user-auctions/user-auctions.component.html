@@ -1,54 +1,77 @@
 <div class="row">
   <div class="col-10 offset-sm-1">
     <mat-card-content>
-      <!-- <form class="example-form" [formGroup]="auctionForm" novalidate> -->
-      <div class="row d-flex align-items-baseline my-4">
-        <div class="col-md-3">
-          <mat-form-field>
-            <mat-label>Datum od</mat-label>
-            <input
-              matInput
-              [matDatepicker]="startPicker"
-              [(ngModel)]="startDate"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="startPicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #startPicker></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <mat-form-field>
-            <mat-label>Datum do</mat-label>
-            <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="endPicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #endPicker></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <div class="">
-            <button
-              type="submit"
-              mat-raised-button
-              class="form-button"
-              color="primary"
-              (click)="filterData()"
-            >
-              Pretrazi
-            </button>
+      <form class="example-form" [formGroup]="filterForm" novalidate>
+        <div class="row d-flex align-items-baseline my-4">
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Datum od</mat-label>
+              <input
+                matInput
+                [matDatepicker]="startPicker"
+                formControlName="StartDateTime"
+                [(ngModel)]="startDate"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="startPicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  (filterForm.controls['StartDateTime'].dirty ||
+                    filterForm.controls['StartDateTime'].touched) &&
+                  filterForm.controls['StartDateTime'].hasError(
+                    'startDateInvalid'
+                  )
+                "
+                >Morate uneti datum koji je pre datuma kraja aukcije</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <mat-label>Datum do</mat-label>
+              <input
+                matInput
+                [matDatepicker]="endPicker"
+                [(ngModel)]="endDate"
+                formControlName="EndDateTime"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="endPicker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  filterForm.controls['EndDateTime'].hasError('endDateInvalid')
+                "
+                >Morate uneti datum koji je veći od datuma početka
+                aukcije</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <div class="">
+              <button
+                type="submit"
+                mat-raised-button
+                class="form-button"
+                color="primary"
+                (click)="filterData()"
+              >
+                Pretraži
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- </form> -->
+      </form>
     </mat-card-content>
 
     <h1>
       <span *ngIf="selectedTabIndex === 0"
-        >Sve aukcije koje se zavrsavaju u izabranom periodu:</span
+        >Sve aukcije koje se završavaju u izabranom periodu:</span
       >
       <span *ngIf="selectedTabIndex === 1"
         >Sve prodate aukcije u izabranom periodu:</span
@@ -65,8 +88,9 @@
                   {{ userAuction.productName }}
                 </h3>
                 <p mat-line class="col-3">
-                  {{ userAuction.startDate | date }} <strong> To </strong
-                  >{{ userAuction.endDate | date }}
+                  {{ userAuction.startDate | date : "dd.MM.yyyy HH:mm" }}
+                  <strong> To </strong
+                  >{{ userAuction.endDate | date : "dd.MM.yyyy HH:mm" }}
                 </p>
                 <p class="clock col-3 text-center">
                   <label
@@ -134,8 +158,9 @@
                   {{ soldAuction.productName }}
                 </h3>
                 <p mat-line class="col-3">
-                  {{ soldAuction.startDate | date }} <strong> To </strong
-                  >{{ soldAuction.endDate | date }}
+                  {{ soldAuction.startDate | date : "dd.MM.yyyy HH:mm" }}
+                  <strong> To </strong
+                  >{{ soldAuction.endDate | date : "dd.MM.yyyy HH:mm" }}
                 </p>
                 <p class="clock col-3 text-center">
                   <label
@@ -195,42 +220,6 @@
             </mat-list-item>
           </mat-list>
         </mat-tab>
-
-        <!-- <mat-tab label="Bids">
-        <mat-list *ngIf="Bids">
-          <mat-list-item *ngFor="let bid of Bids">
-            <h3 mat-line style="font-weight: bolder">{{bid.productName}}</h3>
-            <p mat-line>
-              <strong>Amount:</strong>{{bid.bidPrice}}
-              <strong>Auction End At</strong> {{bid.bidEndTime | date}} </p>
-            <a [routerLink]="['../../','product',bid.productId]">
-              <mat-icon color="primary" mat-list-icon>visibility</mat-icon>
-            </a>
-          </mat-list-item>
-        </mat-list>
-      </mat-tab> -->
-
-        <!-- <mat-tab label="Wins">
-        <mat-list *ngIf="won">
-          <mat-list-item *ngFor="let win of won">
-            <h3 mat-line style="font-weight: bolder">{{win.productName}}</h3>
-            <p mat-line> <strong>Amount:</strong>{{win.soldPrice}} <strong>Description</strong>{{win.productDescription}}</p>
-            <p>
-              <strong>Time</strong> {{win.dateTime | date}} </p>
-          </mat-list-item>
-        </mat-list>
-      </mat-tab> -->
-
-        <!-- <mat-tab label="Sold History">
-        <mat-list *ngIf="sold">
-          <mat-list-item *ngFor="let sale of sold">
-            <h3 mat-line style="font-weight: bolder">{{sale.productName}}</h3>
-            <p mat-line> <strong>Amount:</strong>{{sale.soldPrice}} <strong>Description</strong>{{sale.productDescription}}</p>
-            <p>
-              <strong>Time</strong> {{sale.dateTime | date}} </p>
-          </mat-list-item>
-        </mat-list>
-      </mat-tab> -->
       </mat-tab-group>
     </div>
   </div>

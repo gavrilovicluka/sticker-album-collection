@@ -62,10 +62,10 @@ export class AuctionEffects {
       ))
   ))
 
-  filterData$ = createEffect(() => this.actions$.pipe(
+  getAuctionsWithFilter$ = createEffect(() => this.actions$.pipe(
     ofType(AuctionActions.getAuctionsWithFilter),
     mergeMap((action) =>
-      this.auctionService.getAuctionsWithFilter(action.auctionType, action.startDate, action.endDate).pipe(
+      this.auctionService.getAuctionsWithFilter(action.startDate, action.endDate).pipe(
         map((auctions) => AuctionActions.getAuctionsWithFilterSuccess({ auctions })),
         catchError((error) => {
           if (error.status === 401) {

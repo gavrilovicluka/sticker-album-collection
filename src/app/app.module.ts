@@ -77,6 +77,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { UserAuctionsComponent } from './components/auction/user-auctions/user-auctions.component';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
+import { UserBidsComponent } from './components/auction/user-bids/user-bids.component';
+import { BidService } from './services/bid/bid.service';
+import { BidEffects } from './store/effects/bid.effects';
+import { bidReducer } from './store/reducers/bid.reducer';
 
 @NgModule({
   declarations: [
@@ -110,7 +114,8 @@ import { MatChipsModule } from '@angular/material/chips';
     AddProductComponent,
     AuctionThumbComponent,
     BidDialogComponent,
-    UserAuctionsComponent
+    UserAuctionsComponent,
+    UserBidsComponent
   ],
   imports: [
     BrowserModule,
@@ -125,6 +130,7 @@ import { MatChipsModule } from '@angular/material/chips';
       userAlbums: userAlbumReducer,
       user: userReducer,
       auctions: auctionReducer,
+      bids: bidReducer
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([
@@ -137,7 +143,7 @@ import { MatChipsModule } from '@angular/material/chips';
       UserEffect,
       AlertEffects,
       AuctionEffects,
-
+      BidEffects
     ]),
     HttpClientModule,
     AlertModule.forRoot({ maxMessages: 5, timeout: 4000, positionX: 'right' }),
@@ -157,8 +163,8 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDialogModule,
     MatListModule,
     MatChipsModule,
-    
-    
+
+
   ],
   providers: [              // ovde se dodaju servisi
     AuthService,
@@ -167,6 +173,7 @@ import { MatChipsModule } from '@angular/material/chips';
     UserAlbumService,
     UserService,
     AuctionService,
+    BidService,
     { provide: MAT_DATE_LOCALE, useValue: 'sr-RS' }
   ],
   bootstrap: [AppComponent]

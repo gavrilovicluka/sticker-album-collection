@@ -20,10 +20,12 @@ export const auctionReducer = createReducer(
 
     on(AuctionActions.addAuctionSuccess, (state, action) => adapter.addOne(action.auction, state)),
 
-    on(AuctionActions.getAuctionsSuccess, AuctionActions.getAuctionsWithFilterSuccess, (state, props) => {
-        const { auctions } = props;
-        return adapter.setAll(auctions, state)
-    }),
+    on(AuctionActions.getAuctionsSuccess,
+        AuctionActions.getAuctionsWithFilterSuccess,
+        (state, props) => {
+            const { auctions } = props;
+            return adapter.setAll(auctions, state)
+        }),
 
     on(AuctionActions.getAuctionByIdSuccess, (state, action) => adapter.addOne(action.auction, state)),
 

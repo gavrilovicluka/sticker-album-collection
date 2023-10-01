@@ -1,6 +1,7 @@
 import { AlbumState } from "./reducers/album.reducer";
 import { AuctionState } from "./reducers/auction.reducer";
 import { AuthState } from "./reducers/auth.reducer";
+import { BidState } from "./reducers/bid.reducer";
 import { PublisherState } from "./reducers/publisher.reducer";
 import { UserAlbumState } from "./reducers/user-album.reducer";
 import { UserState } from "./reducers/user.reducer";
@@ -11,5 +12,6 @@ export interface AppState {
     albums: AlbumState,
     userAlbums: UserAlbumState,
     user: UserState,
-    auctions: AuctionState
+    auctions: AuctionState,
+    bids: BidState
 }

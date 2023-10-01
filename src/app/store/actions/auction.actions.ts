@@ -85,10 +85,10 @@ export const makeBidFailure = createAction(
 );
 
 
-// Filter Data
+// Get Auctions With Filter
 export const getAuctionsWithFilter = createAction(
     '[User Auctions Component] Get Auctions With Filter',
-    props<{ auctionType: string, startDate: string, endDate: string }>()
+    props<{ startDate: string, endDate: string }>()
 );
 
 export const getAuctionsWithFilterSuccess = createAction(

@@ -9,6 +9,7 @@ import * as PublisherActions from "../actions/publisher.actions";
 import * as UserAlbumActions from "../actions/user-album.actions";
 import * as HttpActions from "../actions/http.actions";
 import * as AuctionActions from "../actions/auction.actions";
+import * as BidActions from "../actions/bid.actions";
 
 @Injectable()
 export class AlertEffects {
@@ -41,6 +42,8 @@ export class AlertEffects {
                     AuctionActions.addAuctionFailure,
                     AuctionActions.makeBidFailure,
                     AuctionActions.getAuctionsFailure,
+                    AuctionActions.getAuctionsWithFilterFailure,
+                    BidActions.getUserBidsFailure,
 
                 ),
                 tap((error) => this.alertService.danger(error.error.message))

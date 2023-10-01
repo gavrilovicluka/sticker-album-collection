@@ -14,6 +14,7 @@ import { AuctionListComponent } from './components/auction/auction-list/auction-
 import { ViewProductComponent } from './components/auction/view-product/view-product.component';
 import { AddProductComponent } from './components/auction/add-product/add-product.component';
 import { UserAuctionsComponent } from './components/auction/user-auctions/user-auctions.component';
+import { UserBidsComponent } from './components/auction/user-bids/user-bids.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,11 @@ export const routes: Routes = [
   {
     path: ":userId/my-auctions",
     component: UserAuctionsComponent,
+    canActivate: [authGuard()]
+  },
+  {
+    path: ":userId/my-bids",
+    component: UserBidsComponent,
     canActivate: [authGuard()]
   },
   {

@@ -8,5 +8,10 @@ export interface Bid {
     bidUsername: string,
     bidUserAddress: string,
     bidUserPhoneNumber: string,
-    bidUserEmail: string
+    bidUserEmail: string,
+    auctionId?: number,
+    productName?: string,
+    productDescription?: string,
+    endDate?: Date,
+    won?: boolean
 }
