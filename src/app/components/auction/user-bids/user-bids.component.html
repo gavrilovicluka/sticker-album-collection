@@ -78,7 +78,10 @@
     </h1>
 
     <div class="card-basic-content my-4">
-      <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+      <mat-tab-group
+        mat-stretch-tabs="false"
+        [(selectedIndex)]="selectedTabIndex"
+      >
         <mat-tab label="Moje ponude">
           <mat-list *ngIf="userBids$ | async as userBids">
             <mat-list-item *ngFor="let bid of userBids">

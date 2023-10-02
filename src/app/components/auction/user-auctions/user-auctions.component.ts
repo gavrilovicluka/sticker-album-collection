@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { Auction } from 'src/app/models/auction';
+import { ModalService } from 'src/app/services/modal/modal.service';
 import { EndDateValidator } from 'src/app/shared/validators/EndDateValidator';
 import { StartDateValidator } from 'src/app/shared/validators/StartDateValidator';
 import { getAuctionsWithFilter } from 'src/app/store/actions/auction.actions';
@@ -27,7 +28,7 @@ export class UserAuctionsComponent implements OnInit {
     EndDateTime: ['', [Validators.required, EndDateValidator('StartDateTime')]]
   });
 
-  constructor(private store: Store<AppState>, private fb: FormBuilder) {
+  constructor(private store: Store<AppState>, private fb: FormBuilder, private modalService: ModalService) {
     const today = new Date();
 
     this.startDate = new Date();
@@ -81,6 +82,10 @@ export class UserAuctionsComponent implements OnInit {
     let date2 = new Date().getTime();
     if (date1 > date2) return true;
     return false;
+  }
+
+  openModal(userId: number) {
+    this.modalService.openModalSwapContact(userId);
   }
 
 }

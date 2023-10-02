@@ -79,7 +79,10 @@
     </h1>
 
     <div class="card-basic-content my-4">
-      <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+      <mat-tab-group
+        mat-stretch-tabs="false"
+        [(selectedIndex)]="selectedTabIndex"
+      >
         <mat-tab label="Postavljene aukcije">
           <mat-list *ngIf="userAuctions$ | async as userAuctions">
             <mat-list-item *ngFor="let userAuction of userAuctions">
@@ -89,7 +92,7 @@
                 </h3>
                 <p mat-line class="col-3">
                   {{ userAuction.startDate | date : "dd.MM.yyyy HH:mm" }}
-                  <strong> To </strong
+                  <strong> do </strong
                   >{{ userAuction.endDate | date : "dd.MM.yyyy HH:mm" }}
                 </p>
                 <p class="clock col-3 text-center">
@@ -124,12 +127,14 @@
                     ></div>
                   </ng-template>
                 </p>
-                <mat-chip color="primary" selected="true">
-                  <strong style="font-weight: bolder">{{
-                    userAuction?.bids?.length || "0"
-                  }}</strong>
-                  Ponuda</mat-chip
-                >
+                <p>
+                  <mat-chip color="primary" selected="true">
+                    <strong style="font-weight: bolder">{{
+                      userAuction?.bids?.length || "0"
+                    }}</strong>
+                    Ponuda</mat-chip
+                  >
+                </p>
                 <p class="text-center btn-control col-3">
                   <a
                     color="primary"
@@ -154,54 +159,28 @@
           <mat-list *ngIf="soldAuctions$ | async as soldAuctions">
             <mat-list-item *ngFor="let soldAuction of soldAuctions">
               <div class="d-flex align-items-center">
-                <h3 mat-line style="font-weight: bolder" class="col-3">
+                <h3 mat-line style="font-weight: bolder" class="col-4">
                   {{ soldAuction.productName }}
                 </h3>
-                <p mat-line class="col-3">
+                <p mat-line class="col-4">
                   {{ soldAuction.startDate | date : "dd.MM.yyyy HH:mm" }}
                   <strong> To </strong
                   >{{ soldAuction.endDate | date : "dd.MM.yyyy HH:mm" }}
                 </p>
-                <p class="clock col-3 text-center">
-                  <label
-                    *ngIf="IsAuctionEnd(soldAuction.endDate); else startBlock"
-                    class="alert-warning"
-                    matTooltip="Auction Ended"
-                    >ZAVRŠENO</label
+                <p class="col-2">
+                  <mat-chip color="primary" selected="true">
+                    <strong style="font-weight: bolder">{{
+                      soldAuction?.bids?.length || "0"
+                    }}</strong>
+                    Ponuda</mat-chip
                   >
-                  <ng-template #startBlock>
-                    <label
-                      *ngIf="
-                        IsAuctionStart(soldAuction.startDate);
-                        else timeBlock
-                      "
-                      class="alert-success"
-                      >NA ČEKANJU</label
-                    >
-                  </ng-template>
-                  <ng-template #timeBlock>
-                    <p class="mt-2 mb-0">Preostalo vreme:</p>
-                    <div
-                      class="countdown d-flex justify-content-center"
-                      simpleCountdown
-                      [dateTo]="soldAuction.endDate.getTime() / 1000"
-                      [styles]="
-                        '
-                                  background-color: #dfdfdf;
-                                  padding: 10px 4px;
-                                  '
-                      "
-                      [endMessage]="'Aukcija je gotova'"
-                    ></div>
-                  </ng-template>
                 </p>
-                <mat-chip color="primary" selected="true">
-                  <strong style="font-weight: bolder">{{
-                    soldAuction?.bids?.length || "0"
-                  }}</strong>
-                  Ponuda</mat-chip
-                >
-                <p class="text-center btn-control col-3">
+                <p class="col-1">
+                  <button class="btn btn-primary flex-fill w-100" (click)="openModal(soldAuction.bids[0].bidUserId)">
+                    <i class="fa-solid fa-image-portrait"></i> Kontakt
+                  </button>
+                </p>
+                <p class="text-center btn-control col-1">
                   <a
                     color="primary"
                     mat-button
