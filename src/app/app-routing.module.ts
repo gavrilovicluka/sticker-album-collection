@@ -15,11 +15,17 @@ import { ViewProductComponent } from './components/auction/view-product/view-pro
 import { AddProductComponent } from './components/auction/add-product/add-product.component';
 import { UserAuctionsComponent } from './components/auction/user-auctions/user-auctions.component';
 import { UserBidsComponent } from './components/auction/user-bids/user-bids.component';
+import { Home1Component } from './components/home1/home1.component';
+import { PublisherListHomeComponent } from './components/publisher/publisher-list-home/publisher-list-home.component';
 
 export const routes: Routes = [
   {
     path: "",
-    component: HomeComponent
+    component: Home1Component
+  },
+  {
+    path: "publishers",
+    component: PublisherListHomeComponent
   },
   {
     path: ":publisherId/albums-list",

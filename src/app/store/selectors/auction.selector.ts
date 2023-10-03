@@ -39,10 +39,10 @@ export const selectSoldAuctions = createSelector(
   selectAllAuctions,
   (auctions) => {
     const currentDate = new Date();
-    const sortedAuctions = auctions.map(auction => ({ ...auction, bids: [...auction.bids] }));
+    const sortedAuctions = auctions.map(auction => ({ ...auction, bids: Array.isArray(auction.bids) ? [...auction.bids] : [] }));
     
     sortedAuctions.forEach(auction => {
-      auction.bids.sort((a, b) => b.bidPrice - a.bidPrice);
+      if(auction.bids) auction.bids.sort((a, b) => b.bidPrice - a.bidPrice);
     });
     
     return sortedAuctions.filter(auction => new Date(auction.endDate) < currentDate && auction.numberOfBids > 0);

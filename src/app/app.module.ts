@@ -81,6 +81,8 @@ import { UserBidsComponent } from './components/auction/user-bids/user-bids.comp
 import { BidService } from './services/bid/bid.service';
 import { BidEffects } from './store/effects/bid.effects';
 import { bidReducer } from './store/reducers/bid.reducer';
+import { Home1Component } from './components/home1/home1.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -115,7 +117,8 @@ import { bidReducer } from './store/reducers/bid.reducer';
     AuctionThumbComponent,
     BidDialogComponent,
     UserAuctionsComponent,
-    UserBidsComponent
+    UserBidsComponent,
+    Home1Component
   ],
   imports: [
     BrowserModule,
@@ -163,7 +166,7 @@ import { bidReducer } from './store/reducers/bid.reducer';
     MatDialogModule,
     MatListModule,
     MatChipsModule,
-
+    CarouselModule, 
 
   ],
   providers: [              // ovde se dodaju servisi
