@@ -1,3 +1,33 @@
+<div class="container m-3" *ngIf="type !== 'active'">
+  <div class="row px-5 mx-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <div class="input-group-prepend" *ngIf="type === 'ended'">
+          <span class="input-group-text">Završene aukcije u prethodnih:</span>
+        </div>
+        <div class="input-group-prepend" *ngIf="type === 'waiting'">
+          <span class="input-group-text">Aukcije u narednih:</span>
+        </div>
+        <div class="col-2 mx-1">
+          <select
+            class="form-select"
+            id="brojDana"
+            [(ngModel)]="selectedDays"
+            (ngModelChange)="changeSelectedDays()"
+          >
+            <ng-container *ngFor="let day of days">
+              <option value="{{ day }}">{{ day }}</option>
+            </ng-container>
+          </select>
+        </div>
+        <div class="input-group-append">
+          <span class="input-group-text">dana</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div
   class="row justify-content-center bg-light"
   *ngIf="auctions$ | async as auctions; else noContent"

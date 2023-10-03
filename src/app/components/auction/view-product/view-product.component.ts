@@ -10,55 +10,12 @@ import { selectIsLoggedIn } from 'src/app/store/selectors/auth.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { BidDialogComponent } from '../bid-dialog/bid-dialog.component';
 
-
-interface Product {
-  userName: string;
-  userId: string;
-  userAddress: string;
-  userPhone: string;
-  userCity: string;
-  startDateTime: Date;
-  endDateTime: Date;
-  productName: string;
-  productDescription: string;
-  basePrice: number;
-  image: string;
-  bids: Bid[];
-
-}
-
-interface Bid {
-  bidPrice: number;
-  bidTime: string;
-  userId: string;
-  userName: string;
-  productId: string;
-}
-
 @Component({
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',
   styleUrls: ['./view-product.component.scss']
 })
 export class ViewProductComponent implements OnInit {
-
-  product: Product = {
-    userName: 'username1',
-    userId: '1',
-    userAddress: 'adresa 1',
-    userPhone: '061234543',
-    userCity: 'Nis',
-    startDateTime: new Date('2023-09-28'),
-    endDateTime: new Date('2023-10-01'),
-    productName: 'Product name 1',
-    productDescription: 'Some description for product 1... Some description for product 1... Some description for product 1...',
-    basePrice: 1000,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpyQ_cUlRMTHpi6h4oL8sOrGRJA5tmLGE7DQ&usqp=CAU',
-    bids: [],
-  }
-
-  currentTopBid?: Bid;
-  top10Bids?: Bid[];
 
   auction$: Observable<Auction | null> = of();
   auctionId?: number;

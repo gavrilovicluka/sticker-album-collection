@@ -34,11 +34,17 @@ export class AuctionService {
     )
   }
 
-  getAuctions(auctionType: string): Observable<Auction[]> {
-    return this.httpClient.get<Auction[]>(`${environment.apiUrl}${this.path}?type=${auctionType}`)
+  getAuctions(auctionType: string, pastDays: number): Observable<Auction[]> {
+    // return this.httpClient.get<Auction[]>(`${environment.apiUrl}${this.path}?type=${auctionType}`)
+
+    const data = {
+      auctionType,
+      pastDays
+    }
+
+    return this.httpClient.post<Auction[]>(`${environment.apiUrl}${this.path}`, data)
   }
 
-  //  ******************** promenjen url na getWithData
   getAuctionById(auctionId: number): Observable<Auction> {
     return this.httpClient.get<Auction>(environment.apiUrl + this.path + `/getWithData/${auctionId}`);
   }

@@ -8,6 +8,11 @@ export const selectAuctionsFeature = createSelector(
   (auctions) => auctions
 );
 
+export const selectSelectedDays = createSelector(
+  selectAuctionsFeature,
+  (state) => state.selectedDays
+);
+
 export const selectAllAuctions = createSelector(
   selectAuctionsFeature,
   (state: AuctionState) => Object
@@ -54,6 +59,30 @@ export const selectHotAuctions = createSelector(
     return hotAuctions.filter(auction => new Date(auction.endDate) > currentDate);
   }
 );
+
+export const selectAuctionFromPastDays = createSelector(
+  selectAllAuctions,
+  selectSelectedDays,
+  (auctions, pastDays) => {
+    
+    const pastDate = new Date();
+    pastDate.setDate(pastDate.getDate() - pastDays);
+    
+    return auctions.filter(auction => new Date(auction.endDate) >= pastDate);
+  }
+)
+
+export const selectAuctionInNextDays = createSelector(
+  selectAllAuctions,
+  selectSelectedDays,
+  (auctions, pastDays) => {
+    
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + pastDays);
+    console.log(futureDate)
+    return auctions.filter(auction => new Date(auction.startDate) <= futureDate);
+  }
+)
 
 export const selectAllAuctionsAsDict = createSelector(
   selectAuctionsFeature,

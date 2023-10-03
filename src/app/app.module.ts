@@ -83,6 +83,7 @@ import { BidEffects } from './store/effects/bid.effects';
 import { bidReducer } from './store/reducers/bid.reducer';
 import { Home1Component } from './components/home1/home1.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     MatDialogModule,
     MatListModule,
     MatChipsModule,
-    CarouselModule, 
+    CarouselModule,
+    MatSelectModule,
+
 
   ],
   providers: [              // ovde se dodaju servisi

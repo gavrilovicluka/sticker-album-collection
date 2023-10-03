@@ -22,3 +22,9 @@ export interface AuctionDto {
     basePrice: number;
     productDescription: string;
 }
+
+export enum AuctionStatus {
+    ACTIVE = 'active',
+    ENDED = 'ended',
+    WAITING = 'waiting'
+}

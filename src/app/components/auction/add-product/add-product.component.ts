@@ -15,40 +15,34 @@ import { AppState } from 'src/app/store/app.state';
 })
 export class AddProductComponent implements OnInit {
 
-  auctionForm: FormGroup = this.fb.group({
-    StartDateTime: ['', [Validators.required, StartDateValidator('EndDateTime')]],
-    EndDateTime: ['', [Validators.required, EndDateValidator('StartDateTime')]],
-    ProductName: ['', [Validators.required, Validators.maxLength(50)]],
-    ProductDescription: ['', [Validators.required, Validators.maxLength(1000)]],
-    BasePrice: ['', [Validators.required, Validators.min(1), Validators.max(10000000), Validators.pattern('^[0-9]*.[0-9]*?$')]],
-    Image: ['', [Validators.required, imageFileValidator()]]
-  });
+  // auctionForm: FormGroup = this.fb.group({
+  //   StartDateTime: ['', [Validators.required, StartDateValidator('EndDateTime')]],
+  //   EndDateTime: ['', [Validators.required, EndDateValidator('StartDateTime')]],
+  //   ProductName: ['', [Validators.required, Validators.maxLength(50)]],
+  //   ProductDescription: ['', [Validators.required, Validators.maxLength(1000)]],
+  //   BasePrice: ['', [Validators.required, Validators.min(1), Validators.max(10000000), Validators.pattern('^[0-9]*.[0-9]*?$')]],
+  //   Image: ['', [Validators.required, imageFileValidator()]]
+  // });
 
+  auctionForm: FormGroup;
   imageCount?: number;
   selectedFile?: File;
   minDate: Date = new Date();
 
   constructor(private store: Store<AppState>, private fb: FormBuilder) {
-    // this.createForm()
+    this.auctionForm = this.fb.group({
+      StartDateTime: ['', [Validators.required, StartDateValidator('EndDateTime')]],
+      EndDateTime: ['', [Validators.required, EndDateValidator('StartDateTime')]],
+      ProductName: ['', [Validators.required, Validators.maxLength(50)]],
+      ProductDescription: ['', [Validators.required, Validators.maxLength(1000)]],
+      BasePrice: ['', [Validators.required, Validators.min(1), Validators.max(10000000), Validators.pattern('^[0-9]*.[0-9]*?$')]],
+      Image: ['', [Validators.required, imageFileValidator()]]
+    });
   }
 
   ngOnInit(): void {
     // this.createForm();
   }
-
-
-
-
-  // createForm() {
-  //   this.auctionForm = this.fb.group({
-  //     StartDateTime: ['', [Validators.required, StartDateValidator('EndDateTime')]],
-  //     EndDateTime: ['', [Validators.required, EndDateValidator('StartDateTime')]],
-  //     ProductName: ['', [Validators.required, Validators.maxLength(50)]],
-  //     ProductDescription: ['', [Validators.required, Validators.maxLength(1000)]],
-  //     BasePrice: ['', [Validators.required, Validators.min(1), Validators.max(10000000), Validators.pattern('^[0-9]*.[0-9]*?$')]],
-  //     Image: ['', [Validators.required]]
-  //   });
-  // }
 
   onFileSelected($event: any) {
     const file = $event.target.files[0];

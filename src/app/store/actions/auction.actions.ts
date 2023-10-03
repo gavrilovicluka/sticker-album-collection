@@ -9,6 +9,11 @@ export const selectAuction = createAction(
     props<{ selectedAuctionId: number }>()
 )
 
+// Set Selected Days
+export const setSelectedDays = createAction(
+    '[Auctions] Set Selected Days',
+    props<{ selectedDays: number }>()
+);
 
 // Browser Reload Actions
 export const browserReload = createAction(
@@ -37,7 +42,7 @@ export const addAuctionFailure = createAction(
 // Get Auctions Actions
 export const getAuctions = createAction(
     '[Auction List Component] Get Auctions',
-    props<{ auctionType: string }>()
+    props<{ auctionType: string, pastDays: number }>()
 );
 
 export const getAuctionsSuccess = createAction(

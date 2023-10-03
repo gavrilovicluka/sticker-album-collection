@@ -5,6 +5,7 @@ import * as AuctionActions from "../actions/auction.actions";
 
 export interface AuctionState extends EntityState<Auction> {
     selectedAuctionId: number;
+    selectedDays: number;
     error: any;
 }
 
@@ -12,6 +13,7 @@ const adapter = createEntityAdapter<Auction>();
 
 const initialState: AuctionState = adapter.getInitialState({
     selectedAuctionId: -1,
+    selectedDays: 0,
     error: null
 });
 
@@ -19,6 +21,10 @@ export const auctionReducer = createReducer(
     initialState,
 
     on(AuctionActions.addAuctionSuccess, (state, action) => adapter.addOne(action.auction, state)),
+
+    on(AuctionActions.setSelectedDays, (state, { selectedDays }) => {
+        return { ...state, selectedDays };
+    }),
 
     on(AuctionActions.getAuctionsSuccess,
         AuctionActions.getAuctionsWithFilterSuccess,
