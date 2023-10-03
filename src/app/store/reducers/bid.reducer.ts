@@ -22,8 +22,4 @@ export const bidReducer = createReducer(
         const { bids } = props;
         return adapter.setAll(bids, state)
     }),
-
-
-
-
 )

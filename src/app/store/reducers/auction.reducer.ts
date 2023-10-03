@@ -2,6 +2,8 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Auction } from 'src/app/models/auction';
 import * as AuctionActions from "../actions/auction.actions";
+import { updateLocale } from 'moment';
+import { Bid } from 'src/app/models/bid';
 
 export interface AuctionState extends EntityState<Auction> {
     selectedAuctionId: number;
@@ -60,6 +62,40 @@ export const auctionReducer = createReducer(
         entities: { [action.auction.id]: action.auction },
         error: null
     })),
+
+    on(AuctionActions.updateBid, (state, { bid }) => {
+        const auction = state.entities[bid.auctionId!];
+
+        if (!auction) {
+            return state;
+        }
+
+        if (auction.bids) {
+            const updatedBids: Bid[] = auction.bids.map(_bid => {
+                if (_bid.id === bid.id) {
+                    return { ..._bid, ...bid };
+                }
+                return _bid;
+            });
+            updatedBids.sort((a, b) => b.bidPrice - a.bidPrice);
+
+            const updatedAuction: Auction = {
+                ...auction,
+                bids: updatedBids
+            };
+
+            return adapter.updateOne({ id: auction.id, changes: updatedAuction }, state);
+        } else {
+            const newTopBid = auction.topBid.bidPrice > bid.bidPrice ? auction.topBid : bid;     // For Auctions List
+
+            const updatedAuction: Auction = {
+                ...auction,
+                topBid: newTopBid
+            };
+            return adapter.updateOne({ id: auction.id, changes: updatedAuction }, state);
+        }
+    }),
+
 
 )
 

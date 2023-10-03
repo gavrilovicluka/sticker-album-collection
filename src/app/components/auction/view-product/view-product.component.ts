@@ -9,6 +9,9 @@ import { Observable, of } from 'rxjs';
 import { selectIsLoggedIn } from 'src/app/store/selectors/auth.selectors';
 import { MatDialog } from '@angular/material/dialog';
 import { BidDialogComponent } from '../bid-dialog/bid-dialog.component';
+import { Socket, io } from 'socket.io-client';
+import { environment } from 'src/environments/environments';
+import { Bid } from 'src/app/models/bid';
 
 @Component({
   selector: 'app-view-product',
@@ -19,9 +22,10 @@ export class ViewProductComponent implements OnInit {
 
   auction$: Observable<Auction | null> = of();
   auctionId?: number;
-  baseUrl: string = 'http://localhost:3000';
+  baseUrl: string = environment.apiUrl;
   currentPrice?: number;
   isLoggedIn?: boolean;
+  socket: Socket = io(environment.apiUrl);
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +45,17 @@ export class ViewProductComponent implements OnInit {
 
     this.store.select(selectIsLoggedIn).subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
 
+    this.listenForServerMessages();
+  }
+
+  listenForServerMessages() {
+    this.socket.connect();
+
+    this.socket.on('newBid', (bid: Bid) => {
+      if (bid.auctionId != this.auctionId) return;
+
+      this.store.dispatch(AuctionActions.updateBid({ bid }));
+    });
   }
 
 

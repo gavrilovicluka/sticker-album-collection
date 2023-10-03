@@ -14,7 +14,7 @@ export class RouteEffects {
   goHome$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(fromAuthActions.logout, /*HttpActions.forbiddenError, HttpActions.unauthorizedError*/),
+        ofType(fromAuthActions.logout, HttpActions.forbiddenError, HttpActions.unauthorizedError),
         tap(() => this.route.navigate(['/']))
       ),
     { dispatch: false }

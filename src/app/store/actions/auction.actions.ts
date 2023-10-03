@@ -123,3 +123,8 @@ export const getHotAuctionsFailure = createAction(
     props<{ error: any }>()
 );
 
+
+export const updateBid = createAction(
+    '[WebSocket] Update Bid',
+    props<{ bid: Bid }>()
+);

@@ -1,3 +1,4 @@
+import { Auction } from "./auction";
 import { User } from "./user";
 
 export interface Bid {
@@ -13,5 +14,6 @@ export interface Bid {
     productName?: string,
     productDescription?: string,
     endDate?: Date,
-    won?: boolean
+    won?: boolean,
+    auction: Auction
 }
