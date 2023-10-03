@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Observable, of } from 'rxjs';
+import { Auction } from 'src/app/models/auction';
+import * as AuctionActions from 'src/app/store/actions/auction.actions';
 import { AppState } from 'src/app/store/app.state';
+import { selectHotAuctions } from 'src/app/store/selectors/auction.selector';
 import { selectIsLoggedIn } from 'src/app/store/selectors/auth.selectors';
 
 @Component({
@@ -41,11 +45,17 @@ export class Home1Component implements OnInit {
   }
 
   isLoggedIn?: boolean;
+  hotAuctions$: Observable<Auction[]> = of([]);
+  numberOfHotAuctions: number = 3;
+  baseUrl: string = 'http://localhost:3000';
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.store.dispatch(AuctionActions.getHotAuctions({ numberOfAuctions: this.numberOfHotAuctions }));
+
     this.store.select(selectIsLoggedIn).subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
+    this.hotAuctions$ = this.store.select(selectHotAuctions)  //.subscribe(x => console.log(x))
   }
 
 

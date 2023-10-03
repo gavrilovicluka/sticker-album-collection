@@ -25,27 +25,33 @@ export const selectAllAuctions = createSelector(
     }) as Auction[]
 );
 
-// export const selectSoldAuctions = createSelector(
-//   selectAllAuctions,
-//   (auctions) => {
-//     const currentDate = new Date();
-//     return auctions.filter(auction => {
-//       auction.bids.sort((a, b) => b.bidPrice - a.bidPrice);
-//       return new Date(auction.endDate) < currentDate && auction.numberOfBids > 0;
-//     });
-//   }
-// );
 export const selectSoldAuctions = createSelector(
   selectAllAuctions,
   (auctions) => {
     const currentDate = new Date();
     const sortedAuctions = auctions.map(auction => ({ ...auction, bids: Array.isArray(auction.bids) ? [...auction.bids] : [] }));
-    
+
     sortedAuctions.forEach(auction => {
-      if(auction.bids) auction.bids.sort((a, b) => b.bidPrice - a.bidPrice);
+      if (auction.bids) auction.bids.sort((a, b) => b.bidPrice - a.bidPrice);
     });
-    
+
     return sortedAuctions.filter(auction => new Date(auction.endDate) < currentDate && auction.numberOfBids > 0);
+  }
+);
+
+export const selectHotAuctions = createSelector(
+  selectAllAuctions,
+  (auctions) => {
+    const currentDate = new Date();
+    const hotAuctions = auctions.map(auction => ({ ...auction, bids: Array.isArray(auction.bids) ? [...auction.bids] : [] }));
+
+    hotAuctions.sort((a, b) => b.bids.length - a.bids.length);
+
+    hotAuctions.forEach(auction => {
+      if (auction.bids) auction.bids.sort((a, b) => b.bidPrice - a.bidPrice);
+    });
+
+    return hotAuctions.filter(auction => new Date(auction.endDate) > currentDate);
   }
 );
 

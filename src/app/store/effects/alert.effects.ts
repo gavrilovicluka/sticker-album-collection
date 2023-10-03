@@ -43,6 +43,7 @@ export class AlertEffects {
                     AuctionActions.makeBidFailure,
                     AuctionActions.getAuctionsFailure,
                     AuctionActions.getAuctionsWithFilterFailure,
+                    AuctionActions.getHotAuctionsFailure,
                     BidActions.getUserBidsFailure,
 
                 ),

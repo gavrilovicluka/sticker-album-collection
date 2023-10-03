@@ -22,6 +22,7 @@ export const auctionReducer = createReducer(
 
     on(AuctionActions.getAuctionsSuccess,
         AuctionActions.getAuctionsWithFilterSuccess,
+        AuctionActions.getHotAuctionsSuccess,
         (state, props) => {
             const { auctions } = props;
             return adapter.setAll(auctions, state)

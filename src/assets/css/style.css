@@ -838,7 +838,7 @@ h4 {
   border: 1px solid transparent;
   border-radius: 8px 8px;
   /* box-shadow: 12px 14px 0 #ececec; */
-  box-shadow: 7px 7px 10px 0 rgba(76, 110, 245, 0.1);
+  box-shadow: 7px 7px 10px 0 rgba(76, 110, 245, 0.278);
   min-height: 348px;
 }
 

@@ -101,3 +101,20 @@ export const getAuctionsWithFilterFailure = createAction(
     props<{ error: any }>()
 );
 
+
+// Get Auctions With Filter
+export const getHotAuctions = createAction(
+    '[Home1 Component] Get Hot Auctions',
+    props<{ numberOfAuctions: number }>()
+);
+
+export const getHotAuctionsSuccess = createAction(
+    '[Auction Effect] Get Hot Auctions Success',
+    props<{ auctions: Auction[] }>()
+);
+
+export const getHotAuctionsFailure = createAction(
+    '[Auction Effect] Get Hot Auctions Failure',
+    props<{ error: any }>()
+);
+

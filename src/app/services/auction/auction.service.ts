@@ -84,4 +84,19 @@ export class AuctionService {
         })
       )
   }
+
+  getHotAuctions(numberOfAuctions: number): Observable<Auction[]> {
+
+    return this.httpClient
+      .get<Auction[]>(`${environment.apiUrl}${this.path}/hot/${numberOfAuctions}`)
+      .pipe(
+        mergeMap((auctions) => {
+          if (auctions) {
+            return of(auctions);
+          } else {
+            return throwError(() => new Error('Unable to get auctions'));
+          }
+        })
+      )
+  }
 }

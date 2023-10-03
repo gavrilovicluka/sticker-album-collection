@@ -75,7 +75,13 @@
 
             <div class="btn-box">
               <a [routerLink]="['publishers']" class="btn-1"> Izdavači </a>
-              <a [routerLink]="['auctions']" [queryParams]="{ type: 'active' }" class="btn-2"> Aukcije </a>
+              <a
+                [routerLink]="['auctions']"
+                [queryParams]="{ type: 'active' }"
+                class="btn-2"
+              >
+                Aukcije
+              </a>
             </div>
           </div>
         </div>
@@ -157,8 +163,19 @@
             Postavite svoju aukciju i vidite ko će dati najveću ponudu za vaš
             proizvod!
           </p>
-          <a [routerLink]="['auctions']" [queryParams]="{ type: 'active' }" class="btn-1 mx-3"> Sve aukcije </a>
-          <a [routerLink]="['auctions', 'add-product']" (click)="onAddAuctionClick()"> Postavi aukciju </a>
+          <a
+            [routerLink]="['auctions']"
+            [queryParams]="{ type: 'active' }"
+            class="btn-1 mx-3"
+          >
+            Sve aukcije
+          </a>
+          <a
+            [routerLink]="['auctions', 'add-product']"
+            (click)="onAddAuctionClick()"
+          >
+            Postavi aukciju
+          </a>
         </div>
       </div>
     </div>
@@ -181,7 +198,7 @@
     </p>
   </div>
 
-  <div class="carousel_se_01">
+  <div class="carousel_se_01" *ngIf="hotAuctions$ | async as hotAuctions">
     <div class="container-fluid px-0">
       <div class="container pt-5">
         <div class="row mx-4 d-flex justify-content-center">
@@ -190,78 +207,53 @@
               [options]="customOptions"
               class="carousel_se_01_carousel owl-theme"
             >
-              <ng-template carouselSlide>
-                <div class="item">
-                  <div class="col-md-12 wow fadeInUp delay-1">
-                    <div class="main_services text-center">
-                      <div class="box">
-                        <div class="img-box hover15">
-                          <img
-                            src="assets/images/hot-1.png"
-                            class="img-fluid pic-1"
-                          />
-                        </div>
-                        <div class="detail-box">
-                          <h4>$30</h4>
-                          <p>
-                            There are many variations of passages of Lorem Ipsum
-                            available,
-                          </p>
-                          <a href=""> Pogledaj </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
-              <ng-template carouselSlide>
-                <div class="item">
-                  <div class="col-md-12 wow fadeInUp delay-1">
-                    <div class="main_services text-center">
-                      <div class="box">
-                        <div class="img-box hover15">
-                          <img
-                            src="assets/images/hot-1.png"
-                            class="img-fluid pic-1"
-                          />
-                        </div>
-                        <div class="detail-box">
-                          <h4>$30</h4>
-                          <p>
-                            There are many variations of passages of Lorem Ipsum
-                            available,
-                          </p>
-                          <a href=""> Pogledaj </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
-              <ng-template carouselSlide>
-                <div class="item">
-                  <div class="col-md-12 wow fadeInUp delay-1">
-                    <div class="main_services text-center">
-                      <div class="box">
-                        <div class="img-box hover15">
-                          <img
-                            src="assets/images/hot-1.png"
-                            class="img-fluid pic-1"
-                          />
-                        </div>
-                        <div class="detail-box">
-                          <h4>$30</h4>
-                          <p>
-                            There are many variations of passages of Lorem Ipsum
-                            available,
-                          </p>
-                          <a href=""> Pogledaj </a>
+              <ng-container *ngFor="let auction of hotAuctions">
+                <ng-template carouselSlide [id]="auction.id.toString()">
+                  <div class="item">
+                    <div class="col-md-12 wow fadeInUp delay-1">
+                      <div class="main_services text-center">
+                        <div class="box">
+                          <div class="img-box hover15">
+                            <img
+                              src="{{ baseUrl + auction.productImage }}"
+                              alt="{{ auction.productName }}"
+                              class="img-fluid pic-1"
+                            />
+                          </div>
+                          <div class="detail-box">
+                            <p
+                              *ngIf="auction.bids.length > 0; else elseBlock"
+                              class="mb-1 fw-bold fs-3"
+                            >
+                              {{ auction.bids[0].bidPrice }} din
+                            </p>
+                            <ng-template #elseBlock>
+                              <p class="mb-2 fw-bold fs-3">
+                                {{ auction.basePrice }} din
+                              </p>
+                            </ng-template>
+
+                            <p class="mt-2 mb-0">Preostalo vreme:</p>
+                            <div
+                              class="countdown d-flex justify-content-center"
+                              simpleCountdown
+                              [dateTo]="auction.endDate.getTime() / 1000"
+                              [styles]="
+                                '
+                                                background-color: white;
+                                                padding: 10px 4px;
+                                                '
+                              "
+                              [endMessage]="'Aukcija je gotova'"
+                            ></div>
+                            <a [routerLink]="['auctions', 'product', auction.id]"> Pogledaj </a>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </ng-template>
+                </ng-template>
+              </ng-container>
             </owl-carousel-o>
           </div>
         </div>

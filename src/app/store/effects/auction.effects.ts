@@ -78,6 +78,23 @@ export class AuctionEffects {
         })
       ))
   ))
+  
+  getHotAuctions$ = createEffect(() => this.actions$.pipe(
+    ofType(AuctionActions.getHotAuctions),
+    mergeMap((action) =>
+      this.auctionService.getHotAuctions(action.numberOfAuctions).pipe(
+        map((auctions) => AuctionActions.getHotAuctionsSuccess({ auctions })),
+        catchError((error) => {
+          if (error.status === 401) {
+            return of(HttpActions.unauthorizedError(error));
+          } else if (error.status === 403) {
+            return of(HttpActions.forbiddenError(error));
+          } else {
+            return of(AuctionActions.getHotAuctionsFailure(error))
+          }
+        })
+      ))
+  ))
 
 
 
